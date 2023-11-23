@@ -1,0 +1,136 @@
+@import "../styles/common.scss";
+
+.navigator-menu {
+  display: flex;
+  margin: 0;
+  padding: 0;
+  height: 46px !important;
+  display: flex;
+
+  &.list-unstyled,
+  .list-unstyled {
+    list-style-type: none;
+  }
+
+  .menu-group {
+    background-color: #ffff;
+    height: 46px !important;
+
+    &:hover {
+      cursor: pointer;
+      background-color: (#29af33);
+      color: #ffff;
+    }
+
+    .menu-group-name {
+      border-right: 1px solid #29af33;
+      height: 46px !important;
+      //box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.01);
+      font-size: 18px;
+      cursor: pointer;
+      font-weight: 400;
+      display: flex;
+      align-items: center;
+      padding: 0 20px;
+      &:hover {
+        color: #ffff;
+      }
+      // &:first-child {
+      //   border-left: 1px solid #ffff;
+      // }
+    }
+
+    .menu-list {
+      display: none;
+      background-color: #ffff;
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+      -webkit-box-shadow: 2px 2px 4px 0 $box-shadow-color;
+      color: #333;
+      position: absolute;
+      padding: 0;
+
+      .menu {
+        width: 205px;
+        padding: 0 15px;
+        height: 35px;
+        line-height: 35px;
+        text-transform: none;
+        &.active {
+          a {
+            color: #ffff;
+          }
+          background-color: #29af33;
+        }
+
+        .menu-link {
+          text-decoration: none;
+          color: #333;
+        }
+        .sub-menu-list {
+          display: none;
+          background-color: #ffff;
+          box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+          -webkit-box-shadow: 2px 2px 4px 0 $box-shadow-color;
+          position: absolute;
+          top: 0;
+          left: 205px;
+          padding: 0;
+
+          .sub-menu {
+            padding: 0 15px;
+            height: 35px;
+            line-height: 35px;
+            white-space: nowrap;
+
+            &:hover {
+              background-color: (#29af33);
+            }
+
+            .sub-menu-link {
+              text-decoration: none;
+              color: #333;
+            }
+
+            a {
+              display: block;
+            }
+
+            &.active a {
+              font-weight: 500;
+              color: #29af33;
+            }
+          }
+        }
+
+        &.active span {
+          font-weight: 500;
+          color: #ffff;
+        }
+
+        &:hover {
+          background-color: (#29af33);
+
+          .sub-menu-list {
+            display: block;
+          }
+          a {
+            color: #ffff;
+          }
+        }
+
+        .icon-right {
+          display: block;
+          position: absolute;
+          top: 0;
+          right: 10px;
+        }
+      }
+    }
+
+    &:hover {
+      .menu-list {
+        display: block;
+      }
+    }
+  }
+}

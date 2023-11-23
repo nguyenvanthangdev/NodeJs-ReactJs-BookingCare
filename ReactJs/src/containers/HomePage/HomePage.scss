@@ -1,0 +1,160 @@
+.slick-prev:before,
+.slick-next:before {
+  font-size: 52px !important;
+  display: block !important;
+  position: absolute !important;
+  top: 58% !important;
+  left: 50% !important;
+  transform: translate(-50%, -50%) !important;
+}
+.slick-prev {
+  z-index: 1000;
+  border-radius: 50%;
+  left: -25px !important;
+  background-color: #29af33 !important;
+  height: 50px !important;
+  width: 50px !important;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+  top: 45% !important;
+}
+.slick-next {
+  right: -8px !important;
+  background-color: #29af33 !important;
+  border-radius: 50%;
+  height: 50px !important;
+  width: 50px !important;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+  top: 45% !important;
+}
+// Section css
+.section-share {
+  &.section-specialty {
+    background-color: #eee;
+  }
+  &.section-medical-facility {
+    background-color: #eee;
+  }
+  &.section-about {
+    background-color: #eee;
+  }
+  &.section-about {
+    height: 700px;
+  }
+  &.section-home-footer {
+    height: 368px !important;
+    section {
+      margin: 0 0 32px 0;
+      padding-top: 32px;
+    }
+    .footer-color {
+      background-color: #eee;
+    }
+  }
+  .section-body {
+    .section-customize {
+      .bg-image {
+        width: 95%;
+        height: 200px;
+        background-position: center center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-color: #eee;
+
+        &.section-specialty {
+          background-image: url("../../assets/specialty/1.png");
+        }
+        &.section-medical-facility {
+          background-image: url("../../assets/medical-facility/gallery1.png");
+        }
+        &.section-outdtanding-doctor {
+          background-image: url("../../assets/out-standing-doctor/1.png");
+          width: 120px;
+          height: 120px;
+          border-radius: 50%;
+        }
+        &.section-handbook {
+          background-image: url("../../assets/handbook/news-image1.jpg");
+        }
+      }
+    }
+  }
+}
+.section-share {
+  height: 400px;
+  .section-container {
+    margin: 0 300px 0 320px;
+    display: flex;
+    flex-direction: column;
+    padding-top: 30px;
+    .section-header {
+      height: 60px;
+      margin-bottom: 45px;
+      padding-top: 20px;
+      .title-section {
+        font-weight: 500;
+        font-size: 24px;
+      }
+      .btn-section {
+        float: right;
+        border-radius: unset;
+        padding: 9px 15px;
+        outline: none;
+        display: block;
+        background-color: #ffff;
+        color: #333;
+        font-size: 15px;
+        cursor: pointer;
+        font-weight: 400;
+        box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.3);
+        text-transform: uppercase;
+        margin-right: 15px;
+        &:hover {
+          background-color: #29af33;
+          color: #ffff;
+        }
+      }
+    }
+  }
+}
+.section-outdtanding-doctor {
+  .section-customize {
+    padding: 5px;
+    width: 97% !important;
+    .customize-border {
+      border: 1px solid #29af33;
+      padding: 20px;
+      .outer-bg {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 10px;
+      }
+    }
+  }
+  .slick-prev {
+    left: -20px !important;
+  }
+}
+.section-about {
+  padding: 0 300px 0 320px;
+  .section-about-header {
+    padding: 40px 10px;
+    font-size: 24px;
+    font-weight: 500;
+  }
+  .section-about-content {
+    display: flex;
+    gap: 20px;
+    width: 100%;
+    .content-left {
+      width: 60%;
+    }
+    .content-right {
+      width: 40%;
+      p {
+        text-align: justify;
+        font-style: italic;
+        padding: 15px;
+      }
+    }
+  }
+}

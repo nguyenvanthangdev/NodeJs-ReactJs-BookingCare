@@ -1,0 +1,116 @@
+.login-background {
+  background-color: #ffff;
+  height: 100vh;
+
+  .login-container {
+    width: 330px;
+    border-radius: 20px;
+    background-color: white;
+    position: absolute;
+    margin: auto;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    height: 550px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.4);
+
+    .login-content {
+      padding: 10px;
+
+      .text-login {
+        text-align: center;
+        font-weight: 600;
+        font-size: 30px;
+        padding-top: 10px;
+        color: #2d00f7;
+        margin-bottom: 20px;
+      }
+
+      .login-input {
+        margin: 7px 0;
+
+        label {
+          font-size: 16px;
+          color: black;
+          margin: 3px 0;
+        }
+
+        .custom-input-password {
+          position: relative;
+
+          i {
+            position: absolute;
+            right: 6px;
+            top: 10px;
+            cursor: pointer;
+          }
+        }
+      }
+
+      .error-message {
+        color: red;
+      }
+
+      .btn-login {
+        width: 100%;
+        margin: 10px 0;
+        height: 34px;
+        border-radius: 20px;
+        outline: none;
+        border: none;
+        color: #ffff;
+        font-size: 16px;
+        background-color: #2d00f7;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+      }
+
+      .forgot-password {
+        font-size: 15px;
+        color: #2d00f7;
+      }
+
+      .forgot-password:hover {
+        color: red;
+      }
+
+      .social-login {
+        display: flex;
+        text-align: center;
+        justify-content: center;
+        margin-top: 20px;
+
+        a {
+          text-decoration: none;
+
+          .facebook {
+            font-size: 30px;
+            background: #2d00f7;
+            border-radius: 50%;
+            height: 50px;
+            width: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+          }
+
+          .google {
+            font-size: 30px;
+            background: red;
+            border-radius: 50%;
+            height: 50px;
+            width: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            margin-right: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+          }
+        }
+      }
+    }
+  }
+}

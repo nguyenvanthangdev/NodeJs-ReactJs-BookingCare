@@ -1,0 +1,36 @@
+.preview-img-container {
+  display: flex;
+  align-items: center;
+  margin-top: -20px;
+  .label-upload {
+    cursor: pointer;
+    height: 80px;
+    width: 80px;
+    // background-color: #fed049;
+    // border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: left;
+    &:hover {
+      opacity: 0.9;
+    }
+    .img {
+      background: url("../../../assets/icon/file.png") center center no-repeat;
+      height: 60px;
+      width: 80px;
+      cursor: pointer;
+      background-size: contain;
+    }
+  }
+  .preview-image {
+    width: 100%;
+    height: 60px;
+    border: 1px solid #ddd;
+    background: center center no-repeat;
+    background-size: contain;
+    cursor: pointer;
+  }
+}
+label {
+  margin: 10px 0;
+}
