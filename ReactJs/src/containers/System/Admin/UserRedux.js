@@ -23,16 +23,6 @@ class UserRedux extends Component {
     this.props.getGenderStart();
     this.props.getPositionStart();
     this.props.getRoleStart();
-    // try {
-    //   let res = await getAllCodeService("gender");
-    //   if (res && res.errCode === 0) {
-    //     this.setState({
-    //       genderArr: res.data,
-    //     });
-    //   }
-    // } catch (e) {
-    //   console.log(e);
-    // }
   }
   componentDidUpdate(prevProps, prevState, snapshot) {
     if (prevProps.genderRedux !== this.props.genderRedux) {
@@ -73,9 +63,6 @@ class UserRedux extends Component {
     let positions = this.state.positionArr;
     let language = this.props.language;
 
-    //let isGetGender = this.props.isLoadingGender;
-    // console.log("check genderRedux", this.props.genderRedux);
-    // console.log("check ", this.state);
     return (
       <div className="user-redux-container">
         <div className="title my-5">User Redux</div>
