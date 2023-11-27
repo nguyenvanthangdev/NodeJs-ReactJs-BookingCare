@@ -24,7 +24,7 @@
 
   "menu": {
     "admin": {
-      "manage-user": "User System",
+      "manage-user": "Manage User",
       "manage-doctor": "Manage Doctors",
       "manage-admin": "Manage Admins",
       "crud": "CRUD user",
