@@ -25,6 +25,9 @@ class TableManageUser extends Component {
   handleDeleteUser = (user) => {
     this.props.deleteAUserRedux(user.id);
   };
+  handEditUser = (user) => {
+    this.props.handEditUserFromParentKey(user);
+  };
   render() {
     let arrUsers = this.state.usersRedux;
     return (
