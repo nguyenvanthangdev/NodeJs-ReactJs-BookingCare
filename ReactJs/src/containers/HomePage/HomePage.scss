@@ -26,6 +26,9 @@
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
   top: 45% !important;
 }
+.slick-disabled {
+  display: none !important;
+}
 // Section css
 .section-share {
   &.section-specialty {
@@ -67,7 +70,7 @@
           background-image: url("../../assets/medical-facility/gallery1.png");
         }
         &.section-outdtanding-doctor {
-          background-image: url("../../assets/out-standing-doctor/1.png");
+          // background-image: url("../../assets/out-standing-doctor/1.png");
           width: 120px;
           height: 120px;
           border-radius: 50%;
