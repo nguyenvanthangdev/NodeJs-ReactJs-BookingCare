@@ -1,0 +1,48 @@
+.manage-doctor-content {
+  display: flex;
+  .content-left {
+    width: 30%;
+    height: 620px;
+    border-radius: 1rem;
+    box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.3);
+    padding: 40px;
+    margin: 0px 45px;
+    .more-infor-top {
+      .title-doctor {
+        margin: 10px 0;
+        font-size: 18px;
+      }
+      .select-doctor {
+        margin: 10px 0;
+      }
+    }
+    .more-infor-down {
+      .title-doctor {
+        margin: 20px 0 10px 0;
+        font-size: 18px;
+      }
+      .custom-text {
+        margin: 10px 0;
+      }
+    }
+    .custom-btn {
+      margin: 10px 0;
+      padding: 20px 0;
+    }
+  }
+  .content-right {
+    width: 70%;
+    height: 620px;
+    border-radius: 1rem;
+    box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.3);
+    padding: 40px;
+    margin: 0px 45px 0 0;
+  }
+}
+.manage-doctor-title {
+  font-size: 24px;
+  text-align: center;
+  font-weight: 500;
+  color: #0d6efd;
+  text-transform: uppercase;
+}

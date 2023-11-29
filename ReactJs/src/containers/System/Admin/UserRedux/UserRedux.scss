@@ -1,5 +1,5 @@
 .title {
-  text-transform: none !important;
+  //text-transform: none !important;
   font-weight: 500 !important;
   font-size: 24px !important;
 }
@@ -7,10 +7,10 @@
   display: flex;
   .container-left {
     width: 30%;
-    padding: 20px;
     box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.3);
-    margin: auto 45px;
+    margin: 0px 45px;
     border-radius: 1rem;
+    height: 620px;
     .preview-img-container {
       display: flex;
       align-items: center;
@@ -26,7 +26,7 @@
           opacity: 0.9;
         }
         .img {
-          background: url("../../../assets/icon/file.png") center center
+          background: url("../../../../assets/icon/file.png") center center
             no-repeat;
           height: 60px;
           width: 80px;
@@ -50,10 +50,8 @@
   }
   .container-right {
     width: 70%;
-    //margin-left: 15px;
-    padding: 20px;
-    //margin: auto 30px;
-    margin-right: 45px;
+    padding: 45px;
+    margin: 0px 45px 0 0;
     box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.3);
     border-radius: 1rem;
   }
