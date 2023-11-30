@@ -55,6 +55,7 @@
   }
   .section-body {
     .section-customize {
+      cursor: pointer;
       .bg-image {
         width: 95%;
         height: 200px;
@@ -64,19 +65,18 @@
         background-color: #eee;
 
         &.section-specialty {
-          background-image: url("../../assets/specialty/1.png");
+          background-image: url("../../../assets/specialty/1.png");
         }
         &.section-medical-facility {
-          background-image: url("../../assets/medical-facility/gallery1.png");
+          background-image: url("../../../assets/medical-facility/gallery1.png");
         }
         &.section-outdtanding-doctor {
-          // background-image: url("../../assets/out-standing-doctor/1.png");
           width: 120px;
           height: 120px;
           border-radius: 50%;
         }
         &.section-handbook {
-          background-image: url("../../assets/handbook/news-image1.jpg");
+          background-image: url("../../../assets/handbook/news-image1.jpg");
         }
       }
     }
@@ -99,7 +99,7 @@
       }
       .btn-section {
         float: right;
-        border-radius: unset;
+        border-radius: 0.1rem;
         padding: 9px 15px;
         outline: none;
         display: block;

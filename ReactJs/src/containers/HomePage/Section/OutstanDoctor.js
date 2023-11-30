@@ -4,6 +4,7 @@ import { FormattedMessage } from "react-intl";
 import Slider from "react-slick";
 import * as actions from "../../../store/actions";
 import { LANGUAGES } from "../../../utils";
+import { withRouter } from "react-router";
 class OutstanDoctor extends Component {
   constructor(props) {
     super(props);
@@ -21,6 +22,11 @@ class OutstanDoctor extends Component {
       });
     }
   }
+  handleViewDetailDoctor = (doctor) => {
+    if (this.props.history) {
+      this.props.history.push(`/detail-doctor/${doctor.id}`);
+    }
+  };
   render() {
     let allDoctors = this.state.arrDoctors;
     let { language } = this.props;
@@ -42,14 +48,19 @@ class OutstanDoctor extends Component {
                 allDoctors.map((item, index) => {
                   let imageBase64 = "";
                   if (item.image) {
-                    imageBase64 = new Buffer(item.image, "base64").toString(
-                      "binary"
-                    );
+                    imageBase64 = new Buffer.from(
+                      item.image,
+                      "base64"
+                    ).toString("binary");
                   }
                   let nameVi = `${item.positionData.valueVi} ${item.lastName} ${item.firstName}`;
                   let nameEn = `${item.positionData.valueEn} ${item.firstName} ${item.lastName}`;
                   return (
-                    <div className="section-customize" key={index}>
+                    <div
+                      className="section-customize"
+                      key={index}
+                      onClick={() => this.handleViewDetailDoctor(item)}
+                    >
                       <div className="customize-border">
                         <div className="outer-bg">
                           <div
@@ -91,4 +102,6 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(OutstanDoctor);
+export default withRouter(
+  connect(mapStateToProps, mapDispatchToProps)(OutstanDoctor)
+);
