@@ -31,7 +31,7 @@ class DetailDoctor extends Component {
   componentDidUpdate(prevProps, prevState, snapshot) {}
 
   render() {
-    console.log("state", this.state);
+    //console.log("state", this.state);
     let { language } = this.props;
     let { detailDoctor } = this.state;
     let nameVi = "";
@@ -78,6 +78,7 @@ class DetailDoctor extends Component {
                 ></div>
               )}
           </div>
+          <div className="customfooter"></div>
           <div className="comment-doctor"></div>
         </div>
       </React.Fragment>
