@@ -1,4 +1,5 @@
 export const adminMenu = [
+  //Dashboard
   {
     name: "menu.admin.dashboard",
     menus: [
@@ -8,6 +9,7 @@ export const adminMenu = [
       },
     ],
   },
+  //Quan ly nguoi dung
   {
     name: "menu.admin.manage-user",
     menus: [
@@ -22,20 +24,14 @@ export const adminMenu = [
       {
         name: "menu.admin.manage-doctor",
         link: "/system/manage-doctor",
-        // subMenus: [
-        //   {
-        //     name: "menu.system.system-administrator.user-manage",
-        //     link: "/system/user-manage",
-        //   },
-        //   {
-        //     name: "menu.system.system-administrator.user-redux",
-        //     link: "/system/user-redux",
-        //   },
-        // ],
       },
+      // {
+      //   name: "menu.admin.manage-admin",
+      //   link: "/system/user-admin",
+      // },
       {
-        name: "menu.admin.manage-admin",
-        link: "/system/user-admin",
+        name: "menu.doctor.manage-schedule",
+        link: "/doctor/manage-schedule",
       },
     ],
   },
@@ -66,6 +62,28 @@ export const adminMenu = [
       {
         name: "menu.admin.manage-handbook",
         link: "/system/manage-handbook",
+      },
+    ],
+  },
+];
+export const doctorMenu = [
+  //Dashboard
+  {
+    name: "menu.admin.dashboard",
+    menus: [
+      {
+        name: "menu.admin.dashboard",
+        link: "/system/dashboard",
+      },
+    ],
+  },
+  //Quan ly ke hoach kham benh cua bac si
+  {
+    name: "menu.admin.manage-user",
+    menus: [
+      {
+        name: "menu.doctor.manage-schedule",
+        link: "/doctor/manage-schedule",
       },
     ],
   },

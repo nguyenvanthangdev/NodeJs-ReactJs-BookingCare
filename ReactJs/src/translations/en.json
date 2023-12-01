@@ -36,6 +36,9 @@
       "handbook": "Handbook",
       "manage-handbook": "Manage Handbook",
       "dashboard": "Dashboard"
+    },
+    "doctor": {
+      "manage-schedule": "Manage Doctor's Schedule"
     }
   },
   "manage-user": {
@@ -57,5 +60,12 @@
   "homepage": {
     "outstanding-doctor": "Last week's featured doctor",
     "more-infor": "More Infor"
+  },
+  "manage-schedule": {
+    "title": "Manage doctor's examination plan",
+    "select-hours": "Select Hours",
+    "choose-doctor": "Choose A Doctor",
+    "select-date": "Select Date",
+    "save-infor": "Save Infor"
   }
 }

@@ -44,10 +44,12 @@
       align-items: center;
 
       .child-content {
+        cursor: pointer;
         .subs-title {
           font-weight: 400;
           font-size: 12px;
           color: #333;
+          cursor: pointer;
         }
       }
     }

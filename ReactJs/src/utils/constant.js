@@ -19,6 +19,12 @@ export const CRUD_ACTIONS = {
   CREATE: "CREATE",
 };
 
+export const USER_ROLE = {
+  ADMIN: "R1",
+  DOCTOR: "R2",
+  PATIENT: "R3",
+};
+
 export const dateFormat = {
   SEND_TO_SERVER: "DD/MM/YYYY",
 };
