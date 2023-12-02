@@ -104,6 +104,18 @@
           opacity: 1;
         }
       }
+      .logout-button {
+        background-color: #ffff;
+        color: #333;
+        font-weight: 400;
+        i {
+          cursor: pointer;
+          font-size: 18px;
+          &:hover {
+            color: #29af33;
+          }
+        }
+      }
     }
   }
 }

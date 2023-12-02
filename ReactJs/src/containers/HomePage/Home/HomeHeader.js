@@ -5,6 +5,7 @@ import { FormattedMessage } from "react-intl";
 import { LANGUAGES } from "../../../utils";
 import { changeLanguageApp } from "../../../store/actions";
 import { withRouter } from "react-router";
+import * as actions from "../../../store/actions";
 class HomeHeader extends Component {
   changeLanguage = (language) => {
     this.props.changeLanguageAppRedux(language);
@@ -14,6 +15,14 @@ class HomeHeader extends Component {
       this.props.history.push(`/home`);
     }
   };
+  goToLogOut = () => {
+    let { processLogout } = this.props;
+    if (this.props.history) {
+      this.props.history.push(`/login`);
+      processLogout();
+    }
+  };
+
   render() {
     let language = this.props.language;
     return (
@@ -102,6 +111,13 @@ class HomeHeader extends Component {
                   EN
                 </span>
               </div>
+              <div className=" btn-outline-success mx-3 px-4 logout-button">
+                {/* <i className="fas fa-sign-out-alt"></i> */}
+                <i
+                  onClick={() => this.goToLogOut()}
+                  className="fas fa-sign-out-alt"
+                ></i>
+              </div>
             </div>
           </div>
         </div>
@@ -177,6 +193,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     changeLanguageAppRedux: (language) => dispatch(changeLanguageApp(language)),
+    processLogout: () => dispatch(actions.processLogout()),
   };
 };
 
