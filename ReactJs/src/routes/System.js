@@ -20,7 +20,6 @@ class System extends Component {
               <Route path="/system/user-manage" component={UserManage} />
               <Route path="/system/user-redux" component={UserRedux} />
               <Route path="/system/manage-doctor" component={ManageDoctor} />
-
               <Route
                 component={() => {
                   return <Redirect to={systemMenuPath} />;
@@ -38,6 +37,7 @@ const mapStateToProps = (state) => {
   return {
     systemMenuPath: state.app.systemMenuPath,
     isLoggedIn: state.user.isLoggedIn,
+    userInfo: state.user.userInfo,
   };
 };
 

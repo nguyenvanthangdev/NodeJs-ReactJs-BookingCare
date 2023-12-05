@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-
 import * as actions from "../../store/actions";
 import Navigator from "../../components/Navigator";
 import { adminMenu, doctorMenu } from "./menuApp";
@@ -8,7 +7,7 @@ import "./Header.scss";
 import { LANGUAGES, USER_ROLE } from "../../utils";
 import { FormattedMessage } from "react-intl";
 import _ from "lodash";
-
+import { withRouter } from "react-router";
 class Header extends Component {
   constructor(props) {
     super(props);
@@ -20,6 +19,7 @@ class Header extends Component {
   handleChangeLanguage = (language) => {
     this.props.changeLanguageAppRedux(language);
   };
+  handleToHome = () => {};
   componentDidMount() {
     let { userInfo } = this.props;
     let menu = [];
@@ -27,9 +27,11 @@ class Header extends Component {
       let role = userInfo.roleId;
       if (role === USER_ROLE.ADMIN) {
         menu = adminMenu;
-      }
-      if (role === USER_ROLE.DOCTOR) {
+      } else if (role === USER_ROLE.DOCTOR) {
         menu = doctorMenu;
+      } else {
+        this.props.history.push(`/home`);
+        return;
       }
     }
     this.setState({
@@ -117,4 +119,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Header);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Header));
