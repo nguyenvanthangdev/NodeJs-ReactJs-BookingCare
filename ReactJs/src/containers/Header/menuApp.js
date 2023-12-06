@@ -21,14 +21,15 @@ export const adminMenu = [
         name: "menu.admin.crud-redux",
         link: "/system/user-redux",
       },
+    ],
+  },
+  {
+    name: "menu.admin.manage-doctor",
+    menus: [
       {
-        name: "menu.admin.manage-doctor",
+        name: "menu.admin.manage-infor-doctor",
         link: "/system/manage-doctor",
       },
-      // {
-      //   name: "menu.admin.manage-admin",
-      //   link: "/system/user-admin",
-      // },
       {
         name: "menu.doctor.manage-schedule",
         link: "/doctor/manage-schedule",
@@ -67,19 +68,9 @@ export const adminMenu = [
   },
 ];
 export const doctorMenu = [
-  //Dashboard
-  {
-    name: "menu.admin.dashboard",
-    menus: [
-      {
-        name: "menu.admin.dashboard",
-        link: "/system/dashboard",
-      },
-    ],
-  },
   //Quan ly ke hoach kham benh cua bac si
   {
-    name: "menu.admin.manage-user",
+    name: "menu.admin.manage-doctor",
     menus: [
       {
         name: "menu.doctor.manage-schedule",

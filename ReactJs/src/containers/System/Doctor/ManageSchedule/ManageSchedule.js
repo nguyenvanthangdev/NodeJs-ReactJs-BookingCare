@@ -3,11 +3,9 @@ import { connect } from "react-redux";
 import "./ManageSchedule.scss";
 import { FormattedMessage } from "react-intl";
 import Select from "react-select";
-import * as actions from "../../../store/actions";
-import { LANGUAGES } from "../../../utils";
-import DatePicker from "../../../components/Input/DatePicker";
-//import moment from "moment";
-
+import * as actions from "../../../../store/actions";
+import { LANGUAGES } from "../../../../utils";
+import DatePicker from "../../../../components/Input/DatePicker";
 class ManageSchedule extends Component {
   constructor(props) {
     super(props);
@@ -70,6 +68,7 @@ class ManageSchedule extends Component {
   render() {
     let { rangeTime } = this.state;
     let { language } = this.props;
+
     return (
       <div className="manage-schedule-container">
         <div className="m-s-title my-5">

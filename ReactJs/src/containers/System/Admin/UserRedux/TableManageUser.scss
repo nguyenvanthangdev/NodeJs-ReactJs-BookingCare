@@ -1,13 +1,17 @@
-table {
-  vertical-align: baseline !important;
-  th {
-    .customcolumn {
-      text-align: center !important;
+.custom-table {
+  padding: 20px;
+
+  table {
+    vertical-align: baseline !important;
+    th {
+      .customcolumn {
+        text-align: center !important;
+      }
     }
-  }
-  tr {
-    .customcolumn {
-      text-align: center !important;
+    tr {
+      .customcolumn {
+        text-align: center !important;
+      }
     }
   }
 }

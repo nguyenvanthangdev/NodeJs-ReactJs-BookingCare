@@ -1,8 +1,6 @@
 import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
-import { Route, Switch } from "react-router-dom";
-import { ConnectedRouter as Router } from "connected-react-router";
-import { history } from "../redux";
+import { Route, Switch, BrowserRouter } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import {
   userIsAuthenticated,
@@ -16,7 +14,16 @@ import HomePage from "./HomePage/Home/HomePage";
 import CustomScrollbars from "../components/CustomScrollbars";
 import DetailDoctor from "./Patient/Doctor/DetailDoctor";
 import Doctor from "../routes/Doctor";
+
 class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      userInfo: null,
+      isLoggedIn: false,
+    };
+  }
+
   handlePersistorState = () => {
     const { persistor } = this.props;
     let { bootstrapped } = persistor.getState();
@@ -38,7 +45,7 @@ class App extends Component {
   render() {
     return (
       <Fragment>
-        <Router history={history}>
+        <BrowserRouter>
           <div className="main-container">
             <div className="content-container">
               <CustomScrollbars style={{ height: "100vh", width: "100%" }}>
@@ -48,14 +55,17 @@ class App extends Component {
                     path={path.LOGIN}
                     component={userIsNotAuthenticated(Login)}
                   />
+
                   <Route
                     path={path.SYSTEM}
                     component={userIsAuthenticated(System)}
                   />
+
                   <Route
                     path={path.DOCTOR}
                     component={userIsAuthenticated(Doctor)}
                   />
+
                   <Route path={path.HOMEPAGE} component={HomePage} />
                   <Route path={path.DETAIL_DOCTOR} component={DetailDoctor} />
                 </Switch>
@@ -71,10 +81,10 @@ class App extends Component {
               pauseOnFocusLoss
               draggable
               pauseOnHover
-              theme="colored"
+              theme="light"
             />
           </div>
-        </Router>
+        </BrowserRouter>
       </Fragment>
     );
   }
@@ -84,6 +94,7 @@ const mapStateToProps = (state) => {
   return {
     started: state.app.started,
     isLoggedIn: state.user.isLoggedIn,
+    userInfo: state.user.userInfo,
   };
 };
 

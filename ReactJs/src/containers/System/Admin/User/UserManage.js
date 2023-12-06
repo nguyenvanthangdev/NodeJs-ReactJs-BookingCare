@@ -7,9 +7,9 @@ import {
   createNewUserService,
   deleteUserService,
   editUserService,
-} from "../../../services/userService";
+} from "../../../../services/userService";
 import ModalUser from "./ModalUser";
-import { emitter } from "../../../utils/emitter";
+import { emitter } from "../../../../utils/emitter";
 import ModalEditUser from "./ModalEditUser";
 class UserManage extends Component {
   constructor(props) {
@@ -93,7 +93,7 @@ class UserManage extends Component {
         });
         await this.getAllUsersFromReact();
       } else {
-        alert(res.errCode);
+        alert(res.errMessage);
       }
     } catch (e) {
       console.log(e);

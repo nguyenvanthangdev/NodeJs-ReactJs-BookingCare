@@ -19,7 +19,7 @@ class Header extends Component {
   handleChangeLanguage = (language) => {
     this.props.changeLanguageAppRedux(language);
   };
-  handleToHome = () => {};
+
   componentDidMount() {
     let { userInfo } = this.props;
     let menu = [];
@@ -38,8 +38,15 @@ class Header extends Component {
       menuApp: menu,
     });
   }
+  goToLogOut = () => {
+    let { processLogout } = this.props;
+    if (this.props.history) {
+      this.props.history.push(`/login`);
+      processLogout();
+    }
+  };
   render() {
-    const { processLogout, language, userInfo } = this.props;
+    const { language, userInfo } = this.props;
 
     return (
       <div className="header-container">
@@ -93,7 +100,7 @@ class Header extends Component {
           </div>
           <div
             className="btn btn-outline-success mx-3 px-4 logout-button"
-            onClick={processLogout}
+            onClick={() => this.goToLogOut()}
           >
             <i className="fas fa-sign-out-alt"></i>
           </div>

@@ -1,30 +1,39 @@
-import React, { Component } from "react";
-import { Redirect } from "react-router-dom";
+import { Component } from "react";
 import { connect } from "react-redux";
 import { USER_ROLE } from "../utils";
 import { withRouter } from "react-router";
+import { Redirect, Route, Switch } from "react-router-dom";
 class Home extends Component {
   constructor(props) {
     super(props);
     this.state = {
       userInfo: null,
+      isLoggedIn: false,
     };
   }
-  render() {
-    const { isLoggedIn } = this.props;
-    const userInfo = this.props.userInfo;
 
+  render() {
+    const { isLoggedIn, userInfo } = this.props;
     if (isLoggedIn) {
       if (userInfo && userInfo.roleId === USER_ROLE.ADMIN) {
-        return <Redirect to={"/system/user-manage"} />;
+        return <Route render={() => <Redirect to={"/system/user-redux"} />} />;
       } else if (userInfo && userInfo.roleId === USER_ROLE.DOCTOR) {
-        return <Redirect to={"/system/manage-booking"} />;
+        return (
+          <Route render={() => <Redirect to={"/doctor/manage-schedule"} />} />
+        );
       } else {
-        return <Redirect to={"/home"} />;
+        return (
+          <Switch>
+            <Route render={() => <Redirect to={"/home"} />} />
+          </Switch>
+        );
       }
-    } else return <Redirect to={"/home"} />;
+    } else {
+      return <Route render={() => <Redirect to={"/home"} />} />;
+    }
   }
 }
+
 const mapStateToProps = (state) => {
   return {
     isLoggedIn: state.user.isLoggedIn,
