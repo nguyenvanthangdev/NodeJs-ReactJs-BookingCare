@@ -16,11 +16,14 @@ let initWebRoutes = (app) => {
   router.post("/api/login", userController.handleLogin);
   //User
   router.get("/api/get-all-users", userController.handleGetAllUsers);
+
+  router.get("/api/get-all-users1", userController.handleGetAllUsers1);
   router.post("/api/create-new-user", userController.handleCreateNewUser);
   router.put("/api/edit-user", userController.handleEditUser);
   router.delete("/api/delete-user", userController.handleDeleteUser);
   // Allcode
   router.get("/api/allcode", userController.getAllCode);
+  router.get("/api/allcode1", userController.getAllCode1);
   //Top Doctor
   router.get("/api/top-doctor-home", doctorController.getTopDoctorHome);
   //Doctor

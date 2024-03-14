@@ -33,18 +33,17 @@
       "manage-clinic": "Manage Clinics",
       "specialty": "Specialty",
       "manage-specialty": "Manage Specialty",
-      "handbook": "Handbook",
-      "manage-handbook": "Manage Handbook",
+      "schedule": "Schedule",
       "dashboard": "Dashboard",
       "manage-infor-doctor": "Manage Infor"
     },
     "doctor": {
-      "manage-schedule": "Manage Doctor's Schedule"
+      "manage-schedule": "Manage Schedule"
     }
   },
   "manage-user": {
-    "manage-users": "Manage Users",
-    "add": "Add a new user",
+    "manage-users": "Manage Doctor Account",
+    "add": "Add a new doctor",
     "email": "Email",
     "password": "Password",
     "first-name": "First name",

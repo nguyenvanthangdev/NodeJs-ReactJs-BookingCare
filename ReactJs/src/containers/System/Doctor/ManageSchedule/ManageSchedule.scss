@@ -28,7 +28,7 @@
         }
       }
       .btn-custom {
-        margin-top: 20px;
+        margin-top: 25px;
         margin-left: 10px;
       }
     }
@@ -44,6 +44,13 @@
         background-color: #ffff;
         color: #333;
         border-radius: 0.1rem;
+      }
+      .custom-btn-active {
+        &.active {
+          background-color: #29af33;
+          color: #ffff;
+          border-radius: 0.1rem;
+        }
       }
       .title-custom3 {
         font-size: 18px;

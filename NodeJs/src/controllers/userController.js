@@ -33,6 +33,23 @@ let handleGetAllUsers = async (req, res) => {
     users,
   });
 };
+let handleGetAllUsers1 = async (req, res) => {
+  let id = req.query.id;
+  if (!id) {
+    return res.status(200).json({
+      errCode: 1,
+      errMessage: "Missing required parameters",
+      users: [],
+    });
+  }
+  let users = await userService.getAllUsers1(id);
+
+  return res.status(200).json({
+    errCode: 0,
+    errMessage: "OK",
+    users,
+  });
+};
 let handleCreateNewUser = async (req, res) => {
   let message = await userService.createNewUser(req.body);
   return res.status(200).json(message);
@@ -64,11 +81,24 @@ let getAllCode = async (req, res) => {
     });
   }
 };
+let getAllCode1 = async (req, res) => {
+  try {
+    let data = await userService.getAllCodeService1(req.query.type);
+    return res.status(200).json(data);
+  } catch (e) {
+    return res.status(200).json({
+      errCode: -1,
+      errMessage: "Error from server",
+    });
+  }
+};
 module.exports = {
   handleLogin: handleLogin,
   handleGetAllUsers: handleGetAllUsers,
+  handleGetAllUsers1: handleGetAllUsers1,
   handleCreateNewUser: handleCreateNewUser,
   handleEditUser: handleEditUser,
   handleDeleteUser: handleDeleteUser,
   getAllCode: getAllCode,
+  getAllCode1: getAllCode1,
 };

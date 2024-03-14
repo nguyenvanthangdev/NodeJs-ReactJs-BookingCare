@@ -32,18 +32,17 @@
       "manage-clinic": "Quản lý Phòng Khám",
       "specialty": "Chuyên Khoa",
       "manage-specialty": "Quản lý Chuyên Khoa",
-      "handbook": "Cẩm Nang",
-      "manage-handbook": "Quản lý Cẩm Nang",
-      "dashboard": "Bảng Điều Khiển",
+      "schedule": "Lịch Khám",
+      "dashboard": "Dashboard",
       "manage-infor-doctor": "Quản Lý Thông Tin"
     },
     "doctor": {
-      "manage-schedule": "Quản Lý Kế Hoạch Khám Bệnh"
+      "manage-schedule": "Quản Lý Lịch Khám"
     }
   },
   "manage-user": {
-    "manage-users": "Quản Lý Bác Sĩ",
-    "add": "Thêm Mới Người Dùng",
+    "manage-users": "Quản Lý Tài Khoản Bác Sĩ",
+    "add": "Thêm Mới Bác Sĩ",
     "email": "Email",
     "password": "Mật khẩu",
     "first-name": "Tên",
@@ -54,7 +53,7 @@
     "position": "Chức danh",
     "role": "Vai trò",
     "img": "Ảnh",
-    "save": "Lưu",
+    "save": "Thêm Mới",
     "edit": "Sửa"
   },
   "homepage": {

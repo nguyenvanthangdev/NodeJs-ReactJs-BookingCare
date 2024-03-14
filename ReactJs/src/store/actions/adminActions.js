@@ -7,6 +7,7 @@ import {
   editUserService,
   getTopDoctorHomeService,
   getAllDoctorsService,
+  getAllCodeService1,
   saveInforDoctorsService,
 } from "../../services/userService";
 import { toast } from "react-toastify";
@@ -60,7 +61,7 @@ export const fetchPositionFailed = () => ({
 export const fetchRoleStart = () => {
   return async (dispatch, getState) => {
     try {
-      let res = await getAllCodeService("ROLE");
+      let res = await getAllCodeService1("ROLE");
       if (res && res.errCode === 0) {
         dispatch(fetchRoleSuccess(res.data));
       } else {

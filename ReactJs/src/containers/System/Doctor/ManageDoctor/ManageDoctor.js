@@ -103,7 +103,7 @@ class ManageDoctor extends Component {
     let { hasOldData } = this.state;
     return (
       <React.Fragment>
-        <div className="manage-doctor-title my-5">Tạo thông tin doctors</div>
+        <div className="manage-doctor-title my-5">Tạo thông tin Bác Sĩ</div>
         <div className="manage-doctor-content">
           <div className="content-left">
             <div className="more-infor-top">

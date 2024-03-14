@@ -23,6 +23,7 @@ export const adminMenu = [
       },
     ],
   },
+  //Quan lý bác sĩ
   {
     name: "menu.admin.manage-doctor",
     menus: [
@@ -30,7 +31,15 @@ export const adminMenu = [
         name: "menu.admin.manage-infor-doctor",
         link: "/system/manage-doctor",
       },
+    ],
+  },
+  //Quan lý Lịch Khám
+  {
+    name: "menu.admin.schedule",
+    menus: [
       {
+        // name: "menu.admin.manage-handbook",
+        // link: "/system/manage-handbook",
         name: "menu.doctor.manage-schedule",
         link: "/doctor/manage-schedule",
       },
@@ -56,21 +65,11 @@ export const adminMenu = [
       },
     ],
   },
-  //Quan ly cam nan
-  {
-    name: "menu.admin.handbook",
-    menus: [
-      {
-        name: "menu.admin.manage-handbook",
-        link: "/system/manage-handbook",
-      },
-    ],
-  },
 ];
 export const doctorMenu = [
   //Quan ly ke hoach kham benh cua bac si
   {
-    name: "menu.admin.manage-doctor",
+    name: "menu.admin.schedule",
     menus: [
       {
         name: "menu.doctor.manage-schedule",
