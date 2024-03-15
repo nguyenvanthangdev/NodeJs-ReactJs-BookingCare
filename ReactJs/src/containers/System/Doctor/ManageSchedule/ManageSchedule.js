@@ -4,11 +4,13 @@ import "./ManageSchedule.scss";
 import { FormattedMessage } from "react-intl";
 import Select from "react-select";
 import * as actions from "../../../../store/actions";
-import { LANGUAGES, dateFormat } from "../../../../utils";
+import { LANGUAGES } from "../../../../utils";
+//dateFormat
 import DatePicker from "../../../../components/Input/DatePicker";
 import { toast } from "react-toastify";
 import _ from "lodash";
-import moment from "moment";
+//import moment from "moment";
+import { SaveBulkScheduleDoctor } from "../../../../services/userService";
 class ManageSchedule extends Component {
   constructor(props) {
     super(props);
@@ -84,7 +86,7 @@ class ManageSchedule extends Component {
       });
     }
   };
-  handleSaveSchedele = () => {
+  handleSaveSchedule = async () => {
     let { rangeTime, selectedDoctor, currentDate } = this.state;
     let result = [];
     if (!currentDate) {
@@ -95,15 +97,16 @@ class ManageSchedule extends Component {
       toast.error("Invalid selected doctor !");
       return;
     }
-    let formatedDate = moment(currentDate).format(dateFormat.SEND_TO_SERVER);
+    // let formatedDate = moment(currentDate).format(dateFormat.SEND_TO_SERVER);
+    let formatedDate = new Date(currentDate).getTime();
     if (rangeTime && rangeTime.length > 0) {
       let selectedTime = rangeTime.filter((item) => item.isSelected === true);
       if (selectedTime && selectedTime.length > 0) {
-        selectedTime.map((schedele, index) => {
+        selectedTime.map((schedule, index) => {
           let object = {};
           object.doctorId = selectedDoctor.value;
-          object.data = formatedDate;
-          object.time = schedele.keyMap;
+          object.date = formatedDate;
+          object.timeType = schedule.keyMap;
           result.push(object);
           return null;
         });
@@ -112,7 +115,14 @@ class ManageSchedule extends Component {
         return;
       }
     }
-    console.log(result);
+    let res = await SaveBulkScheduleDoctor({
+      arrSchedule: result,
+      doctorId: selectedDoctor.value,
+      formatedDate: formatedDate,
+    });
+    toast.success("Selected time success !");
+    console.log("check res", res);
+    console.log("check result", result);
   };
   render() {
     let { rangeTime } = this.state;
@@ -155,7 +165,7 @@ class ManageSchedule extends Component {
             </div>
             <button
               className="btn btn-primary btn-custom"
-              onClick={() => this.handleSaveSchedele()}
+              onClick={() => this.handleSaveSchedule()}
             >
               <FormattedMessage id="manage-schedule.save-infor" />
             </button>
