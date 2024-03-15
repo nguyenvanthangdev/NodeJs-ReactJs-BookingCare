@@ -144,7 +144,7 @@ let bulkCreateScheduleService = (data) => {
       if (!data.arrSchedule || !data.doctorId || !data.formatedDate) {
         resolve({
           errCode: 1,
-          errMessage: "Missing required param !",
+          errMessage: "Missing required parameters !",
         });
       } else {
         let schedule = data.arrSchedule;
@@ -160,16 +160,9 @@ let bulkCreateScheduleService = (data) => {
           attributes: ["timeType", "date", "doctorId", "maxNumber"],
           raw: true,
         });
-        // Convert date
-        if (existing && existing.length > 0) {
-          existing = existing.map((item) => {
-            item.date = new Date(item.date).getTime();
-            return item;
-          });
-        }
         // Compare different
         let toCreate = _.differenceWith(schedule, existing, (a, b) => {
-          return a.timeType === b.timeType && a.date === b.date;
+          return a.timeType === b.timeType && +a.date === +b.date;
         });
         //Create data
         if (toCreate && toCreate.length > 0) {
@@ -185,6 +178,38 @@ let bulkCreateScheduleService = (data) => {
     }
   });
 };
+let getScheduleByDateService = (doctorId, date) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      if (!doctorId || !date) {
+        resolve({
+          errCode: 1,
+          errMessage: "Missing required parameters !",
+        });
+      } else {
+        let dataSchedule = await db.Schedule.findAll({
+          where: { doctorId: doctorId, date: date },
+          include: [
+            {
+              model: db.Allcode,
+              as: "timeTypeData",
+              attributes: ["valueEn", "valueVi"],
+            },
+          ],
+          raw: false,
+          nest: true,
+        });
+        if (!dataSchedule) dataSchedule = [];
+        resolve({
+          errCode: 0,
+          data: dataSchedule,
+        });
+      }
+    } catch (e) {
+      reject(e);
+    }
+  });
+};
 
 module.exports = {
   getTopDoctorHomeServices: getTopDoctorHomeServices,
@@ -192,4 +217,5 @@ module.exports = {
   saveInforDoctorsService: saveInforDoctorsService,
   getDetailDoctorByIdService: getDetailDoctorByIdService,
   bulkCreateScheduleService: bulkCreateScheduleService,
+  getScheduleByDateService: getScheduleByDateService,
 };
