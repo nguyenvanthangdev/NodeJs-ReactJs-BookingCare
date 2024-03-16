@@ -2,9 +2,8 @@ import React, { Component } from "react";
 //import { FormattedMessage } from "react-intl";
 import { connect } from "react-redux";
 import "./UserManage.scss";
-import CustomScrollbars from "../../../../components/CustomScrollbars";
 import {
-  getAllUsers1,
+  getAllUsers,
   createNewUserService,
   deleteUserService,
   editUserService,
@@ -42,7 +41,7 @@ class UserManage extends Component {
     });
   };
   getAllUsersFromReact = async () => {
-    let response = await getAllUsers1("ALL");
+    let response = await getAllUsers("ALL");
     if (response && response.errCode === 0) {
       this.setState({
         arrUsers: response.users,
@@ -117,9 +116,7 @@ class UserManage extends Component {
             editUser={this.doEditUser}
           />
         )}
-        <div className="title text-center my-5">
-          Quản Lý Tài Khoản Người Dùng
-        </div>
+        <div className="title text-center my-5">Quản Lý Tài Khoản</div>
         <div className="mx-1">
           <button
             className="btn btn-primary px-3 mx-5"
@@ -128,50 +125,49 @@ class UserManage extends Component {
             <i className="fas fa-plus"></i>Create new users
           </button>
         </div>
-        <CustomScrollbars style={{ height: "100vh", width: "100%" }}>
-          <div className="users-table mt-3 mx-5">
-            <table className="table">
-              <thead className="thead-light">
-                <tr>
-                  <th scope="col">Email</th>
-                  <th scope="col">First Name</th>
-                  <th scope="col">Last Name</th>
-                  <th scope="col">Address</th>
-                  <th scope="col">Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                {arrUsers &&
-                  arrUsers.map((item, index) => {
-                    return (
-                      <tr key={index}>
-                        <td>{item.email}</td>
-                        <td>{item.firstName}</td>
-                        <td>{item.lastName}</td>
-                        <td>{item.address}</td>
-                        <td>
-                          <button
-                            type="button"
-                            className="btn btn-warning px-3 mx-2"
-                            onClick={() => this.handEditUser(item)}
-                          >
-                            Edit
-                          </button>
-                          <button
-                            type="button"
-                            className="btn btn-danger px-3"
-                            onClick={() => this.handleDeleteUser(item)}
-                          >
-                            Delete
-                          </button>
-                        </td>
-                      </tr>
-                    );
-                  })}
-              </tbody>
-            </table>
-          </div>
-        </CustomScrollbars>
+
+        <div className="users-table mt-3 mx-5">
+          <table className="table">
+            <thead className="thead-light">
+              <tr>
+                <th scope="col">Email</th>
+                <th scope="col">First Name</th>
+                <th scope="col">Last Name</th>
+                <th scope="col">Address</th>
+                <th scope="col">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {arrUsers &&
+                arrUsers.map((item, index) => {
+                  return (
+                    <tr key={index}>
+                      <td>{item.email}</td>
+                      <td>{item.firstName}</td>
+                      <td>{item.lastName}</td>
+                      <td>{item.address}</td>
+                      <td>
+                        <button
+                          type="button"
+                          className="btn btn-warning px-3 mx-2"
+                          onClick={() => this.handEditUser(item)}
+                        >
+                          Edit
+                        </button>
+                        <button
+                          type="button"
+                          className="btn btn-danger px-3"
+                          onClick={() => this.handleDeleteUser(item)}
+                        >
+                          Delete
+                        </button>
+                      </td>
+                    </tr>
+                  );
+                })}
+            </tbody>
+          </table>
+        </div>
       </div>
     );
   }

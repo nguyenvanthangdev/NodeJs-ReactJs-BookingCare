@@ -26,8 +26,8 @@
       "manage-user": "Quản lý Tài Khoản",
       "manage-doctor": "Quản lý Bác Sĩ",
       "manage-admin": "Quản lý Admins",
-      "crud": "Tài Khoản Người Dùng",
-      "crud-redux": "Tài Khoản Bác Sĩ",
+      "crud": "Tài Khoản",
+      "crud-redux": "Quản lý tài khoản",
       "clinic": "Phòng Khám",
       "manage-clinic": "Quản lý Phòng Khám",
       "specialty": "Chuyên Khoa",
@@ -41,7 +41,7 @@
     }
   },
   "manage-user": {
-    "manage-users": "Quản Lý Tài Khoản Bác Sĩ",
+    "manage-users": "Quản Lý Tài Khoản",
     "add": "Thêm Mới Bác Sĩ",
     "email": "Email",
     "password": "Mật khẩu",

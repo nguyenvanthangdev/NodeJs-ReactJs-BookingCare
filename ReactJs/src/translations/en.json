@@ -27,8 +27,8 @@
       "manage-user": "Manage Account",
       "manage-doctor": "Manage Doctors",
       "manage-admin": "Manage Admins",
-      "crud": "Users Account",
-      "crud-redux": "Doctors Account",
+      "crud": "Account",
+      "crud-redux": "Manage Account",
       "clinic": "Clinic",
       "manage-clinic": "Manage Clinics",
       "specialty": "Specialty",
@@ -42,7 +42,7 @@
     }
   },
   "manage-user": {
-    "manage-users": "Manage Doctor Account",
+    "manage-users": "Manage Account",
     "add": "Add a new doctor",
     "email": "Email",
     "password": "Password",

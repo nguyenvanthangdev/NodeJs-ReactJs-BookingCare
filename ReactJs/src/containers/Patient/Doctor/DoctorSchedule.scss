@@ -1,10 +1,11 @@
 .doctor-schedule-container {
   .all-schedule {
     select {
-      width: 200px;
+      margin-left: 5px;
+      width: 145px;
       padding: 10px 0px;
-      font-size: 17px;
-      text-transform: uppercase;
+      font-size: 14px;
+      //text-transform: uppercase;
       color: #333;
       border: none;
       border-bottom: 1px solid #333;
@@ -49,7 +50,7 @@
         }
       }
       .text {
-        margin-top: 20px;
+        margin-top: 40px;
         color: #333;
         font-size: 14px;
         margin-left: 10px;

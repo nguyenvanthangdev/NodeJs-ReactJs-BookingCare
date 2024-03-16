@@ -79,7 +79,6 @@ let getAllUsers = (userId) => {
       let users = "";
       if (userId === "ALL") {
         users = await db.User.findAll({
-          where: { roleId: "R2" },
           attributes: {
             exclude: ["password"],
           },
@@ -87,7 +86,7 @@ let getAllUsers = (userId) => {
       }
       if (userId && userId !== "ALL") {
         users = await db.User.findOne({
-          where: { id: userId, roleId: "R2" },
+          where: { id: userId },
           attributes: {
             exclude: ["password"],
           },
@@ -99,33 +98,6 @@ let getAllUsers = (userId) => {
     }
   });
 };
-let getAllUsers1 = (userId) => {
-  return new Promise(async (resolve, reject) => {
-    try {
-      let users = "";
-      if (userId === "ALL") {
-        users = await db.User.findAll({
-          where: { roleId: "R3" },
-          attributes: {
-            exclude: ["password", "image"],
-          },
-        });
-      }
-      if (userId && userId !== "ALL") {
-        users = await db.User.findOne({
-          where: { id: userId, roleId: "R3" },
-          attributes: {
-            exclude: ["password", "image"],
-          },
-        });
-      }
-      resolve(users);
-    } catch (e) {
-      reject(e);
-    }
-  });
-};
-
 let createNewUser = (data) => {
   return new Promise(async (resolve, reject) => {
     try {
@@ -242,35 +214,12 @@ let getAllCodeService = (typeInput) => {
     }
   });
 };
-let getAllCodeService1 = (typeInput) => {
-  return new Promise(async (resolve, reject) => {
-    try {
-      if (!typeInput) {
-        resolve({
-          errCode: 1,
-          errMessage: "Missing required parameters",
-        });
-      } else {
-        let res = {};
-        let allcode = await db.Allcode.findAll({
-          where: { type: typeInput, keyMap: "R2" },
-        });
-        res.errCode = 0;
-        res.data = allcode;
-        resolve(res);
-      }
-    } catch (e) {
-      reject(e);
-    }
-  });
-};
+
 module.exports = {
   handleUserLogin: handleUserLogin,
   getAllUsers: getAllUsers,
-  getAllUsers1: getAllUsers1,
   createNewUser: createNewUser,
   deleteUser: deleteUser,
   updateUserData: updateUserData,
   getAllCodeService: getAllCodeService,
-  getAllCodeService1: getAllCodeService1,
 };

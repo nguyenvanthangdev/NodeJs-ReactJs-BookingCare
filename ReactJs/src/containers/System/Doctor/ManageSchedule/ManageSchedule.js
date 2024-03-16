@@ -42,13 +42,6 @@ class ManageSchedule extends Component {
         rangeTime: data,
       });
     }
-
-    // if (prevProps.language !== this.props.language) {
-    //   let dataSelect = this.builDataInputSelect(this.props.allDoctors);
-    //   this.setState({
-    //     listDoctors: dataSelect,
-    //   });
-    // }
   }
   builDataInputSelect = (inputData) => {
     let result = [];
@@ -97,7 +90,6 @@ class ManageSchedule extends Component {
       toast.error("Invalid selected doctor !");
       return;
     }
-    // let formatedDate = moment(currentDate).format(dateFormat.SEND_TO_SERVER);
     let formatedDate = new Date(currentDate).getTime();
     if (rangeTime && rangeTime.length > 0) {
       let selectedTime = rangeTime.filter((item) => item.isSelected === true);
@@ -120,13 +112,17 @@ class ManageSchedule extends Component {
       doctorId: selectedDoctor.value,
       formatedDate: formatedDate,
     });
-    toast.success("Selected time success !");
-    console.log("check res", res);
-    console.log("check result", result);
+    if (res && res.errCode === 0) {
+      toast.success("Selected time success !");
+    } else {
+      toast.success("Erorr selected time !");
+      console.log("Erorr selected time !", res);
+    }
   };
   render() {
     let { rangeTime } = this.state;
     let { language } = this.props;
+    let yesterday = new Date(new Date().setDate(new Date().getDate() - 1));
 
     return (
       <div className="manage-schedule-container">
@@ -158,7 +154,7 @@ class ManageSchedule extends Component {
                     onChange={this.handleChangeDatePicker}
                     className="form-control"
                     value={this.state.currentDate}
-                    minDate={new Date()}
+                    minDate={yesterday}
                   />
                 </div>
               </div>
