@@ -1,15 +1,17 @@
 @import "../../styles/common.scss";
 
 .header-container {
-  z-index: 99;
+  z-index: 1000;
+  top: 0px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   background-color: #ffff;
   color: #333;
   height: 56px;
-  position: relative;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+  position: sticky;
+  //position: relative;
+  box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.3);
 
   .oheader-tabs-container {
     display: flex;
