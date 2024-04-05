@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import "./HomeHeader.scss";
 import { FormattedMessage } from "react-intl";
-import { LANGUAGES } from "../../../utils";
+import { LANGUAGES, USER_ROLE } from "../../../utils";
 import { changeLanguageApp } from "../../../store/actions";
 import { withRouter } from "react-router";
 import * as actions from "../../../store/actions";
@@ -13,6 +13,7 @@ import {
   DropdownMenu,
   DropdownItem,
 } from "reactstrap";
+
 class HomeHeader extends Component {
   constructor(props) {
     super(props);
@@ -40,11 +41,35 @@ class HomeHeader extends Component {
       processLogout();
     }
   };
-
+  goToLogIn = () => {
+    if (this.props.history) {
+      this.props.history.push(`/login`);
+    }
+  };
+  gotoAdmin = () => {
+    const { userInfo } = this.props;
+    if (userInfo && userInfo.roleId === USER_ROLE.ADMIN) {
+      if (this.props.history) {
+        this.props.history.push(`/system/user-redux`);
+      }
+    }
+    if (userInfo && userInfo.roleId === USER_ROLE.DOCTOR) {
+      if (this.props.history) {
+        this.props.history.push(`/doctor/manage-schedule`);
+      }
+    }
+  };
+  handleViewAccount = () => {
+    const { userInfo } = this.props;
+    if (this.props.history) {
+      this.props.history.push(`/account/${userInfo.id}`);
+    }
+  };
   render() {
     //let language = this.props.language;
     const { dropdownOpen } = this.state;
     const { userInfo, language, isLoggedIn } = this.props;
+    console.log(this.props);
     let imageBase64 = "";
     if (isLoggedIn === true && userInfo && userInfo.image.data.length > 0) {
       imageBase64 = new Buffer.from(userInfo.image, "base64").toString(
@@ -140,13 +165,7 @@ class HomeHeader extends Component {
                   EN
                 </span>
               </div>
-              <div className="btn-outline-success mx-3 px-4 logout-button">
-                <i
-                  onClick={() => this.goToLogOut()}
-                  className="fas fa-sign-out-alt"
-                ></i>
-              </div>
-
+              {/* acount */}
               <div className="dropdown-custom">
                 <Dropdown
                   className=""
@@ -163,9 +182,42 @@ class HomeHeader extends Component {
                     }}
                   ></DropdownToggle>
                   <DropdownMenu right>
-                    <DropdownItem>ưdwdwdw</DropdownItem>
-                    <DropdownItem>đwdww</DropdownItem>
-                    <DropdownItem>dưdww</DropdownItem>
+                    {isLoggedIn === true ? (
+                      <>
+                        <DropdownItem onClick={() => this.handleViewAccount()}>
+                          Thông tin tài khoản
+                        </DropdownItem>
+                        {(userInfo && userInfo.roleId === USER_ROLE.DOCTOR) ||
+                        (userInfo && userInfo.roleId === USER_ROLE.ADMIN) ? (
+                          <DropdownItem onClick={() => this.gotoAdmin()}>
+                            Admin
+                          </DropdownItem>
+                        ) : (
+                          <>
+                            <DropdownItem>Lịch sử dặt lịch</DropdownItem>
+                          </>
+                        )}
+                        <DropdownItem
+                          className="custom-logout"
+                          onClick={() => this.goToLogOut()}
+                        >
+                          <span>
+                            <i className="fas fa-sign-out-alt"></i>
+                            Logout
+                          </span>
+                        </DropdownItem>
+                      </>
+                    ) : (
+                      <DropdownItem
+                        className="custom-logout"
+                        onClick={() => this.goToLogIn()}
+                      >
+                        <span>
+                          <i className="fas fa-sign-out-alt"></i>
+                          Login
+                        </span>
+                      </DropdownItem>
+                    )}
                   </DropdownMenu>
                 </Dropdown>
               </div>

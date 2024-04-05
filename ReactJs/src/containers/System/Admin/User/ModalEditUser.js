@@ -128,7 +128,7 @@ class ModalEditUser extends Component {
             }}
           >
             Save changes
-          </Button>{" "}
+          </Button>
           <Button
             className="btn px-3"
             color="secondary"

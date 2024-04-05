@@ -117,14 +117,25 @@
         }
       }
       .dropdown-custom {
+        margin-left: 30px;
         .dropdown-toggle {
           color: rgba(255, 255, 255, 0);
         }
         .dropdown-item {
           color: #333;
+          height: 40px;
+          font-size: 16px;
+          font-family: "Inter", sans-serif;
           &:hover {
             background-color: #29af33;
             color: #ffff;
+          }
+        }
+        .custom-logout {
+          span {
+            i {
+              margin-right: 10px;
+            }
           }
         }
         .dropdown-custom-title {

@@ -143,8 +143,8 @@ class Header extends Component {
                   onClick={() => this.goToLogOut()}
                 >
                   <span>
-                    Logout
                     <i className="fas fa-sign-out-alt"></i>
+                    Logout
                   </span>
                 </DropdownItem>
               </DropdownMenu>

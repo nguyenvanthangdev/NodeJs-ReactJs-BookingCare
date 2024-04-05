@@ -25,6 +25,7 @@ let handleUserLogin = (email, password) => {
             "firstName",
             "lastName",
             "image",
+            "id",
           ],
           where: { email: email },
           raw: true,
