@@ -103,7 +103,7 @@ class ManageDoctor extends Component {
           let labelVi = `${item.valueVi}`;
           let labelEn = `${item.valueEn} USD`;
           object.label = language === LANGUAGES.VI ? labelVi : labelEn;
-          object.value = item.id;
+          object.value = item.keyMap;
           result.push(object);
           return null;
         });
@@ -114,7 +114,7 @@ class ManageDoctor extends Component {
           let labelVi = `${item.valueVi}`;
           let labelEn = `${item.valueEn}`;
           object.label = language === LANGUAGES.VI ? labelVi : labelEn;
-          object.value = item.id;
+          object.value = item.keyMap;
           result.push(object);
           return null;
         });
@@ -165,16 +165,16 @@ class ManageDoctor extends Component {
       });
     }
   };
-  handleChangeSelectDoctorInfor = async (selectedOption, name) => {
+  handleChangeSelectDoctorInfor = async (selectedDoctor, name) => {
     let stateName = name.name;
     let stateCopy = { ...this.state };
-    stateCopy[stateName] = selectedOption;
+    stateCopy[stateName] = selectedDoctor;
     this.setState({
       ...stateCopy,
     });
   };
 
-  handleChangeText = async (event, id) => {
+  handleChangeText = (event, id) => {
     let stateCopy = { ...this.state };
     stateCopy[id] = event.target.value;
     this.setState({

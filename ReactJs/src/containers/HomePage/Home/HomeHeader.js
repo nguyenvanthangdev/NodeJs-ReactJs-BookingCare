@@ -6,7 +6,24 @@ import { LANGUAGES } from "../../../utils";
 import { changeLanguageApp } from "../../../store/actions";
 import { withRouter } from "react-router";
 import * as actions from "../../../store/actions";
+import {
+  Dropdown,
+  DropdownToggle,
+  DropdownMenu,
+  DropdownItem,
+} from "reactstrap";
 class HomeHeader extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      dropdownOpen: false,
+    };
+  }
+  toggleDropdown = () => {
+    this.setState((prevState) => ({
+      dropdownOpen: !prevState.dropdownOpen,
+    }));
+  };
   changeLanguage = (language) => {
     this.props.changeLanguageAppRedux(language);
   };
@@ -25,6 +42,7 @@ class HomeHeader extends Component {
 
   render() {
     let language = this.props.language;
+    const { dropdownOpen } = this.state;
     return (
       <React.Fragment>
         <div className="home-header-container">
@@ -111,12 +129,35 @@ class HomeHeader extends Component {
                   EN
                 </span>
               </div>
-              <div className=" btn-outline-success mx-3 px-4 logout-button">
-                {/* <i className="fas fa-sign-out-alt"></i> */}
+              <div className="btn-outline-success mx-3 px-4 logout-button">
                 <i
                   onClick={() => this.goToLogOut()}
                   className="fas fa-sign-out-alt"
                 ></i>
+              </div>
+
+              <div className="dropdown-custom">
+                <Dropdown
+                  className=""
+                  isOpen={dropdownOpen}
+                  toggle={this.toggleDropdown}
+                >
+                  <DropdownToggle
+                    caret
+                    className="btn-light dropdown-custom-title"
+                  ></DropdownToggle>
+                  <DropdownMenu right>
+                    <DropdownItem>
+                      <FormattedMessage id="home-header.logout" />
+                    </DropdownItem>
+                    <DropdownItem>
+                      <FormattedMessage id="home-header.logout" />
+                    </DropdownItem>
+                    <DropdownItem>
+                      <FormattedMessage id="home-header.logout" />
+                    </DropdownItem>
+                  </DropdownMenu>
+                </Dropdown>
               </div>
             </div>
           </div>

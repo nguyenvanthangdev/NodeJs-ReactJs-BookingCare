@@ -116,6 +116,32 @@
           }
         }
       }
+      .dropdown-custom {
+        .dropdown-toggle {
+          color: rgba(255, 255, 255, 0);
+          // background-color: #ffff;
+          // border-color: #ffff;
+        }
+        .dropdown-item {
+          color: #333;
+          //background-color: #29af33;
+          &:hover {
+            background-color: #29af33;
+            color: #ffff;
+          }
+        }
+        .dropdown-custom-title {
+          background-image: url("../../../assets/icon/user.png");
+          box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.05);
+          background-color: #ffff;
+          background-position: center center;
+          background-repeat: no-repeat;
+          background-size: cover;
+          height: 50px;
+          width: 50px;
+          border-radius: 50%;
+        }
+      }
     }
   }
 }

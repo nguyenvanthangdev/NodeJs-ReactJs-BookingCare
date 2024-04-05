@@ -2,9 +2,8 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { push } from "connected-react-router";
 import * as actions from "../../store/actions";
-
+import { Link } from "react-router-dom";
 import "./Login.scss";
-// import { FormattedMessage } from "react-intl";
 import { handleLoginApi } from "../../services/userService";
 class Login extends Component {
   constructor(props) {
@@ -68,11 +67,11 @@ class Login extends Component {
           <div className="row login-content">
             <div className="col-12 text-login">Login</div>
             <div className="col-12 form-group login-input ">
-              <label>User name</label>
+              <label>Email</label>
               <input
-                type="text"
+                type="email"
                 className="form-control"
-                placeholder="Enter your username"
+                placeholder="Enter your Email"
                 value={this.state.username}
                 onChange={(event) => this.handleOnChangeName(event)}
               />
@@ -115,6 +114,9 @@ class Login extends Component {
             </div>
             <div className="col-12 mt-2">
               <span className="forgot-password">Forgot your password ?</span>
+              <Link className="sign-up" to="/sign-up">
+                Sing Up ?
+              </Link>
             </div>
             <div className="col-12 text-center mt-5">
               <span className="text-other-login">Or Login with : </span>
