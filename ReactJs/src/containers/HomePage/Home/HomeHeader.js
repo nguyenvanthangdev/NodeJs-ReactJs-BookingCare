@@ -6,6 +6,7 @@ import { LANGUAGES } from "../../../utils";
 import { changeLanguageApp } from "../../../store/actions";
 import { withRouter } from "react-router";
 import * as actions from "../../../store/actions";
+import img from "../../../assets/icon/user.png";
 import {
   Dropdown,
   DropdownToggle,
@@ -41,8 +42,18 @@ class HomeHeader extends Component {
   };
 
   render() {
-    let language = this.props.language;
+    //let language = this.props.language;
     const { dropdownOpen } = this.state;
+    const { userInfo, language, isLoggedIn } = this.props;
+    let imageBase64 = "";
+    if (isLoggedIn === true && userInfo && userInfo.image.data.length > 0) {
+      imageBase64 = new Buffer.from(userInfo.image, "base64").toString(
+        "binary"
+      );
+    } else {
+      imageBase64 = img;
+    }
+
     return (
       <React.Fragment>
         <div className="home-header-container">
@@ -145,17 +156,16 @@ class HomeHeader extends Component {
                   <DropdownToggle
                     caret
                     className="btn-light dropdown-custom-title"
+                    style={{
+                      backgroundImage: `url(${
+                        isLoggedIn === true && userInfo ? imageBase64 : img
+                      })`,
+                    }}
                   ></DropdownToggle>
                   <DropdownMenu right>
-                    <DropdownItem>
-                      <FormattedMessage id="home-header.logout" />
-                    </DropdownItem>
-                    <DropdownItem>
-                      <FormattedMessage id="home-header.logout" />
-                    </DropdownItem>
-                    <DropdownItem>
-                      <FormattedMessage id="home-header.logout" />
-                    </DropdownItem>
+                    <DropdownItem>ưdwdwdw</DropdownItem>
+                    <DropdownItem>đwdww</DropdownItem>
+                    <DropdownItem>dưdww</DropdownItem>
                   </DropdownMenu>
                 </Dropdown>
               </div>
@@ -227,6 +237,7 @@ const mapStateToProps = (state) => {
   return {
     isLoggedIn: state.user.isLoggedIn,
     language: state.app.language,
+    userInfo: state.user.userInfo,
   };
 };
 

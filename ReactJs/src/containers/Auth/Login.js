@@ -115,7 +115,7 @@ class Login extends Component {
             <div className="col-12 mt-2">
               <span className="forgot-password">Forgot your password ?</span>
               <Link className="sign-up" to="/sign-up">
-                Sing Up ?
+                Sign Up ?
               </Link>
             </div>
             <div className="col-12 text-center mt-5">

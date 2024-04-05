@@ -5,17 +5,28 @@ import Navigator from "../../components/Navigator";
 import { adminMenu, doctorMenu } from "./menuApp";
 import "./Header.scss";
 import { LANGUAGES, USER_ROLE } from "../../utils";
-import { FormattedMessage } from "react-intl";
 import _ from "lodash";
 import { withRouter } from "react-router";
+import img from "../../assets/icon/user.png";
+import {
+  Dropdown,
+  DropdownToggle,
+  DropdownMenu,
+  DropdownItem,
+} from "reactstrap";
 class Header extends Component {
   constructor(props) {
     super(props);
     this.state = {
       menuApp: [],
+      dropdownOpen: false,
     };
   }
-
+  toggleDropdown = () => {
+    this.setState((prevState) => ({
+      dropdownOpen: !prevState.dropdownOpen,
+    }));
+  };
   handleChangeLanguage = (language) => {
     this.props.changeLanguageAppRedux(language);
   };
@@ -45,9 +56,22 @@ class Header extends Component {
       processLogout();
     }
   };
+  gotoHome = () => {
+    if (this.props.history) {
+      this.props.history.push(`/home`);
+    }
+  };
   render() {
-    const { language, userInfo } = this.props;
-
+    const { dropdownOpen } = this.state;
+    const { userInfo, language, isLoggedIn } = this.props;
+    let imageBase64 = "";
+    if (isLoggedIn === true && userInfo && userInfo.image.data.length > 0) {
+      imageBase64 = new Buffer.from(userInfo.image, "base64").toString(
+        "binary"
+      );
+    } else {
+      imageBase64 = img;
+    }
     return (
       <div className="header-container">
         {/* thanh navigator */}
@@ -69,18 +93,8 @@ class Header extends Component {
             placeholder="Search"
             aria-label="Search"
           />
-          <button className="btn btn-outline-success mx-3 px-4" type="#">
-            Search
-          </button>
+          <button className="btn btn-outline-light mx-3 px-4">Search</button>
           <div className="languages">
-            <span className="welcome">
-              <span className="mx-2">
-                <FormattedMessage id="home-header.welcome" />
-              </span>
-              <span className="text">
-                {userInfo && userInfo.firstName ? userInfo.firstName : " "}
-              </span>
-            </span>
             <span
               className={
                 language === LANGUAGES.VI ? "language-vi active" : "language-vi"
@@ -98,11 +112,43 @@ class Header extends Component {
               EN
             </span>
           </div>
-          <div
-            className="btn btn-outline-success mx-3 px-4 logout-button"
-            onClick={() => this.goToLogOut()}
-          >
-            <i className="fas fa-sign-out-alt"></i>
+          <div className="dropdown-custom">
+            <Dropdown
+              className=""
+              isOpen={dropdownOpen}
+              toggle={this.toggleDropdown}
+            >
+              <DropdownToggle
+                caret
+                className="btn-light dropdown-custom-title"
+                style={{
+                  backgroundImage: `url(${
+                    isLoggedIn === true && userInfo ? imageBase64 : img
+                  })`,
+                }}
+              ></DropdownToggle>
+              <DropdownMenu right>
+                <DropdownItem className="custom-name">
+                  Xin Chào{" "}
+                  {userInfo && userInfo.firstName ? userInfo.firstName : " "}
+                </DropdownItem>
+                <DropdownItem
+                  className="custom-home"
+                  onClick={() => this.gotoHome()}
+                >
+                  Home
+                </DropdownItem>
+                <DropdownItem
+                  className="custom-logout"
+                  onClick={() => this.goToLogOut()}
+                >
+                  <span>
+                    Logout
+                    <i className="fas fa-sign-out-alt"></i>
+                  </span>
+                </DropdownItem>
+              </DropdownMenu>
+            </Dropdown>
           </div>
         </form>
       </div>
