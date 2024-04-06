@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import "./ManageSchedule.scss";
-import { FormattedMessage } from "react-intl";
 import Select from "react-select";
 import * as actions from "../../../../store/actions";
 import { LANGUAGES } from "../../../../utils";
@@ -127,16 +126,14 @@ class ManageSchedule extends Component {
     return (
       <div className="manage-schedule-container">
         <div className="m-s-title my-5">
-          <FormattedMessage id="manage-schedule.title" />
+          QUẢN LÝ KẾ HOẠCH KHÁM BỆNH CỦA BÁC SĨ
         </div>
         <div className="container-title">
           <div className="container container-body">
             <div className="row">
               <div className="form-row">
                 <div className="col-12 form-group">
-                  <label className="title-custom1">
-                    <FormattedMessage id="manage-schedule.choose-doctor" />
-                  </label>
+                  <label className="title-custom1">Chọn Bác Sĩ</label>
                   <Select
                     className="select-doctor"
                     value={this.state.selectedDoctor}
@@ -147,9 +144,7 @@ class ManageSchedule extends Component {
               </div>
               <div className="form-row">
                 <div className="col-12 form-group">
-                  <label className="title-custom2">
-                    <FormattedMessage id="manage-schedule.select-date" />
-                  </label>
+                  <label className="title-custom2">Chọn Ngày</label>
                   <DatePicker
                     onChange={this.handleChangeDatePicker}
                     className="form-control"
@@ -163,13 +158,11 @@ class ManageSchedule extends Component {
               className="btn btn-primary btn-custom"
               onClick={() => this.handleSaveSchedule()}
             >
-              <FormattedMessage id="manage-schedule.save-infor" />
+              Lưu Thông Tin
             </button>
           </div>
           <div className="col-12 pick-hour-container">
-            <div className="title-custom3">
-              <FormattedMessage id="manage-schedule.select-hours" />
-            </div>
+            <div className="title-custom3">Chọn Giờ</div>
             <div className="form-group-custom">
               {rangeTime &&
                 rangeTime.length > 0 &&
