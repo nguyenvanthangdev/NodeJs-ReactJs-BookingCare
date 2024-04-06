@@ -5,6 +5,7 @@ import HomeHeader from "../../HomePage/Home/HomeHeader";
 import { LANGUAGES } from "../../../utils";
 import { getDetailDoctorByIdService } from "../../../services/userService";
 import DoctorSchedule from "./DoctorSchedule";
+import DoctorExtrainfor from "./DoctorExtrainfor";
 class DetailDoctor extends Component {
   constructor(props) {
     super(props);
@@ -77,7 +78,11 @@ class DetailDoctor extends Component {
                   doctorIdFromParent={this.state.currenDoctorId}
                 />
               </div>
-              <div className="content-right"></div>
+              <div className="content-right">
+                <DoctorExtrainfor
+                  doctorIdFromParent={this.state.currenDoctorId}
+                />
+              </div>
             </div>
           </div>
           <div className="detail-infor-doctor">
