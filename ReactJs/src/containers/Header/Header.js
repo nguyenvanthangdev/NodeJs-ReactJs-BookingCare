@@ -65,7 +65,13 @@ class Header extends Component {
     const { dropdownOpen } = this.state;
     const { userInfo, language, isLoggedIn } = this.props;
     let imageBase64 = "";
-    if (isLoggedIn === true && userInfo && userInfo.image.data.length > 0) {
+    if (
+      isLoggedIn === true &&
+      userInfo &&
+      userInfo.image &&
+      userInfo.image.data &&
+      userInfo.image.data.length > 0
+    ) {
       imageBase64 = new Buffer.from(userInfo.image, "base64").toString(
         "binary"
       );

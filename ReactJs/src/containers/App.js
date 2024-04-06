@@ -8,8 +8,8 @@ import {
 } from "../hoc/authentication";
 import { path } from "../utils";
 import Home from "../routes/Home";
-import Login from "./Auth/Login";
-import Signup from "./Auth/Signup";
+import Login from "./Auth/Login/Login";
+import Signup from "./Auth/Signup/Signup";
 import ManageAccount from "./Auth/ManageAccount/ManageAccount";
 import System from "../routes/System";
 import HomePage from "./HomePage/Home/HomePage";

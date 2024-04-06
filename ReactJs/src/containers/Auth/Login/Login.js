@@ -1,11 +1,11 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-//import { push } from "connected-react-router";
-//import * as actions from "../../store/actions";
+import { push } from "connected-react-router";
+import * as actions from "../../../store/actions";
 import { Link } from "react-router-dom";
-import "./Signup.scss";
-import { handleLoginApi } from "../../services/userService";
-class Signup extends Component {
+import "./Login.scss";
+import { handleLoginApi } from "../../../services/userService";
+class Login extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -65,11 +65,11 @@ class Signup extends Component {
       <div className="login-background">
         <div className="login-container">
           <div className="row login-content">
-            <div className="col-12 text-login">Sign Up</div>
+            <div className="col-12 text-login">Login</div>
             <div className="col-12 form-group login-input ">
               <label>Email</label>
               <input
-                type="text"
+                type="email"
                 className="form-control"
                 placeholder="Enter your Email"
                 value={this.state.username}
@@ -109,13 +109,13 @@ class Signup extends Component {
                   this.handleLogin();
                 }}
               >
-                Sign Up
+                Login
               </button>
             </div>
             <div className="col-12 mt-2">
-              {/* <span className="forgot-password">Forgot your password ?</span> */}
-              <Link className="sign-in" to="/login">
-                Login ?
+              <span className="forgot-password">Forgot your password ?</span>
+              <Link className="sign-up" to="/sign-up">
+                Sign Up ?
               </Link>
             </div>
             <div className="col-12 text-center mt-5">
@@ -145,11 +145,11 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    // navigate: (path) => dispatch(push(path)),
+    navigate: (path) => dispatch(push(path)),
     //userLoginFail: () => dispatch(actions.adminLoginFail()),
-    // userLoginSuccess: (userInfo) =>
-    //   dispatch(actions.userLoginSuccess(userInfo)),
+    userLoginSuccess: (userInfo) =>
+      dispatch(actions.userLoginSuccess(userInfo)),
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Signup);
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

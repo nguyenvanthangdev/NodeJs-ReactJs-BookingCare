@@ -1,9 +1,9 @@
-.login-background {
+.signup-background {
   background-color: #ffff;
   height: 100vh;
 
-  .login-container {
-    width: 330px;
+  .signup-container {
+    width: 380px;
     border-radius: 20px;
     background-color: white;
     position: absolute;
@@ -12,13 +12,13 @@
     bottom: 0;
     right: 0;
     left: 0;
-    height: 550px;
+    height: 720px;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.4);
 
-    .login-content {
+    .signup-content {
       padding: 20px;
 
-      .text-login {
+      .text-signup {
         text-align: center;
         font-weight: 600;
         font-size: 30px;
@@ -27,7 +27,7 @@
         margin-bottom: 20px;
       }
 
-      .login-input {
+      .signup-input {
         margin: 7px 0;
 
         label {
@@ -53,7 +53,7 @@
         margin-top: 12px;
       }
 
-      .btn-login {
+      .btn-signup {
         width: 100%;
         margin: 10px 0;
         height: 34px;
@@ -83,7 +83,7 @@
         color: red;
       }
 
-      .social-login {
+      .social-signup {
         display: flex;
         text-align: center;
         justify-content: center;

@@ -71,10 +71,18 @@ class HomeHeader extends Component {
     const { userInfo, language, isLoggedIn } = this.props;
     console.log(this.props);
     let imageBase64 = "";
-    if (isLoggedIn === true && userInfo && userInfo.image.data.length > 0) {
+    if (
+      isLoggedIn === true &&
+      userInfo &&
+      userInfo.image &&
+      userInfo.image.data &&
+      userInfo.image.data.length > 0
+    ) {
       imageBase64 = new Buffer.from(userInfo.image, "base64").toString(
         "binary"
       );
+    } else if (isLoggedIn === true && userInfo && userInfo.image === null) {
+      imageBase64 = img;
     } else {
       imageBase64 = img;
     }
