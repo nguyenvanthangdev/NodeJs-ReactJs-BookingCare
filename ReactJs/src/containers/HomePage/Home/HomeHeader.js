@@ -69,7 +69,6 @@ class HomeHeader extends Component {
     //let language = this.props.language;
     const { dropdownOpen } = this.state;
     const { userInfo, language, isLoggedIn } = this.props;
-    console.log(this.props);
     let imageBase64 = "";
     if (
       isLoggedIn === true &&

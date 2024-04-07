@@ -7,6 +7,7 @@ import "./UserRedux.scss";
 import Lightbox from "react-image-lightbox";
 import "react-image-lightbox/style.css";
 import TableManageUser from "./TableManageUser";
+import { toast } from "react-toastify";
 class UserRedux extends Component {
   constructor(props) {
     super(props);
@@ -146,7 +147,7 @@ class UserRedux extends Component {
     for (let i = 0; i < arrCheck.length; i++) {
       if (!this.state[arrCheck[i]]) {
         isValid = false;
-        alert("This input is required : " + arrCheck[i]);
+        toast.warning("This input is required : " + arrCheck[i]);
         break;
       }
     }

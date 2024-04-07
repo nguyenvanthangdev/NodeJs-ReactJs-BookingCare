@@ -6,12 +6,15 @@ import moment from "moment";
 import localization from "moment/locale/vi";
 import { LANGUAGES } from "../../../utils";
 import { getScheduleDoctorByDate } from "../../../services/userService";
+import BookingModal from "./Modal/BookingModal";
 class DoctorSchedule extends Component {
   constructor(props) {
     super(props);
     this.state = {
       allDays: [],
       allAvalableTime: [],
+      isOpenModelBooking: false,
+      dataScheduleTimeModal: {},
     };
   }
 
@@ -86,11 +89,27 @@ class DoctorSchedule extends Component {
           allAvalableTime: res.data ? res.data : [],
         });
       }
-      console.log("check ", res);
+      console.log("check", res);
     }
   };
+  handleClickScheduleTime = (time) => {
+    this.setState({
+      isOpenModelBooking: true,
+      dataScheduleTimeModal: time,
+    });
+  };
+  closeBookingClose = () => {
+    this.setState({
+      isOpenModelBooking: false,
+    });
+  };
   render() {
-    let { allDays, allAvalableTime } = this.state;
+    let {
+      allDays,
+      allAvalableTime,
+      isOpenModelBooking,
+      dataScheduleTimeModal,
+    } = this.state;
     let { language } = this.props;
     return (
       <React.Fragment>
@@ -125,7 +144,11 @@ class DoctorSchedule extends Component {
                       ? item.timeTypeData.valueVi
                       : item.timeTypeData.valueEn;
                   return (
-                    <button key={index} className="btn custom-btn">
+                    <button
+                      key={index}
+                      className="btn custom-btn"
+                      onClick={() => this.handleClickScheduleTime(item)}
+                    >
                       {timeDisplay}
                     </button>
                   );
@@ -139,6 +162,11 @@ class DoctorSchedule extends Component {
             </div>
           </div>
         </div>
+        <BookingModal
+          isOpenModel={isOpenModelBooking}
+          closeBookingClose={this.closeBookingClose}
+          dataTime={dataScheduleTimeModal}
+        />
       </React.Fragment>
     );
   }

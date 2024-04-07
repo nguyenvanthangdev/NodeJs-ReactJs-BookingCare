@@ -69,13 +69,11 @@ class Signup extends Component {
   createNewUser = async (data) => {
     try {
       let response = await createNewUserService(data);
-      if (response && response.errCode !== 0) {
-        toast.error(response.errMessage);
-      } else {
-        emitter.emit("EVENT_CLEAR_MODAL_DATA");
-      }
       if (response && response.errCode === 0) {
+        emitter.emit("EVENT_CLEAR_MODAL_DATA");
         toast.success("Create a new user succeed !");
+      } else {
+        toast.error(response.errMessage);
       }
     } catch (e) {
       console.log(e);
@@ -100,17 +98,19 @@ class Signup extends Component {
   };
   handleKeyDown = (event) => {
     if (event.key === "Enter") {
-      this.handleLogin();
+      this.handleSignUp();
     }
   };
+
   render() {
     //JSX
+    console.log(this.state);
     return (
       <div className="signup-background">
         <div className="signup-container">
           <div className="row signup-content">
             <div className="col-12 text-signup">Sign Up</div>
-            <div className="col-6 form-group signup-input ">
+            <div className="col-12 form-group signup-input ">
               <label>First Name</label>
               <input
                 type="text"
@@ -122,7 +122,7 @@ class Signup extends Component {
                 }
               />
             </div>
-            <div className="col-6 form-group signup-input ">
+            <div className="col-12 form-group signup-input ">
               <label>Last Name</label>
               <input
                 type="text"
@@ -151,6 +151,7 @@ class Signup extends Component {
                   className="form-control"
                   type={this.state.isShowPassWord ? "text" : "password"}
                   placeholder="Enter your password"
+                  value={this.state.password}
                   onChange={(event) =>
                     this.handleOnChangeInput(event, "password")
                   }
@@ -171,13 +172,14 @@ class Signup extends Component {
                 </span>
               </div>
             </div>
-            <div className="col-12 form-group signup-input">
+            <div className="col-12 form-group signup-input my-3">
               <label>Confirm password </label>
               <div className="custom-input-password">
                 <input
                   className="form-control"
                   type={this.state.isShowPassWord ? "text" : "password"}
                   placeholder="Enter your password"
+                  value={this.state.confirmPassword}
                   onChange={(event) =>
                     this.handleOnChangeInput(event, "confirmPassword")
                   }
@@ -207,7 +209,7 @@ class Signup extends Component {
                 readOnly
               />
               <input
-                type="email"
+                type="text"
                 className="form-control"
                 value={this.state.positionId}
                 hidden
