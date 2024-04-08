@@ -119,10 +119,12 @@ class ManageSchedule extends Component {
     }
   };
   render() {
-    let { rangeTime } = this.state;
+    let { rangeTime, selectedDoctor } = this.state;
     let { language } = this.props;
     let yesterday = new Date(new Date().setDate(new Date().getDate() - 1));
-
+    console.log(this.state.listDoctors);
+    console.log("dhaudgaufgauyf", selectedDoctor.value);
+    console.log("dhaudgaufgauyf", rangeTime);
     return (
       <div className="manage-schedule-container">
         <div className="m-s-title my-5">

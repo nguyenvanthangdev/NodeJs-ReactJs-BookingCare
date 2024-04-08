@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 import "./BookingModal.scss";
+import ProfileDoctor from "../ProfileDoctor";
+import _ from "lodash";
 class BookingModal extends Component {
   constructor(props) {
     super(props);
@@ -14,6 +16,11 @@ class BookingModal extends Component {
   }
   render() {
     let { isOpenModel, closeBookingClose, dataTime } = this.props;
+    let doctorId = "";
+    if (dataTime && !_.isEmpty(dataTime)) {
+      doctorId = dataTime.doctorId;
+    }
+    console.log("ashsf", dataTime);
     return (
       <>
         <Modal
@@ -31,9 +38,11 @@ class BookingModal extends Component {
           </ModalHeader>
           <ModalBody>
             {/* {JSON.stringify(dataTime)} */}
+            <div className="doctor-infor">
+              <ProfileDoctor doctorId={doctorId} />
+            </div>
             <div className="row ">
               <form className="ml-5 row g-3">
-                <div className="price">Giá khám : 500.000VND</div>
                 <div className="form-row">
                   <div className="form-group col-md-6">
                     <label>Họ tên</label>
