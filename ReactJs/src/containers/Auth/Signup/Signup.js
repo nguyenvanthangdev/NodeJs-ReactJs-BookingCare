@@ -20,6 +20,7 @@ class Signup extends Component {
       confirmPassword: "",
       roleId: "R3",
       positionId: "P1",
+      gender: "O",
     };
     this.listenToEmitter();
   }
@@ -33,6 +34,7 @@ class Signup extends Component {
         firstName: "",
         roleId: "R3",
         positionId: "P1",
+        gender: "O",
       });
     });
   }
@@ -64,8 +66,21 @@ class Signup extends Component {
         break;
       }
     }
+    if (isValid && !this.validateEmail(this.state.email)) {
+      isValid = false;
+      this.setState({
+        errMessage: "Invalid email format",
+      });
+    }
+
     return isValid;
   };
+  validateEmail = (email) => {
+    // Mẫu biểu thức chính quy để kiểm tra định dạng email
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailPattern.test(email);
+  };
+
   createNewUser = async (data) => {
     try {
       let response = await createNewUserService(data);
@@ -84,14 +99,20 @@ class Signup extends Component {
       errMessage: "",
     });
     const { password, confirmPassword } = this.state;
-    if (password !== confirmPassword) {
-      this.setState({
-        errMessage: "Passwords do not match",
-      });
-      return;
-    }
     let isValid = this.checkValidateInput();
     if (isValid === true) {
+      if (password !== confirmPassword) {
+        this.setState({
+          errMessage: "Passwords do not match",
+        });
+        return;
+      }
+      if (password.length < 8 || password.length > 12) {
+        this.setState({
+          errMessage: "Password must be between 8 and 12 characters",
+        });
+        return;
+      }
       //call api new a user
       this.createNewUser(this.state);
     }
@@ -212,6 +233,13 @@ class Signup extends Component {
                 type="text"
                 className="form-control"
                 value={this.state.positionId}
+                hidden
+                readOnly
+              />
+              <input
+                type="text"
+                className="form-control"
+                value={this.state.gender}
                 hidden
                 readOnly
               />

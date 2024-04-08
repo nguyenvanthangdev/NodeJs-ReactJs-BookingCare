@@ -37,6 +37,18 @@ class Login extends Component {
         });
       }
       if (data && data.errCode === 0) {
+        if (!this.validateEmail(this.state.username)) {
+          this.setState({
+            errMessage: "Invalid email format",
+          });
+          return;
+        }
+        if (!this.validatePassword(this.state.password)) {
+          this.setState({
+            errMessage: "Password must be between 8 and 12 characters",
+          });
+          return;
+        }
         this.props.userLoginSuccess(data.user);
       }
     } catch (error) {
@@ -48,6 +60,15 @@ class Login extends Component {
         }
       }
     }
+  };
+  // Hàm kiểm tra độ dài mật khẩu
+  validatePassword = (password) => {
+    return password.length >= 8 && password.length <= 12;
+  };
+  // Hàm kiểm tra định dạng email
+  validateEmail = (email) => {
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailPattern.test(email);
   };
   hendleShowHidePassword = () => {
     this.setState({
