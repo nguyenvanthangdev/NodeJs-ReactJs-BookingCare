@@ -4,7 +4,14 @@ let postBookAppointmentService = (data) => {
   return new Promise(async (resolve, reject) => {
     try {
       // || !data.doctorId || !data.timeType || !data.date
-      if (!data.email || !data.doctorId || !data.timeType || !data.date) {
+      if (
+        !data.email ||
+        !data.doctorId ||
+        !data.timeType ||
+        !data.date ||
+        !data.reason ||
+        !data.price
+      ) {
         resolve({
           errCode: 1,
           errMessage: "Missing required parameter !",
@@ -34,6 +41,8 @@ let postBookAppointmentService = (data) => {
             patientId: user[0].id,
             date: data.date,
             timeType: data.timeType,
+            reason: data.reason,
+            price: data.price,
           });
         }
         resolve({

@@ -1,16 +1,20 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
+import { withRouter } from "react-router";
 import "./BookingModal.scss";
 import ProfileDoctor from "../ProfileDoctor";
 import _ from "lodash";
-import { postBookAppointmentService } from "../../../../services/userService";
+import {
+  postBookAppointmentService,
+  getExtraInforDoctorByIdService,
+} from "../../../../services/userService";
+import NumericFormat from "react-number-format";
 import DatePicker from "../../../../components/Input/DatePicker";
 import * as actions from "../../../../store/actions";
 import { LANGUAGES } from "../../../../utils";
 import Select from "react-select";
 import { toast } from "react-toastify";
-
 class BookingModal extends Component {
   constructor(props) {
     super(props);
@@ -25,6 +29,8 @@ class BookingModal extends Component {
       doctorId: "",
       genders: "",
       timeType: "",
+      price: "",
+      extraInfor: {},
     };
   }
   async componentDidMount() {
@@ -59,6 +65,14 @@ class BookingModal extends Component {
       if (this.props.dataTime && !_.isEmpty(this.props.dataTime)) {
         let doctorId = this.props.dataTime.doctorId;
         let timeType = this.props.dataTime.timeType;
+        let res = await getExtraInforDoctorByIdService(
+          this.props.dataTime.doctorId
+        );
+        if (res && res.errCode === 0) {
+          this.setState({
+            extraInfor: res.data,
+          });
+        }
         this.setState({
           doctorId: doctorId,
           timeType: timeType,
@@ -83,32 +97,45 @@ class BookingModal extends Component {
     this.setState({ selectedGender: selectedOption });
   };
   handleConfirmBooking = async () => {
-    let date = new Date(this.state.birthday).getTime();
-    let res = await postBookAppointmentService({
-      fullName: this.state.fullName,
-      phoneNumber: this.state.phoneNumber,
-      email: this.state.email,
-      address: this.state.address,
-      reason: this.state.reason,
-      date: date,
-      selectedGender: this.state.selectedGender.value,
-      doctorId: this.state.doctorId,
-      timeType: this.state.timeType,
-    });
-    if (res && res.errCode === 0) {
-      toast.success("Booking a new appointment succeed !");
-      this.props.closeBookingClose();
-    } else {
-      toast.error("Booking a new appointment error !");
+    let { isLoggedIn } = this.props;
+    if (isLoggedIn !== true) {
+      if (this.props.history) {
+        this.props.history.push(`/login`);
+      }
+    } else if (isLoggedIn === true) {
+      let date = new Date(this.state.birthday).getTime();
+      let res = await postBookAppointmentService({
+        fullName: this.state.fullName,
+        phoneNumber: this.state.phoneNumber,
+        email: this.state.email,
+        address: this.state.address,
+        reason: this.state.reason,
+        date: date,
+        selectedGender: this.state.selectedGender?.value || "",
+        doctorId: this.state.doctorId,
+        timeType: this.state.timeType,
+        price: this.state.extraInfor?.priceTypeData?.valueVi || "",
+      });
+      if (res && res.errCode === 0) {
+        toast.success("Booking a new appointment succeed !");
+        this.props.closeBookingClose();
+      } else if (res && res.errCode === 1) {
+        toast.error("Missing input parameters !");
+      } else {
+        toast.error("Booking a new appointment error !");
+      }
     }
   };
   render() {
-    let { isOpenModel, closeBookingClose, dataTime } = this.props;
+    let { extraInfor } = this.state;
+    let { isOpenModel, closeBookingClose, dataTime, language } = this.props;
     let doctorId = "";
     if (dataTime && !_.isEmpty(dataTime)) {
       doctorId = dataTime.doctorId;
     }
+    console.log("ashsf", this.props);
     console.log("ashsf", this.state);
+    console.log("ashsf", this.state.extraInfor.priceTypeData);
     return (
       <>
         <Modal
@@ -215,6 +242,33 @@ class BookingModal extends Component {
                     />
                   </div>
                 </div>
+                <div className="price-custom">
+                  <span className="price-custom-title">
+                    Tổng tiền thanh toán :
+                    {extraInfor &&
+                      extraInfor.priceTypeData &&
+                      language === LANGUAGES.VI && (
+                        <NumericFormat
+                          className="price-custom-body"
+                          value={extraInfor.priceTypeData.valueVi}
+                          displayType={"text"}
+                          thousandSeparator={true}
+                          suffix={"VND"}
+                        />
+                      )}
+                    {extraInfor &&
+                      extraInfor.priceTypeData &&
+                      language === LANGUAGES.EN && (
+                        <NumericFormat
+                          className="price-custom-body"
+                          value={extraInfor.priceTypeData.valueEn}
+                          displayType={"text"}
+                          thousandSeparator={true}
+                          suffix={"USD"}
+                        />
+                      )}
+                  </span>
+                </div>
               </form>
             </div>
           </ModalBody>
@@ -244,6 +298,8 @@ const mapStateToProps = (state) => {
   return {
     language: state.app.language,
     genders: state.admin.genders,
+    isLoggedIn: state.user.isLoggedIn,
+    userInfo: state.user.userInfo,
   };
 };
 
@@ -253,4 +309,6 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(BookingModal);
+export default withRouter(
+  connect(mapStateToProps, mapDispatchToProps)(BookingModal)
+);
