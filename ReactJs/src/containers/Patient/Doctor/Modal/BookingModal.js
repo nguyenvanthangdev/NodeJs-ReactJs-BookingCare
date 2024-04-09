@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
+import { Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 import { withRouter } from "react-router";
 import "./BookingModal.scss";
 import ProfileDoctor from "../ProfileDoctor";
@@ -15,6 +15,9 @@ import * as actions from "../../../../store/actions";
 import { LANGUAGES } from "../../../../utils";
 import Select from "react-select";
 import { toast } from "react-toastify";
+import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
+//require("dotenv").config();
+//const PAYPAL_ID_KEY = process.env.PAYPAL_ID_KEY;
 class BookingModal extends Component {
   constructor(props) {
     super(props);
@@ -96,36 +99,64 @@ class BookingModal extends Component {
   handleOnChangeSelect = (selectedOption) => {
     this.setState({ selectedGender: selectedOption });
   };
-  handleConfirmBooking = async () => {
+  isFormValid() {
+    let {
+      fullName,
+      phoneNumber,
+      email,
+      address,
+      reason,
+      birthday,
+      selectedGender,
+      doctorId,
+      timeType,
+      extraInfor,
+    } = this.state;
+    return (
+      fullName &&
+      phoneNumber &&
+      email &&
+      address &&
+      reason &&
+      birthday &&
+      selectedGender &&
+      doctorId &&
+      timeType &&
+      extraInfor
+    );
+  }
+  handleCheckLohin = async () => {
     let { isLoggedIn } = this.props;
-    if (isLoggedIn !== true) {
+    if (!isLoggedIn) {
       if (this.props.history) {
         this.props.history.push(`/login`);
       }
-    } else if (isLoggedIn === true) {
-      let date = new Date(this.state.birthday).getTime();
-      let res = await postBookAppointmentService({
-        fullName: this.state.fullName,
-        phoneNumber: this.state.phoneNumber,
-        email: this.state.email,
-        address: this.state.address,
-        reason: this.state.reason,
-        date: date,
-        selectedGender: this.state.selectedGender?.value || "",
-        doctorId: this.state.doctorId,
-        timeType: this.state.timeType,
-        price: this.state.extraInfor?.priceTypeData?.valueVi || "",
-      });
-      if (res && res.errCode === 0) {
-        toast.success("Booking a new appointment succeed !");
-        this.props.closeBookingClose();
-      } else if (res && res.errCode === 1) {
-        toast.error("Missing input parameters !");
-      } else {
-        toast.error("Booking a new appointment error !");
-      }
     }
   };
+  handleConfirmBooking = async () => {
+    let date = new Date(this.state.birthday).getTime();
+    let res = await postBookAppointmentService({
+      fullName: this.state.fullName,
+      phoneNumber: this.state.phoneNumber,
+      email: this.state.email,
+      address: this.state.address,
+      reason: this.state.reason,
+      date: date,
+      selectedGender: this.state.selectedGender?.value || "",
+      doctorId: this.state.doctorId,
+      timeType: this.state.timeType,
+      price: this.state.extraInfor?.priceTypeData?.valueVi || "",
+    });
+    if (res && res.errCode === 0) {
+      toast.success("Booking a new appointment succeed !");
+      this.props.closeBookingClose();
+    } else if (res && res.errCode === 1) {
+      toast.error("Missing input parameters !");
+    } else {
+      toast.error("Booking a new appointment error !");
+    }
+  };
+
   render() {
     let { extraInfor } = this.state;
     let { isOpenModel, closeBookingClose, dataTime, language } = this.props;
@@ -133,9 +164,16 @@ class BookingModal extends Component {
     if (dataTime && !_.isEmpty(dataTime)) {
       doctorId = dataTime.doctorId;
     }
-    console.log("ashsf", this.props);
-    console.log("ashsf", this.state);
-    console.log("ashsf", this.state.extraInfor.priceTypeData);
+    let amountInVND = this.state.extraInfor?.priceTypeData?.valueVi;
+    let amountInUSD = this.state.extraInfor?.priceTypeData?.valueEn;
+    let exchangeRate = 25000;
+    let amountInVNDToUSD = amountInVND / exchangeRate;
+    console.log("this.props", this.props);
+    console.log("this.state", this.state);
+    console.log(
+      "this.state.extraInfor.priceTypeData",
+      this.state.extraInfor.priceTypeData
+    );
     return (
       <>
         <Modal
@@ -269,25 +307,42 @@ class BookingModal extends Component {
                       )}
                   </span>
                 </div>
+                <PayPalScriptProvider
+                  options={{
+                    "client-id":
+                      "Ac5ebgBXXf3Wb7Ve9IZMI7xf1mTVWvj-9z49U2eKESW4Qe0GjIRSiD2v-uF1cuRn2j9L510BVHTIRyQw",
+                  }}
+                >
+                  <PayPalButtons
+                    className="paypal-buttons"
+                    disabled={!this.isFormValid()}
+                    onClick={() => this.handleCheckLohin()}
+                    createOrder={(data, actions) => {
+                      return actions.order.create({
+                        purchase_units: [
+                          {
+                            amount: {
+                              value:
+                                extraInfor &&
+                                extraInfor.priceTypeData &&
+                                language === LANGUAGES.VI
+                                  ? amountInVNDToUSD
+                                  : amountInUSD,
+                            },
+                          },
+                        ],
+                      });
+                    }}
+                    onApprove={async (data, actions) => {
+                      await actions.order.capture();
+                      this.handleConfirmBooking();
+                    }}
+                  />
+                </PayPalScriptProvider>
               </form>
             </div>
           </ModalBody>
-          <ModalFooter>
-            <Button
-              className="btn px-3"
-              color="primary"
-              onClick={() => this.handleConfirmBooking()}
-            >
-              Xác Nhận
-            </Button>
-            <Button
-              className="btn px-3"
-              color="secondary"
-              onClick={closeBookingClose}
-            >
-              Cancel
-            </Button>
-          </ModalFooter>
+          <ModalFooter></ModalFooter>
         </Modal>
       </>
     );
