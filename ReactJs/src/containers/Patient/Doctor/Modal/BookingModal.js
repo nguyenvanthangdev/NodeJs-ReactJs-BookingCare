@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
+import { Modal, ModalHeader, ModalBody } from "reactstrap";
 import { withRouter } from "react-router";
 import "./BookingModal.scss";
 import ProfileDoctor from "../ProfileDoctor";
@@ -13,7 +13,6 @@ import NumericFormat from "react-number-format";
 import DatePicker from "../../../../components/Input/DatePicker";
 import * as actions from "../../../../store/actions";
 import { LANGUAGES } from "../../../../utils";
-import Select from "react-select";
 import { toast } from "react-toastify";
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 //require("dotenv").config();
@@ -28,54 +27,43 @@ class BookingModal extends Component {
       address: "",
       reason: "",
       birthday: "",
-      selectedGender: "",
       doctorId: "",
-      genders: "",
       timeType: "",
       price: "",
       extraInfor: {},
+      genders: "",
+      genderArr: [],
     };
   }
   async componentDidMount() {
     this.props.getGenders();
+    if (
+      this.props.match &&
+      this.props.match.params &&
+      this.props.match.params.id
+    ) {
+      let id = this.props.match.params.id;
+      let res = await getExtraInforDoctorByIdService(id);
+      if (res && res.errCode === 0) {
+        this.setState({
+          extraInfor: res.data,
+        });
+      }
+    }
   }
-  buildDataGender = (data) => {
-    let result = [];
-    let language = this.props.language;
-    if (data && data.length > 0) {
-      data.map((item) => {
-        let object = {};
-        object.label = language === LANGUAGES.VI ? item.valueVi : item.valueEn;
-        object.value = item.keyMap;
-        result.push(object);
-        return null;
-      });
-    }
-    return result;
-  };
   async componentDidUpdate(prevProps, prevState, snapshot) {
-    if (this.props.language !== prevProps.language) {
+    if (prevProps.genderRedux !== this.props.genderRedux) {
+      let arrGenders = this.props.genderRedux;
       this.setState({
-        genders: this.buildDataGender(this.props.genders),
-      });
-    }
-    if (this.props.genders !== prevProps.genders) {
-      this.setState({
-        genders: this.buildDataGender(this.props.genders),
+        genderArr: arrGenders,
+        genders:
+          arrGenders && arrGenders.length > 0 ? arrGenders[0].keyMap : "",
       });
     }
     if (this.props.dataTime !== prevProps.dataTime) {
       if (this.props.dataTime && !_.isEmpty(this.props.dataTime)) {
         let doctorId = this.props.dataTime.doctorId;
         let timeType = this.props.dataTime.timeType;
-        let res = await getExtraInforDoctorByIdService(
-          this.props.dataTime.doctorId
-        );
-        if (res && res.errCode === 0) {
-          this.setState({
-            extraInfor: res.data,
-          });
-        }
         this.setState({
           doctorId: doctorId,
           timeType: timeType,
@@ -96,9 +84,6 @@ class BookingModal extends Component {
       birthday: date[0],
     });
   };
-  handleOnChangeSelect = (selectedOption) => {
-    this.setState({ selectedGender: selectedOption });
-  };
   isFormValid() {
     let {
       fullName,
@@ -107,7 +92,7 @@ class BookingModal extends Component {
       address,
       reason,
       birthday,
-      selectedGender,
+      genders,
       doctorId,
       timeType,
       extraInfor,
@@ -119,7 +104,7 @@ class BookingModal extends Component {
       address &&
       reason &&
       birthday &&
-      selectedGender &&
+      genders &&
       doctorId &&
       timeType &&
       extraInfor
@@ -142,10 +127,10 @@ class BookingModal extends Component {
       address: this.state.address,
       reason: this.state.reason,
       date: date,
-      selectedGender: this.state.selectedGender?.value || "",
+      genders: this.state.genders,
       doctorId: this.state.doctorId,
       timeType: this.state.timeType,
-      price: this.state.extraInfor?.priceTypeData?.valueVi || "",
+      price: this.state.extraInfor.priceTypeData?.valueVi,
     });
     if (res && res.errCode === 0) {
       toast.success("Booking a new appointment succeed !");
@@ -156,24 +141,25 @@ class BookingModal extends Component {
       toast.error("Booking a new appointment error !");
     }
   };
-
   render() {
     let { extraInfor } = this.state;
     let { isOpenModel, closeBookingClose, dataTime, language } = this.props;
+    let genders = this.state.genderArr;
     let doctorId = "";
     if (dataTime && !_.isEmpty(dataTime)) {
       doctorId = dataTime.doctorId;
     }
-    let amountInVND = this.state.extraInfor?.priceTypeData?.valueVi;
-    let amountInUSD = this.state.extraInfor?.priceTypeData?.valueEn;
+    let priceVND = this.state.extraInfor.priceTypeData?.valueVi;
+    let priceUSD = this.state.extraInfor.priceTypeData?.valueEn;
     let exchangeRate = 25000;
-    let amountInVNDToUSD = amountInVND / exchangeRate;
+    let priceVNDToUSD = priceVND / exchangeRate;
     console.log("this.props", this.props);
     console.log("this.state", this.state);
     console.log(
       "this.state.extraInfor.priceTypeData",
       this.state.extraInfor.priceTypeData
     );
+    //this.props.match.params.id
     return (
       <>
         <Modal
@@ -190,7 +176,6 @@ class BookingModal extends Component {
             Thông tin đặt lịch khám bệnh
           </ModalHeader>
           <ModalBody>
-            {/* {JSON.stringify(dataTime)} */}
             <div className="doctor-infor">
               <ProfileDoctor
                 doctorId={doctorId}
@@ -272,12 +257,25 @@ class BookingModal extends Component {
                   </div>
                   <div className="form-group col-md-6">
                     <label>Giới tính</label>
-                    <Select
-                      value={this.state.selectedGender}
-                      onChange={this.handleOnChangeSelect}
-                      options={this.state.genders}
-                      placeholder=""
-                    />
+                    <select
+                      className="form-select"
+                      onChange={(event) =>
+                        this.handleOnChangeInput(event, "genders")
+                      }
+                      value={genders}
+                    >
+                      {genders &&
+                        genders.length > 0 &&
+                        genders.map((item, index) => {
+                          return (
+                            <option key={index} value={item.keyMap}>
+                              {language === LANGUAGES.VI
+                                ? item.valueVi
+                                : item.valueEn}
+                            </option>
+                          );
+                        })}
+                    </select>
                   </div>
                 </div>
                 <div className="price-custom">
@@ -326,8 +324,8 @@ class BookingModal extends Component {
                                 extraInfor &&
                                 extraInfor.priceTypeData &&
                                 language === LANGUAGES.VI
-                                  ? amountInVNDToUSD
-                                  : amountInUSD,
+                                  ? priceVNDToUSD
+                                  : priceUSD,
                             },
                           },
                         ],
@@ -342,7 +340,6 @@ class BookingModal extends Component {
               </form>
             </div>
           </ModalBody>
-          <ModalFooter></ModalFooter>
         </Modal>
       </>
     );
@@ -352,7 +349,7 @@ class BookingModal extends Component {
 const mapStateToProps = (state) => {
   return {
     language: state.app.language,
-    genders: state.admin.genders,
+    genderRedux: state.admin.genders,
     isLoggedIn: state.user.isLoggedIn,
     userInfo: state.user.userInfo,
   };
