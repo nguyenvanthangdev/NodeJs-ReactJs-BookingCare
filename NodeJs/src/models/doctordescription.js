@@ -1,20 +1,20 @@
-"Markdown strict";
+"DoctorDescription strict";
 const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
-  class Markdown extends Model {
+  class DoctorDescription extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      Markdown.belongsTo(models.User, { foreignKey: "doctorId" });
+      DoctorDescription.belongsTo(models.User, { foreignKey: "doctorId" });
     }
   }
-  Markdown.init(
+  DoctorDescription.init(
     {
-      contentHTML: DataTypes.TEXT("long"),
-      contentMarkdown: DataTypes.TEXT("long"),
+      doctorDescriptionHTML: DataTypes.TEXT("long"),
+      doctorDescriptionMarkdown: DataTypes.TEXT("long"),
       description: DataTypes.TEXT("long"),
       doctorId: DataTypes.INTEGER,
       specialtyId: DataTypes.INTEGER,
@@ -22,8 +22,9 @@ module.exports = (sequelize, DataTypes) => {
     },
     {
       sequelize,
-      modelName: "Markdown",
+      modelName: "DoctorDescription",
+      //freezeTableName: true,
     }
   );
-  return Markdown;
+  return DoctorDescription;
 };

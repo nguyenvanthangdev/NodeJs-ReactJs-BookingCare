@@ -59,8 +59,8 @@ let saveInforDoctorsService = (inputData) => {
     try {
       if (
         !inputData.doctorId ||
-        !inputData.contentHTML ||
-        !inputData.contentMarkdown ||
+        !inputData.doctorDescriptionHTML ||
+        !inputData.doctorDescriptionMarkdown ||
         !inputData.action ||
         !inputData.selectedPrice ||
         !inputData.selectedPayment ||
@@ -76,27 +76,29 @@ let saveInforDoctorsService = (inputData) => {
       } else {
         //upsert to Markdown
         if (inputData.action === "CREATE") {
-          await db.Markdown.create({
-            contentHTML: inputData.contentHTML,
-            contentMarkdown: inputData.contentMarkdown,
+          await db.DoctorDescription.create({
+            doctorDescriptionHTML: inputData.doctorDescriptionHTML,
+            doctorDescriptionMarkdown: inputData.doctorDescriptionMarkdown,
             description: inputData.description,
             doctorId: inputData.doctorId,
           });
         } else if (inputData.action === "EDIT") {
-          let doctorMarkdown = await db.Markdown.findOne({
+          let doctorMarkdown = await db.DoctorDescription.findOne({
             where: { doctorId: inputData.doctorId },
             raw: false,
           });
           if (doctorMarkdown) {
-            doctorMarkdown.contentHTML = inputData.contentHTML;
-            doctorMarkdown.contentMarkdown = inputData.contentMarkdown;
+            doctorMarkdown.doctorDescriptionHTML =
+              inputData.doctorDescriptionHTML;
+            doctorMarkdown.doctorDescriptionMarkdown =
+              inputData.doctorDescriptionMarkdown;
             doctorMarkdown.description = inputData.description;
             doctorMarkdown.updatedAt = new Date();
             await doctorMarkdown.save();
           }
         }
-        //upsert to Doctor_Infor table
-        let doctorInfor = await db.Doctor_Infor.findOne({
+        //upsert to ClinicDetail table
+        let doctorInfor = await db.ClinicDetail.findOne({
           where: { doctorId: inputData.doctorId },
           raw: false,
         });
@@ -110,7 +112,7 @@ let saveInforDoctorsService = (inputData) => {
           doctorInfor.note = inputData.note;
           await doctorInfor.save();
         } else {
-          await db.Doctor_Infor.create({
+          await db.ClinicDetail.create({
             doctorId: inputData.doctorId,
             priceId: inputData.selectedPrice,
             paymentId: inputData.selectedPayment,
@@ -144,8 +146,12 @@ let getDetailDoctorByIdService = (inputId) => {
           attributes: { exclude: ["password"] },
           include: [
             {
-              model: db.Markdown,
-              attributes: ["contentHTML", "contentMarkdown", "description"],
+              model: db.DoctorDescription,
+              attributes: [
+                "doctorDescriptionHTML",
+                "doctorDescriptionMarkdown",
+                "description",
+              ],
             },
             {
               model: db.Allcode,
@@ -153,7 +159,7 @@ let getDetailDoctorByIdService = (inputId) => {
               attributes: ["valueEn", "valueVi"],
             },
             {
-              model: db.Doctor_Infor,
+              model: db.ClinicDetail,
               attributes: {
                 exclude: ["id", "doctorId"],
               },
@@ -274,7 +280,7 @@ let getExtraInforDoctorByIdService = (inputId) => {
           errMessage: "Missing required parameter !",
         });
       } else {
-        let data = await db.Doctor_Infor.findOne({
+        let data = await db.ClinicDetail.findOne({
           where: { doctorId: inputId },
           attributes: { exclude: ["id", "doctorId"] },
           include: [
@@ -322,8 +328,12 @@ let getProfileDoctorByIdService = (inputId) => {
           attributes: { exclude: ["password"] },
           include: [
             {
-              model: db.Markdown,
-              attributes: ["contentHTML", "contentMarkdown", "description"],
+              model: db.DoctorDescription,
+              attributes: [
+                "doctorDescriptionHTML",
+                "doctorDescriptionMarkdown",
+                "description",
+              ],
             },
             {
               model: db.Allcode,
@@ -331,7 +341,7 @@ let getProfileDoctorByIdService = (inputId) => {
               attributes: ["valueEn", "valueVi"],
             },
             {
-              model: db.Doctor_Infor,
+              model: db.ClinicDetail,
               attributes: {
                 exclude: ["id", "doctorId"],
               },

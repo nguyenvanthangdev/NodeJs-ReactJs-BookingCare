@@ -89,9 +89,9 @@ class ProfileDoctor extends Component {
                 {isShowDescriptionDoctor === true ? (
                   <>
                     {dataProfile &&
-                      dataProfile.Markdown &&
-                      dataProfile.Markdown.description && (
-                        <span>{dataProfile.Markdown.description}</span>
+                      dataProfile.DoctorDescription &&
+                      dataProfile.DoctorDescription.description && (
+                        <span>{dataProfile.DoctorDescription.description}</span>
                       )}
                   </>
                 ) : (
@@ -103,22 +103,22 @@ class ProfileDoctor extends Component {
           <div className="price">
             <span>Giá Khám : </span>
             {dataProfile &&
-              dataProfile.Doctor_Infor &&
+              dataProfile.ClinicDetail &&
               language === LANGUAGES.VI && (
                 <NumericFormat
                   className="currency"
-                  value={dataProfile.Doctor_Infor.priceTypeData.valueVi}
+                  value={dataProfile.ClinicDetail.priceTypeData.valueVi}
                   displayType={"text"}
                   thousandSeparator={true}
                   suffix={"VND"}
                 />
               )}
             {dataProfile &&
-              dataProfile.Doctor_Infor &&
+              dataProfile.ClinicDetail &&
               language === LANGUAGES.EN && (
                 <NumericFormat
                   className="currency"
-                  value={dataProfile.Doctor_Infor.priceTypeData.valueEn}
+                  value={dataProfile.ClinicDetail.priceTypeData.valueEn}
                   displayType={"text"}
                   thousandSeparator={true}
                   suffix={"USD"}

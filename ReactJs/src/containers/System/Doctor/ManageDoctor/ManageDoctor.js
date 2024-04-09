@@ -16,8 +16,8 @@ class ManageDoctor extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      contentHTML: "",
-      contentMarkdown: "",
+      doctorDescriptionHTML: "",
+      doctorDescriptionMarkdown: "",
       selectedDoctor: "",
       description: "",
       listDoctors: [],
@@ -124,19 +124,19 @@ class ManageDoctor extends Component {
   };
   handleEditorChange = ({ html, text }) => {
     this.setState({
-      contentHTML: html,
-      contentMarkdown: text,
+      doctorDescriptionHTML: html,
+      doctorDescriptionMarkdown: text,
     });
   };
   handleSaveContentMarkdown = () => {
     let { hasOldData } = this.state;
     this.props.saveDetailDoctor({
-      contentHTML: this.state.contentHTML,
-      contentMarkdown: this.state.contentMarkdown,
+      doctorDescriptionHTML: this.state.doctorDescriptionHTML,
+      doctorDescriptionMarkdown: this.state.doctorDescriptionMarkdown,
       description: this.state.description,
       doctorId: this.state.selectedDoctor.value,
       action: hasOldData === true ? CRUD_ACTIONS.EDIT : CRUD_ACTIONS.CREATE,
-      //Doctor_Infor
+      //ClinicDetail
       selectedPrice: this.state.selectedPrice.value,
       selectedPayment: this.state.selectedPayment.value,
       selectProvince: this.state.selectProvince.value,
@@ -149,8 +149,8 @@ class ManageDoctor extends Component {
     this.setState({ selectedDoctor });
     let { listPayment, listPrice, listProvince } = this.state;
     let res = await getDetailDoctorByIdService(selectedDoctor.value);
-    if (res && res.errCode === 0 && res.data && res.data.Markdown) {
-      let markdown = res.data.Markdown;
+    if (res && res.errCode === 0 && res.data && res.data.DoctorDescription) {
+      let markdown = res.data.DoctorDescription;
       let addressClinic = "",
         nameClinic = "",
         note = "",
@@ -160,13 +160,13 @@ class ManageDoctor extends Component {
         selectedPrice = "",
         selectedPayment = "",
         selectProvince = "";
-      if (res.data.Doctor_Infor) {
-        addressClinic = res.data.Doctor_Infor.addressClinic;
-        nameClinic = res.data.Doctor_Infor.nameClinic;
-        note = res.data.Doctor_Infor.note;
-        priceId = res.data.Doctor_Infor.priceId;
-        provinceId = res.data.Doctor_Infor.provinceId;
-        paymentId = res.data.Doctor_Infor.paymentId;
+      if (res.data.ClinicDetail) {
+        addressClinic = res.data.ClinicDetail.addressClinic;
+        nameClinic = res.data.ClinicDetail.nameClinic;
+        note = res.data.ClinicDetail.note;
+        priceId = res.data.ClinicDetail.priceId;
+        provinceId = res.data.ClinicDetail.provinceId;
+        paymentId = res.data.ClinicDetail.paymentId;
 
         selectedPayment = listPayment.find((item) => {
           return item && item.value === paymentId;
@@ -179,8 +179,8 @@ class ManageDoctor extends Component {
         });
       }
       this.setState({
-        contentHTML: markdown.contentHTML,
-        contentMarkdown: markdown.contentMarkdown,
+        doctorDescriptionHTML: markdown.doctorDescriptionHTML,
+        doctorDescriptionMarkdown: markdown.doctorDescriptionMarkdown,
         description: markdown.description,
         hasOldData: true,
         addressClinic: addressClinic,
@@ -192,8 +192,8 @@ class ManageDoctor extends Component {
       });
     } else {
       this.setState({
-        contentHTML: "",
-        contentMarkdown: "",
+        doctorDescriptionHTML: "",
+        doctorDescriptionMarkdown: "",
         description: "",
         hasOldData: false,
         addressClinic: "",
@@ -335,7 +335,7 @@ class ManageDoctor extends Component {
               style={{ height: "540px" }}
               renderHTML={(text) => mdParser.render(text)}
               onChange={this.handleEditorChange}
-              value={this.state.contentMarkdown}
+              value={this.state.doctorDescriptionMarkdown}
             />
           </div>
         </div>

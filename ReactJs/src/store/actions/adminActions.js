@@ -279,7 +279,7 @@ export const getRequiredDoctorInfor = () => {
   return async (dispatch, getState) => {
     try {
       dispatch({
-        type: actionTypes.FETCH_REQUIRED_DOCTOR_INFOR_START,
+        type: actionTypes.FETCH_REQUIRED_CLINIC_DETAIL_START,
       });
       let resPrice = await getAllCodeService("PRICE");
       let resPayment = await getAllCodeService("PAYMENT");
@@ -308,9 +308,9 @@ export const getRequiredDoctorInfor = () => {
   };
 };
 export const fetchRequiredDoctorInforSuccess = (allRequiredData) => ({
-  type: actionTypes.FETCH_REQUIRED_DOCTOR_INFOR_SUCCESS,
+  type: actionTypes.FETCH_REQUIRED_CLINIC_DETAIL_SUCCESS,
   data: allRequiredData,
 });
 export const fetchRequiredDoctorInforFailed = () => ({
-  type: actionTypes.FETCH_REQUIRED_DOCTOR_INFOR_FAIDED,
+  type: actionTypes.FETCH_REQUIRED_CLINIC_DETAIL_FAIDED,
 });

@@ -1,29 +1,29 @@
-"Doctor_Infor strict";
+"ClinicDetail strict";
 const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
-  class Doctor_Infor extends Model {
+  class ClinicDetail extends Model {
     static associate(models) {
       // define association here
-      Doctor_Infor.belongsTo(models.User, { foreignKey: "doctorId" });
+      ClinicDetail.belongsTo(models.User, { foreignKey: "doctorId" });
 
-      Doctor_Infor.belongsTo(models.Allcode, {
+      ClinicDetail.belongsTo(models.Allcode, {
         foreignKey: "priceId",
         targetKey: "keyMap",
         as: "priceTypeData",
       });
-      Doctor_Infor.belongsTo(models.Allcode, {
+      ClinicDetail.belongsTo(models.Allcode, {
         foreignKey: "provinceId",
         targetKey: "keyMap",
         as: "provinceTypeData",
       });
-      Doctor_Infor.belongsTo(models.Allcode, {
+      ClinicDetail.belongsTo(models.Allcode, {
         foreignKey: "paymentId",
         targetKey: "keyMap",
         as: "paymentTypeData",
       });
     }
   }
-  Doctor_Infor.init(
+  ClinicDetail.init(
     {
       doctorId: DataTypes.INTEGER,
       priceId: DataTypes.STRING,
@@ -36,9 +36,9 @@ module.exports = (sequelize, DataTypes) => {
     },
     {
       sequelize,
-      modelName: "Doctor_Infor",
-      freezeTableName: true,
+      modelName: "ClinicDetail",
+      //freezeTableName: true,
     }
   );
-  return Doctor_Infor;
+  return ClinicDetail;
 };
