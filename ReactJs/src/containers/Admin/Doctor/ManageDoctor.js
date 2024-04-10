@@ -2,13 +2,13 @@ import React, { Component } from "react";
 //import { FormattedMessage } from "react-intl";
 import { connect } from "react-redux";
 import "./ManageDoctor.scss";
-import * as actions from "../../../../store/actions";
+import * as actions from "../../../store/actions";
 import MarkdownIt from "markdown-it";
 import MdEditor from "react-markdown-editor-lite";
 import "react-markdown-editor-lite/lib/index.css";
 import Select from "react-select";
-import { CRUD_ACTIONS, LANGUAGES } from "../../../../utils";
-import { getDetailDoctorByIdService } from "../../../../services/userService";
+import { CRUD_ACTIONS, LANGUAGES } from "../../../utils";
+import { getDetailDoctorByIdService } from "../../../services/userService";
 
 const mdParser = new MarkdownIt();
 

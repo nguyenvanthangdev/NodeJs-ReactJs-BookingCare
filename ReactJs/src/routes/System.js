@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Redirect, Route, Switch } from "react-router-dom";
-import UserManage from "../containers/System/Admin/User/UserManage";
-import Dashboard from "../containers/System/Dashboard/Dashboard";
-import UserRedux from "../containers/System/Admin/UserRedux/UserRedux";
-import ManageDoctor from "../containers/System/Doctor/ManageDoctor/ManageDoctor";
+import UserManage from "../containers/Admin/Account/UserApi/UserManage";
+import Dashboard from "../containers/Admin/Dashboard/Dashboard";
+import UserRedux from "../containers/Admin/Account/UserRedux/UserRedux";
+import ManageDoctor from "../containers/Admin/Doctor/ManageDoctor";
 import Header from "../containers/Header/Header";
 import { USER_ROLE } from "../utils";
 import { withRouter } from "react-router";
@@ -18,17 +18,6 @@ class System extends Component {
     };
   }
 
-  // componentDidUpdate(prevProps) {
-  //   if (
-  //     this.props.isLoggedIn !== prevProps.isLoggedIn ||
-  //     this.props.userInfo !== prevProps.userInfo
-  //   ) {
-  //     this.setState({
-  //       isLoggedIn: this.props.isLoggedIn,
-  //       userInfo: this.props.userInfo,
-  //     });
-  //   }
-  // }
   render() {
     const { systemMenuPath, isLoggedIn, userInfo } = this.props;
 

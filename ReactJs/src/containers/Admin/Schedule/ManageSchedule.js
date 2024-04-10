@@ -2,14 +2,14 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import "./ManageSchedule.scss";
 import Select from "react-select";
-import * as actions from "../../../../store/actions";
-import { LANGUAGES } from "../../../../utils";
+import * as actions from "../../../store/actions";
+import { LANGUAGES } from "../../../utils";
 //dateFormat
-import DatePicker from "../../../../components/Input/DatePicker";
+import DatePicker from "../../../components/Input/DatePicker";
 import { toast } from "react-toastify";
 import _ from "lodash";
 //import moment from "moment";
-import { SaveBulkScheduleDoctor } from "../../../../services/userService";
+import { SaveBulkScheduleDoctor } from "../../../services/userService";
 class ManageSchedule extends Component {
   constructor(props) {
     super(props);

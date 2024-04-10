@@ -30,14 +30,14 @@
       "crud-redux": "Quản lý tài khoản",
       "clinic": "Phòng Khám",
       "manage-clinic": "Quản lý Phòng Khám",
-      "specialty": "Chuyên Khoa",
+      "specialty": "Quản lý Chuyên Khoa",
       "manage-specialty": "Quản lý Chuyên Khoa",
-      "schedule": "Lịch Khám",
+      "schedule": "Quản lý Lịch",
       "dashboard": "Dashboard",
-      "manage-infor-doctor": "Quản Lý Thông Tin"
+      "manage-infor-doctor": "Quản lý Thông Tin"
     },
     "doctor": {
-      "manage-schedule": "Quản Lý Lịch Khám"
+      "manage-schedule": "Quản Lý Lịch"
     }
   },
   "manage-user": {

@@ -50,7 +50,7 @@ class HomeHeader extends Component {
     const { userInfo } = this.props;
     if (userInfo && userInfo.roleId === USER_ROLE.ADMIN) {
       if (this.props.history) {
-        this.props.history.push(`/system/user-redux`);
+        this.props.history.push(`/system/dashboard`);
       }
     }
     if (userInfo && userInfo.roleId === USER_ROLE.DOCTOR) {

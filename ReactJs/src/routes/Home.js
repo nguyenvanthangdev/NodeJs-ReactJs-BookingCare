@@ -16,7 +16,7 @@ class Home extends Component {
     const { isLoggedIn, userInfo } = this.props;
     if (isLoggedIn) {
       if (userInfo && userInfo.roleId === USER_ROLE.ADMIN) {
-        return <Route render={() => <Redirect to={"/system/user-redux"} />} />;
+        return <Route render={() => <Redirect to={"/system/dashboard"} />} />;
       } else if (userInfo && userInfo.roleId === USER_ROLE.DOCTOR) {
         return (
           <Route render={() => <Redirect to={"/doctor/manage-schedule"} />} />
