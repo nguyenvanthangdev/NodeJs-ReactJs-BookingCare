@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-//import { push } from "connected-react-router";
-//import * as actions from "../../store/actions";
+import { CommonUtils } from "../../../utils";
 import { Link } from "react-router-dom";
 import "./Signup.scss";
 import { emitter } from "../../../utils/emitter";
@@ -21,6 +20,9 @@ class Signup extends Component {
       roleId: "R3",
       positionId: "P1",
       gender: "O",
+      avatar: "",
+      //previewImgUrl: "",
+      isMounted: false,
     };
     this.listenToEmitter();
   }
@@ -35,8 +37,16 @@ class Signup extends Component {
         roleId: "R3",
         positionId: "P1",
         gender: "O",
+        avatar: "",
       });
     });
+  }
+  componentDidMount() {
+    this.setState({ isMounted: true });
+  }
+
+  componentWillUnmount() {
+    this.setState({ isMounted: false });
   }
   handleOnChangeInput = (event, id) => {
     let copyState = { ...this.state };
@@ -76,13 +86,15 @@ class Signup extends Component {
     return isValid;
   };
   validateEmail = (email) => {
-    // Mẫu biểu thức chính quy để kiểm tra định dạng email
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailPattern.test(email);
   };
 
   createNewUser = async (data) => {
     try {
+      if (!data.avatar) {
+        data.avatar = "";
+      }
       let response = await createNewUserService(data);
       if (response && response.errCode === 0) {
         emitter.emit("EVENT_CLEAR_MODAL_DATA");
@@ -122,7 +134,22 @@ class Signup extends Component {
       this.handleSignUp();
     }
   };
-
+  handleOnChangeImage = async (event) => {
+    let data = event.target.files;
+    let files = data[0];
+    if (files && this.state.isMounted) {
+      let base64 = await CommonUtils.getBase64(files);
+      this.setState({
+        avatar: base64,
+      });
+    }
+  };
+  openPreviewImage = () => {
+    if (!this.state.previewImgUrl) return;
+    this.setState({
+      isOpen: true,
+    });
+  };
   render() {
     //JSX
     console.log(this.state);
@@ -244,6 +271,13 @@ class Signup extends Component {
                 readOnly
               />
             </div>
+
+            <input
+              type="file"
+              hidden
+              onChange={(event) => this.handleOnChangeImage(event)}
+            />
+
             <div className="col-12 error-message">{this.state.errMessage}</div>
             <div className="col-12">
               <button
@@ -256,7 +290,7 @@ class Signup extends Component {
             <div className="col-12 mt-2">
               {/* <span className="forgot-password">Forgot your password ?</span> */}
               <Link className="sign-in" to="/login">
-                Login ?
+                Login Now
               </Link>
             </div>
             <div className="col-12 text-center mt-5">

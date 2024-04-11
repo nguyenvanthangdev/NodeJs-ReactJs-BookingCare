@@ -100,7 +100,6 @@ let editSpecialtyService = (data) => {
         if (data.imageBase64) {
           specialty.image = data.imageBase64;
         }
-
         specialty.descriptionHTML = data.descriptionHTML;
         specialty.descriptionMarkdown = data.descriptionMarkdown;
         await specialty.save();

@@ -134,9 +134,9 @@ class Login extends Component {
               </button>
             </div>
             <div className="col-12 mt-2">
-              <span className="forgot-password">Forgot your password ?</span>
+              <span className="forgot-password">No account ?</span>
               <Link className="sign-up" to="/sign-up">
-                Sign Up ?
+                SignUp now
               </Link>
             </div>
             <div className="col-12 text-center mt-5">

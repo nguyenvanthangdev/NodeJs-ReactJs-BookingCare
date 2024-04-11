@@ -26,6 +26,7 @@ class ManageSpecialty extends Component {
       nameSpecialty: [],
       isOpenSeleced: false,
       nameselectedSpecialty: "",
+      previewImgUrl: "",
     };
   }
 
@@ -54,6 +55,7 @@ class ManageSpecialty extends Component {
       stateCopy.descriptionMarkdown = "";
       stateCopy.selectedSpecialty = "";
       stateCopy.nameselectedSpecialty = "";
+      stateCopy.previewImgUrl = "";
     }
     this.setState({
       ...stateCopy,
@@ -65,15 +67,23 @@ class ManageSpecialty extends Component {
       descriptionMarkdown: text,
     });
   };
-  hanldOnChangeImage = async (event) => {
+  handleOnChangeImage = async (event) => {
     let data = event.target.files;
-    let files = data[0];
-    if (files) {
-      let base64 = await CommonUtils.getBase64(files);
+    let file = data[0];
+    if (file) {
+      let base64 = await CommonUtils.getBase64(file);
+      let objectUrl = URL.createObjectURL(file);
       this.setState({
+        previewImgUrl: objectUrl,
         imageBase64: base64,
       });
     }
+  };
+  openPreviewImage = () => {
+    if (!this.state.previewImgUrl) return;
+    this.setState({
+      isOpen: true,
+    });
   };
   hanldSaveNewSpecialty = async () => {
     let { isOpenSeleced } = this.state;
@@ -82,6 +92,15 @@ class ManageSpecialty extends Component {
       if (res && res.errCode === 0) {
         this.AllNameSpecialty();
         toast.success("Add new specialty succeeds !");
+        this.setState({
+          isOpenSeleced: false,
+          nameselectedSpecialty: "",
+          name: "",
+          imageBase64: "",
+          descriptionHTML: "",
+          descriptionMarkdown: "",
+          previewImgUrl: "",
+        });
       } else {
         toast.error("Missing required parameter!");
         console.log(res);
@@ -90,6 +109,16 @@ class ManageSpecialty extends Component {
       let res = await getEditSpecialtyService(this.state);
       if (res && res.errCode === 0) {
         toast.success("Edit new specialty succeeds !");
+        this.setState({
+          isOpenSeleced: false,
+          nameselectedSpecialty: "",
+          name: "",
+          imageBase64: "",
+          descriptionHTML: "",
+          descriptionMarkdown: "",
+          previewImgUrl: "",
+          selectedSpecialty: "",
+        });
       } else {
         toast.error("Missing required parameter!");
         console.log(res);
@@ -101,14 +130,17 @@ class ManageSpecialty extends Component {
     let res = await getAllSpecialtyService(selectedSpecialty.value);
     if (res && res.errCode === 0 && res.data) {
       let specialty = res.data;
+      let image64 = "";
+      if (specialty.image) {
+        image64 = new Buffer.from(specialty.image, "base64").toString("binary");
+      }
       this.setState({
         isOpenSeleced: true,
         nameselectedSpecialty: specialty.name,
         descriptionHTML: specialty.descriptionHTML,
         descriptionMarkdown: specialty.descriptionMarkdown,
-        imageBase64: new Buffer.from(specialty.image, "base64").toString(
-          "binary"
-        ),
+        imageBase64: image64,
+        previewImgUrl: image64,
       });
     } else {
       this.setState({
@@ -117,12 +149,14 @@ class ManageSpecialty extends Component {
         imageBase64: "",
         descriptionHTML: "",
         descriptionMarkdown: "",
+        previewImgUrl: "",
       });
     }
     this.setState({
       name: "",
     });
   };
+
   render() {
     console.log("hdaihdws", this.state);
     let { isOpenSeleced } = this.state;
@@ -167,11 +201,24 @@ class ManageSpecialty extends Component {
               <div className="form-row">
                 <div className="col-12 form-group">
                   <label className="title-custom2-specialty">Hình Ảnh</label>
-                  <input
-                    type="file"
-                    className="form-control"
-                    onChange={(event) => this.hanldOnChangeImage(event)}
-                  />
+                  <div className="preview-img-container">
+                    <input
+                      id="previewImg"
+                      type="file"
+                      hidden
+                      onChange={(event) => this.handleOnChangeImage(event)}
+                    />
+                    <label htmlFor="previewImg" className="label-upload">
+                      <div className="img"></div>
+                    </label>
+                    <div
+                      className="preview-image mx-3"
+                      style={{
+                        backgroundImage: `url(${this.state.previewImgUrl})`,
+                      }}
+                      onClick={() => this.openPreviewImage()}
+                    ></div>
+                  </div>
                 </div>
               </div>
             </div>

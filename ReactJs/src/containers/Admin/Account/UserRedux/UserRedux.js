@@ -199,6 +199,7 @@ class UserRedux extends Component {
       position,
       //avatar,
     } = this.state;
+    console.log(this.state);
     return (
       <React.Fragment>
         <div className="title my-5">

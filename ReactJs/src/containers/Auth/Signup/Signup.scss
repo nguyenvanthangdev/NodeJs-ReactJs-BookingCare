@@ -73,7 +73,7 @@
       .sign-in {
         font-size: 15px;
         color: #2d00f7;
-        font-weight: 500;
+        font-weight: 600;
         text-decoration: none;
       }
       .sign-in:hover {
@@ -119,6 +119,39 @@
             box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
           }
         }
+      }
+    }
+    .preview-img-container {
+      display: flex;
+      align-items: center;
+      margin-top: -20px;
+      .label-upload {
+        cursor: pointer;
+        height: 80px;
+        width: 80px;
+        display: flex;
+        align-items: center;
+        justify-content: left;
+        &:hover {
+          opacity: 0.9;
+        }
+        .img {
+          background: url("../../../assets/icon/file.png") center center
+            no-repeat;
+          height: 60px;
+          width: 80px;
+          cursor: pointer;
+          background-size: contain;
+        }
+      }
+      .preview-image {
+        width: 100%;
+        height: 60px;
+        border: 1px solid #ddd;
+        background: center center no-repeat;
+        background-size: contain;
+        cursor: pointer;
+        margin-right: 0rem !important;
       }
     }
   }
