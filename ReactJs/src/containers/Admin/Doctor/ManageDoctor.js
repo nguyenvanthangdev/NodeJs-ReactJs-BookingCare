@@ -136,7 +136,7 @@ class ManageDoctor extends Component {
       description: this.state.description,
       doctorId: this.state.selectedDoctor.value,
       action: hasOldData === true ? CRUD_ACTIONS.EDIT : CRUD_ACTIONS.CREATE,
-      //ClinicDetail
+      //Doctor_Detail
       selectedPrice: this.state.selectedPrice.value,
       selectedPayment: this.state.selectedPayment.value,
       selectProvince: this.state.selectProvince.value,
@@ -149,8 +149,8 @@ class ManageDoctor extends Component {
     this.setState({ selectedDoctor });
     let { listPayment, listPrice, listProvince } = this.state;
     let res = await getDetailDoctorByIdService(selectedDoctor.value);
-    if (res && res.errCode === 0 && res.data && res.data.DoctorDescription) {
-      let markdown = res.data.DoctorDescription;
+    if (res && res.errCode === 0 && res.data && res.data.Doctor_Expertise) {
+      let markdown = res.data.Doctor_Expertise;
       let addressClinic = "",
         nameClinic = "",
         note = "",
@@ -160,13 +160,13 @@ class ManageDoctor extends Component {
         selectedPrice = "",
         selectedPayment = "",
         selectProvince = "";
-      if (res.data.ClinicDetail) {
-        addressClinic = res.data.ClinicDetail.addressClinic;
-        nameClinic = res.data.ClinicDetail.nameClinic;
-        note = res.data.ClinicDetail.note;
-        priceId = res.data.ClinicDetail.priceId;
-        provinceId = res.data.ClinicDetail.provinceId;
-        paymentId = res.data.ClinicDetail.paymentId;
+      if (res.data.Doctor_Detail) {
+        addressClinic = res.data.Doctor_Detail.addressClinic;
+        nameClinic = res.data.Doctor_Detail.nameClinic;
+        note = res.data.Doctor_Detail.note;
+        priceId = res.data.Doctor_Detail.priceId;
+        provinceId = res.data.Doctor_Detail.provinceId;
+        paymentId = res.data.Doctor_Detail.paymentId;
 
         selectedPayment = listPayment.find((item) => {
           return item && item.value === paymentId;

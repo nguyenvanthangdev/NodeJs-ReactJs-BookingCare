@@ -1,7 +1,7 @@
-"doctordescriptions strict";
+"doctor_expertises strict";
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable("doctordescriptions", {
+    await queryInterface.createTable("doctor_expertises", {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -43,6 +43,6 @@ module.exports = {
     });
   },
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable("doctordescriptions");
+    await queryInterface.dropTable("doctor_expertises");
   },
 };

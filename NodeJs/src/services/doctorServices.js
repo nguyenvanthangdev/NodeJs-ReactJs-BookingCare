@@ -76,14 +76,14 @@ let saveInforDoctorsService = (inputData) => {
       } else {
         //upsert to Markdown
         if (inputData.action === "CREATE") {
-          await db.DoctorDescription.create({
+          await db.Doctor_Expertise.create({
             doctorDescriptionHTML: inputData.doctorDescriptionHTML,
             doctorDescriptionMarkdown: inputData.doctorDescriptionMarkdown,
             description: inputData.description,
             doctorId: inputData.doctorId,
           });
         } else if (inputData.action === "EDIT") {
-          let doctorMarkdown = await db.DoctorDescription.findOne({
+          let doctorMarkdown = await db.Doctor_Expertise.findOne({
             where: { doctorId: inputData.doctorId },
             raw: false,
           });
@@ -97,8 +97,8 @@ let saveInforDoctorsService = (inputData) => {
             await doctorMarkdown.save();
           }
         }
-        //upsert to ClinicDetail table
-        let doctorInfor = await db.ClinicDetail.findOne({
+        //upsert to Doctor_Detail table
+        let doctorInfor = await db.Doctor_Detail.findOne({
           where: { doctorId: inputData.doctorId },
           raw: false,
         });
@@ -112,7 +112,7 @@ let saveInforDoctorsService = (inputData) => {
           doctorInfor.note = inputData.note;
           await doctorInfor.save();
         } else {
-          await db.ClinicDetail.create({
+          await db.Doctor_Detail.create({
             doctorId: inputData.doctorId,
             priceId: inputData.selectedPrice,
             paymentId: inputData.selectedPayment,
@@ -146,7 +146,7 @@ let getDetailDoctorByIdService = (inputId) => {
           attributes: { exclude: ["password"] },
           include: [
             {
-              model: db.DoctorDescription,
+              model: db.Doctor_Expertise,
               attributes: [
                 "doctorDescriptionHTML",
                 "doctorDescriptionMarkdown",
@@ -159,7 +159,7 @@ let getDetailDoctorByIdService = (inputId) => {
               attributes: ["valueEn", "valueVi"],
             },
             {
-              model: db.ClinicDetail,
+              model: db.Doctor_Detail,
               attributes: {
                 exclude: ["id", "doctorId"],
               },
@@ -280,7 +280,7 @@ let getExtraInforDoctorByIdService = (inputId) => {
           errMessage: "Missing required parameter !",
         });
       } else {
-        let data = await db.ClinicDetail.findOne({
+        let data = await db.Doctor_Detail.findOne({
           where: { doctorId: inputId },
           attributes: { exclude: ["id", "doctorId"] },
           include: [
@@ -328,7 +328,7 @@ let getProfileDoctorByIdService = (inputId) => {
           attributes: { exclude: ["password"] },
           include: [
             {
-              model: db.DoctorDescription,
+              model: db.Doctor_Expertise,
               attributes: [
                 "doctorDescriptionHTML",
                 "doctorDescriptionMarkdown",
@@ -341,7 +341,7 @@ let getProfileDoctorByIdService = (inputId) => {
               attributes: ["valueEn", "valueVi"],
             },
             {
-              model: db.ClinicDetail,
+              model: db.Doctor_Detail,
               attributes: {
                 exclude: ["id", "doctorId"],
               },

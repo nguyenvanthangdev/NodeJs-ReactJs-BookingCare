@@ -18,8 +18,8 @@ module.exports = (sequelize, DataTypes) => {
         targetKey: "keyMap",
         as: "genderData",
       });
-      User.hasOne(models.DoctorDescription, { foreignKey: "doctorId" });
-      User.hasOne(models.ClinicDetail, { foreignKey: "doctorId" });
+      User.hasOne(models.Doctor_Expertise, { foreignKey: "doctorId" });
+      User.hasOne(models.Doctor_Detail, { foreignKey: "doctorId" });
     }
   }
   User.init(
