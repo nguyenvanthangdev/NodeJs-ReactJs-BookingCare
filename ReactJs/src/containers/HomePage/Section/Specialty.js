@@ -1,11 +1,27 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-
+import { getAllSpecialtyService } from "../../../services/userService";
 //import { FormattedMessage } from "react-intl";
 import Slider from "react-slick";
 
 class Specialty extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      dataSpecialty: [],
+    };
+  }
+  async componentDidMount() {
+    let res = await getAllSpecialtyService("ALL");
+    if (res && res.errCode === 0) {
+      this.setState({
+        dataSpecialty: res.data ? res.data : [],
+      });
+    }
+  }
   render() {
+    let { dataSpecialty } = this.state;
+    console.log("fhusdf", this.state);
     return (
       <div className="section-share section-specialty">
         <div className="section-container">
@@ -15,30 +31,30 @@ class Specialty extends Component {
           </div>
           <div className="section-body">
             <Slider {...this.props.settings}>
-              <div className="section-customize">
-                <div className="bg-image section-specialty"></div>
-                <div>Cơ xương khớp 1</div>
-              </div>
-              <div className="section-customize">
-                <div className="bg-image section-specialty"></div>
-                <div>Cơ xương khớp 2</div>
-              </div>
-              <div className="section-customize">
-                <div className="bg-image section-specialty"></div>
-                <div>Cơ xương khớp 3</div>
-              </div>
-              <div className="section-customize">
-                <div className="bg-image section-specialty"></div>
-                <div>Cơ xương khớp 4</div>
-              </div>
-              <div className="section-customize">
-                <div className="bg-image section-specialty"></div>
-                <div>Cơ xương khớp 5</div>
-              </div>
-              <div className="section-customize">
-                <div className="bg-image section-specialty"></div>
-                <div>Cơ xương khớp 6</div>
-              </div>
+              {dataSpecialty &&
+                dataSpecialty.length > 0 &&
+                dataSpecialty.map((item, index) => {
+                  let imageBase64 = "";
+                  if (item.image) {
+                    imageBase64 = new Buffer.from(
+                      item.image,
+                      "base64"
+                    ).toString("binary");
+                  }
+                  return (
+                    <div className="section-customize" key={index}>
+                      <div
+                        className="bg-image section-specialty"
+                        style={{
+                          backgroundImage: `url(${imageBase64})`,
+                        }}
+                      ></div>
+                      <div style={{ fontSize: "16px", fontWeight: 500 }}>
+                        {item.name}
+                      </div>
+                    </div>
+                  );
+                })}
             </Slider>
           </div>
         </div>

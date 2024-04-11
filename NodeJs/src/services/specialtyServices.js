@@ -11,15 +11,15 @@ let allSpecialtyService = (inputId) => {
         let specialty = "";
         if (inputId === "ALL") {
           specialty = await db.Specialty.findAll({
-            attributes: {
-              exclude: [
-                "image",
-                "descriptionMarkdown",
-                "descriptionHTML",
-                "createdAt",
-                "updatedAt",
-              ],
-            },
+            // attributes: {
+            //   exclude: [
+            //     "image",
+            //     "descriptionMarkdown",
+            //     "descriptionHTML",
+            //     "createdAt",
+            //     "updatedAt",
+            //   ],
+            // },
           });
         }
         if (inputId && inputId !== "ALL") {
