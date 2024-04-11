@@ -34,14 +34,12 @@
       display: flex;
       gap: 5px;
       flex-wrap: wrap;
-      .custom-btn {
-        color: #333;
-        border-radius: 0.1rem;
+      .custom-btn-time {
         width: 140px;
         padding: 10px;
         background-color: #ffff;
         border-radius: 0.25rem;
-        font-size: 13px;
+        font-size: 14px;
         font-weight: 500;
         color: #333;
         &:hover {

@@ -146,7 +146,7 @@ class DoctorSchedule extends Component {
                   return (
                     <button
                       key={index}
-                      className="btn custom-btn"
+                      className="btn custom-btn-time"
                       onClick={() => this.handleClickScheduleTime(item)}
                     >
                       {timeDisplay}

@@ -8,6 +8,7 @@ import ManageDoctor from "../containers/Admin/Doctor/ManageDoctor";
 import Header from "../containers/Header/Header";
 import { USER_ROLE } from "../utils";
 import { withRouter } from "react-router";
+import ManageSpecialty from "../containers/Admin/Specialty/ManageSpecialty";
 
 class System extends Component {
   constructor(props) {
@@ -32,6 +33,10 @@ class System extends Component {
                 <Route path="/system/user-manage" component={UserManage} />
                 <Route path="/system/user-redux" component={UserRedux} />
                 <Route path="/system/manage-doctor" component={ManageDoctor} />
+                <Route
+                  path="/system/manage-specialty"
+                  component={ManageSpecialty}
+                />
                 <Route render={() => <Redirect to={systemMenuPath} />} />
               </Switch>
             </div>

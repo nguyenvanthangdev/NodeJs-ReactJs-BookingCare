@@ -16,7 +16,7 @@ import { LANGUAGES } from "../../../../utils";
 import { toast } from "react-toastify";
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 //require("dotenv").config();
-//const PAYPAL_ID_KEY = process.env.PAYPAL_ID_KEY;
+//const ID_PAYPAL_KEY = process.env.ID_PAYPAL_KEY;
 class BookingModal extends Component {
   constructor(props) {
     super(props);

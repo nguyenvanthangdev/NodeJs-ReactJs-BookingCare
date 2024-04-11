@@ -220,6 +220,7 @@ class ManageDoctor extends Component {
   };
   render() {
     let { hasOldData } = this.state;
+    console.log("jaiksdjs", this.state);
     return (
       <React.Fragment>
         <div className="manage-doctor-title">Tạo thông tin Bác Sĩ</div>
