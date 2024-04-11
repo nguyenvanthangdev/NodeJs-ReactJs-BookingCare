@@ -61,11 +61,15 @@ const createNewSpecialtyService = (data) => {
 const getAllSpecialtyService = (inputId) => {
   return axios.get(`/api/all-specialty?id=${inputId}`);
 };
-const getAllNameSpecialtyService = () => {
-  return axios.get(`/api/all-namespecialty`);
-};
 const getEditSpecialtyService = (inputData) => {
   return axios.put("/api/edit-specialty", inputData);
+};
+const deleteSpecialtyService = (specialtyId) => {
+  return axios.delete("/api/delete-specialty", {
+    data: {
+      id: specialtyId,
+    },
+  });
 };
 
 export {
@@ -86,6 +90,6 @@ export {
   postBookAppointmentService,
   createNewSpecialtyService,
   getAllSpecialtyService,
-  getAllNameSpecialtyService,
   getEditSpecialtyService,
+  deleteSpecialtyService,
 };

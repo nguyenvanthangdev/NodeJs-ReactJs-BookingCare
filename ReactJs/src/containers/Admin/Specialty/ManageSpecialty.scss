@@ -10,11 +10,11 @@
     display: flex;
     gap: 60px;
     .container-body-specialty {
-      width: 40%;
+      width: 25%;
       box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.3);
       border-radius: 0.5rem;
       height: 570px;
-      margin-left: 250px;
+      margin-left: 50px;
       padding: 50px;
       margin-top: 50px;
       .form-row {
@@ -68,7 +68,7 @@
       }
     }
     .introductory-information {
-      width: 60%;
+      width: 45%;
       margin-top: 50px;
       flex-wrap: wrap;
       box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.3);
@@ -85,6 +85,17 @@
         margin-top: 7px;
         .custom-mdeditor-specialty {
           height: 450px !important;
+        }
+      }
+    }
+    .table-specialty {
+      width: 30%;
+      margin: 50px 50px 0 0;
+      box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.3);
+      border-radius: 0.5rem;
+      .custom-scrollbar {
+        .specialty-table {
+          padding: 30px;
         }
       }
     }

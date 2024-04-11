@@ -6,12 +6,14 @@ import { toast } from "react-toastify";
 import {
   createNewSpecialtyService,
   getAllSpecialtyService,
-  getAllNameSpecialtyService,
   getEditSpecialtyService,
+  deleteSpecialtyService,
 } from "../../../services/userService";
 import MarkdownIt from "markdown-it";
 import MdEditor from "react-markdown-editor-lite";
 import Select from "react-select";
+import Lightbox from "react-image-lightbox";
+import CustomScrollbars from "../../../components/CustomScrollbars";
 const mdParser = new MarkdownIt();
 
 class ManageSpecialty extends Component {
@@ -27,14 +29,25 @@ class ManageSpecialty extends Component {
       isOpenSeleced: false,
       nameselectedSpecialty: "",
       previewImgUrl: "",
+      isOpen: false,
+      //arrSpecialty: [],
     };
   }
 
   async componentDidMount() {
-    this.AllNameSpecialty();
+    //this.AllNameSpecialty();
+    this.AllSpecialty();
   }
-  AllNameSpecialty = async () => {
-    let res = await getAllNameSpecialtyService();
+  // AllNameSpecialty = async () => {
+  //   let res = await getAllNameSpecialtyService();
+  //   if (res && res.errCode === 0 && res.data) {
+  //     this.setState({
+  //       nameSpecialty: res.data,
+  //     });
+  //   }
+  // };
+  AllSpecialty = async () => {
+    let res = await getAllSpecialtyService("ALL");
     if (res && res.errCode === 0 && res.data) {
       this.setState({
         nameSpecialty: res.data,
@@ -90,7 +103,7 @@ class ManageSpecialty extends Component {
     if (isOpenSeleced === false) {
       let res = await createNewSpecialtyService(this.state);
       if (res && res.errCode === 0) {
-        this.AllNameSpecialty();
+        this.AllSpecialty();
         toast.success("Add new specialty succeeds !");
         this.setState({
           isOpenSeleced: false,
@@ -108,6 +121,7 @@ class ManageSpecialty extends Component {
     } else {
       let res = await getEditSpecialtyService(this.state);
       if (res && res.errCode === 0) {
+        this.AllSpecialty();
         toast.success("Edit new specialty succeeds !");
         this.setState({
           isOpenSeleced: false,
@@ -156,10 +170,23 @@ class ManageSpecialty extends Component {
       name: "",
     });
   };
-
+  handleDeleteUser = async (specialty) => {
+    try {
+      let res = await deleteSpecialtyService(specialty.id);
+      if (res && res.errCode === 0) {
+        await this.AllSpecialty();
+        toast.success(res.errMessage);
+      } else {
+        toast.error(res.errMessage);
+      }
+      console.log(res);
+    } catch (e) {
+      console.log(e);
+    }
+  };
   render() {
     console.log("hdaihdws", this.state);
-    let { isOpenSeleced } = this.state;
+    let { isOpenSeleced, nameSpecialty } = this.state;
     return (
       <div className="manage-specialty-container">
         <div className="m-s-title my-5">QUẢN LÝ CHUYÊN KHOA</div>
@@ -251,7 +278,47 @@ class ManageSpecialty extends Component {
               />
             </div>
           </div>
+          <div className="table-specialty">
+            <CustomScrollbars style={{ height: "570px" }}>
+              <div className="specialty-table">
+                <table className="table">
+                  <thead className="thead-light">
+                    <tr>
+                      <th scope="col">Tên Khoa</th>
+                      <th scope="col">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {nameSpecialty &&
+                      nameSpecialty.map((item, index) => {
+                        return (
+                          <tr key={index}>
+                            <td>{item.name}</td>
+                            <td>
+                              <button
+                                type="button"
+                                className="btn btn-danger px-3"
+                                onClick={() => this.handleDeleteUser(item)}
+                              >
+                                Delete
+                              </button>
+                            </td>
+                          </tr>
+                        );
+                      })}
+                  </tbody>
+                </table>
+              </div>
+            </CustomScrollbars>
+          </div>
         </div>
+
+        {this.state.isOpen === true && (
+          <Lightbox
+            mainSrc={this.state.previewImgUrl}
+            onCloseRequest={() => this.setState({ isOpen: false })}
+          />
+        )}
       </div>
     );
   }

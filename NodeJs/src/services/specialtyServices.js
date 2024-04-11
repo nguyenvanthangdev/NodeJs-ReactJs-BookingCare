@@ -8,9 +8,25 @@ let allSpecialtyService = (inputId) => {
           errMessage: "Missing required parameter !",
         });
       } else {
-        let specialty = await db.Specialty.findOne({
-          where: { id: inputId },
-        });
+        let specialty = "";
+        if (inputId === "ALL") {
+          specialty = await db.Specialty.findAll({
+            attributes: {
+              exclude: [
+                "image",
+                "descriptionMarkdown",
+                "descriptionHTML",
+                "createdAt",
+                "updatedAt",
+              ],
+            },
+          });
+        }
+        if (inputId && inputId !== "ALL") {
+          specialty = await db.Specialty.findOne({
+            where: { id: inputId },
+          });
+        }
         resolve({
           errCode: 0,
           data: specialty,
@@ -118,9 +134,37 @@ let editSpecialtyService = (data) => {
     }
   });
 };
+let deleteSpecialtyService = (specialtyId) => {
+  return new Promise(async (resolve, reject) => {
+    if (!specialtyId) {
+      resolve({
+        errCode: 1,
+        errMessage: "Missing required parameters",
+      });
+    } else {
+      let specialty = await db.Specialty.findOne({
+        where: { id: specialtyId },
+      });
+      if (!specialty) {
+        resolve({
+          errCode: 2,
+          errMessage: "Specialty is not exist",
+        });
+      }
+      await db.Specialty.destroy({
+        where: { id: specialtyId },
+      });
+      resolve({
+        errCode: 0,
+        errMessage: "The specialty is deleted",
+      });
+    }
+  });
+};
 module.exports = {
   createSpecialtyService: createSpecialtyService,
   allSpecialtyService: allSpecialtyService,
   allNameSpecialtyService: allNameSpecialtyService,
   editSpecialtyService: editSpecialtyService,
+  deleteSpecialtyService: deleteSpecialtyService,
 };

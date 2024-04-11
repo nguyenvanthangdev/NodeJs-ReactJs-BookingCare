@@ -54,7 +54,7 @@ let initWebRoutes = (app) => {
   router.get("/api/all-namespecialty", specialtyController.allNameSpecialty);
   router.post("/api/creace-new-specialty", specialtyController.createSpecialty);
   router.put("/api/edit-specialty", specialtyController.editSpecialty);
-
+  router.delete("/api/delete-specialty", specialtyController.deleteSpecialty);
   return app.use("/", router);
 };
 module.exports = initWebRoutes;
