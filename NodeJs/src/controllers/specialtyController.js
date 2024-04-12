@@ -12,18 +12,7 @@ let allSpecialty = async (req, res) => {
     });
   }
 };
-let allNameSpecialty = async (req, res) => {
-  try {
-    let infor = await specialtyServices.allNameSpecialtyService();
-    return res.status(200).json(infor);
-  } catch (e) {
-    console.log(e);
-    return res.status(200).json({
-      errCode: -1,
-      errMessage: "Error from the server",
-    });
-  }
-};
+
 let createSpecialty = async (req, res) => {
   try {
     let infor = await specialtyServices.createSpecialtyService(req.body);
@@ -60,10 +49,26 @@ let deleteSpecialty = async (req, res) => {
     });
   }
 };
+
+let getDetailSpecialtyById = async (req, res) => {
+  try {
+    let infor = await specialtyServices.getDetailSpecialtyByIdService(
+      req.query.id,
+      req.query.location
+    );
+    return res.status(200).json(infor);
+  } catch (e) {
+    console.log(e);
+    return res.status(200).json({
+      errCode: -1,
+      errMessage: "Error from the server",
+    });
+  }
+};
 module.exports = {
   createSpecialty: createSpecialty,
   allSpecialty: allSpecialty,
-  allNameSpecialty: allNameSpecialty,
   editSpecialty: editSpecialty,
   deleteSpecialty: deleteSpecialty,
+  getDetailSpecialtyById: getDetailSpecialtyById,
 };

@@ -6,6 +6,7 @@ import { LANGUAGES } from "../../../utils";
 import NumericFormat from "react-number-format";
 import _ from "lodash";
 import moment from "moment";
+import { Link } from "react-router-dom";
 class ProfileDoctor extends Component {
   constructor(props) {
     super(props);
@@ -33,6 +34,10 @@ class ProfileDoctor extends Component {
     if (this.props.language !== prevProps.language) {
     }
     if (this.props.doctorId !== prevProps.doctorId) {
+      // let data = await this.getInforDoctor(this.props.doctorId);
+      // this.setState({
+      //   dataProfile: data,
+      // });
     }
   }
   renderTimeBooking = (dataTime) => {
@@ -61,8 +66,14 @@ class ProfileDoctor extends Component {
   };
   render() {
     let { dataProfile } = this.state;
-    let { language, dataTime, isShowDescriptionDoctor, isShowPrice } =
-      this.props;
+    let {
+      language,
+      dataTime,
+      isShowDescriptionDoctor,
+      isShowPrice,
+      isShowLinkDetail,
+      doctorId,
+    } = this.props;
     let nameVi = "";
     let nameEn = "";
     if (dataProfile && dataProfile.positionData) {
@@ -101,6 +112,11 @@ class ProfileDoctor extends Component {
               </div>
             </div>
           </div>
+          {isShowLinkDetail === true && (
+            <div className="view-datai-doctor">
+              <Link to={`/detail-doctor/${doctorId}`}>Xem Thêm</Link>
+            </div>
+          )}
           {isShowPrice === true ? (
             <div className="price">
               <span>Giá Khám : </span>

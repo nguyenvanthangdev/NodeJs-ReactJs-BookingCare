@@ -245,6 +245,11 @@ class ManageDoctor extends Component {
         addressClinic: "",
         nameClinic: "",
         note: "",
+        selectedProvince: "",
+        selectedPayment: "",
+        selectedPrice: "",
+        selectedClinic: "",
+        selectedSpecialty: "",
       });
     }
   };
@@ -295,7 +300,7 @@ class ManageDoctor extends Component {
                 />
               </div>
               <div className="col-md-6">
-                <label className="form-label">Phòng Khám</label>
+                <label className="form-label">Chọn Phòng Khám</label>
                 <Select
                   className="select-doctor"
                   value={this.state.selectedClinic}

@@ -27,29 +27,7 @@ let allSpecialtyService = (inputId) => {
     }
   });
 };
-let allNameSpecialtyService = () => {
-  return new Promise(async (resolve, reject) => {
-    try {
-      let specialty = await db.Specialty.findAll({
-        attributes: {
-          exclude: [
-            "image",
-            "descriptionMarkdown",
-            "descriptionHTML",
-            "createdAt",
-            "updatedAt",
-          ],
-        },
-      });
-      resolve({
-        errCode: 0,
-        data: specialty,
-      });
-    } catch (e) {
-      reject(e);
-    }
-  });
-};
+
 let createSpecialtyService = (data) => {
   return new Promise(async (resolve, reject) => {
     try {
@@ -151,10 +129,46 @@ let deleteSpecialtyService = (specialtyId) => {
     }
   });
 };
+
+let getDetailSpecialtyByIdService = (inputId, location) => {
+  return new Promise(async (resolve, reject) => {
+    if (!inputId || !location) {
+      resolve({
+        errCode: 1,
+        errMessage: "Missing required parameters",
+      });
+    } else {
+      let data = await db.Specialty.findOne({
+        where: { id: inputId },
+        attributes: ["descriptionHTML", "descriptionMarkdown"],
+      });
+      if (data) {
+        let doctorSpecialty = [];
+        if (location === "ALL") {
+          doctorSpecialty = await db.Doctor_Detail.findAll({
+            where: { specialtyId: inputId },
+            attributes: ["doctorId", "provinceId"],
+          });
+        } else {
+          doctorSpecialty = await db.Doctor_Detail.findAll({
+            where: { specialtyId: inputId, provinceId: location },
+            attributes: ["doctorId", "provinceId"],
+          });
+        }
+        data.doctorSpecialty = doctorSpecialty;
+      } else data = {};
+      resolve({
+        errCode: 0,
+        errMessage: "Ok",
+        data,
+      });
+    }
+  });
+};
 module.exports = {
   createSpecialtyService: createSpecialtyService,
   allSpecialtyService: allSpecialtyService,
-  allNameSpecialtyService: allNameSpecialtyService,
   editSpecialtyService: editSpecialtyService,
   deleteSpecialtyService: deleteSpecialtyService,
+  getDetailSpecialtyByIdService: getDetailSpecialtyByIdService,
 };

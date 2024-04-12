@@ -37,19 +37,19 @@ class BookingModal extends Component {
   }
   async componentDidMount() {
     this.props.getGenders();
-    if (
-      this.props.match &&
-      this.props.match.params &&
-      this.props.match.params.id
-    ) {
-      let id = this.props.match.params.id;
-      let res = await getExtraInforDoctorByIdService(id);
-      if (res && res.errCode === 0) {
-        this.setState({
-          extraInfor: res.data,
-        });
-      }
-    }
+    // if (
+    //   this.props.match &&
+    //   this.props.match.params &&
+    //   this.props.match.params.id
+    // ) {
+    //   let id = this.props.match.params.id;
+    //   let res = await getExtraInforDoctorByIdService(id);
+    //   if (res && res.errCode === 0) {
+    //     this.setState({
+    //       extraInfor: res.data,
+    //     });
+    //   }
+    // }
   }
   async componentDidUpdate(prevProps, prevState, snapshot) {
     if (prevProps.genderRedux !== this.props.genderRedux) {
@@ -64,6 +64,14 @@ class BookingModal extends Component {
       if (this.props.dataTime && !_.isEmpty(this.props.dataTime)) {
         let doctorId = this.props.dataTime.doctorId;
         let timeType = this.props.dataTime.timeType;
+        let res = await getExtraInforDoctorByIdService(
+          this.props.dataTime.doctorId
+        );
+        if (res && res.errCode === 0) {
+          this.setState({
+            extraInfor: res.data,
+          });
+        }
         this.setState({
           doctorId: doctorId,
           timeType: timeType,
@@ -149,17 +157,6 @@ class BookingModal extends Component {
     if (dataTime && !_.isEmpty(dataTime)) {
       doctorId = dataTime.doctorId;
     }
-    let priceVND = this.state.extraInfor.priceTypeData?.valueVi;
-    let priceUSD = this.state.extraInfor.priceTypeData?.valueEn;
-    let exchangeRate = 25000;
-    let priceVNDToUSD = priceVND / exchangeRate;
-    console.log("this.props", this.props);
-    console.log("this.state", this.state);
-    console.log(
-      "this.state.extraInfor.priceTypeData",
-      this.state.extraInfor.priceTypeData
-    );
-    //this.props.match.params.id
     return (
       <>
         <Modal
@@ -182,6 +179,7 @@ class BookingModal extends Component {
                 isShowDescriptionDoctor={false}
                 dataTime={dataTime}
                 isShowPrice={true}
+                isShowLinkDetail={false}
               />
             </div>
             <div className="row ">
@@ -322,11 +320,12 @@ class BookingModal extends Component {
                           {
                             amount: {
                               value:
-                                extraInfor &&
-                                extraInfor.priceTypeData &&
-                                language === LANGUAGES.VI
-                                  ? priceVNDToUSD
-                                  : priceUSD,
+                                this.state.extraInfor &&
+                                this.state.extraInfor.priceTypeData &&
+                                this.props.language === LANGUAGES.VI
+                                  ? this.state.extraInfor.priceTypeData
+                                      .valueVi / 25000
+                                  : this.state.extraInfor.priceTypeData.valueEn,
                             },
                           },
                         ],

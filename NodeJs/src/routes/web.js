@@ -51,10 +51,13 @@ let initWebRoutes = (app) => {
   );
   //Specialty
   router.get("/api/all-specialty", specialtyController.allSpecialty);
-  router.get("/api/all-namespecialty", specialtyController.allNameSpecialty);
   router.post("/api/creace-new-specialty", specialtyController.createSpecialty);
   router.put("/api/edit-specialty", specialtyController.editSpecialty);
   router.delete("/api/delete-specialty", specialtyController.deleteSpecialty);
+  router.get(
+    "/api/get-detail-specialty-by-id",
+    specialtyController.getDetailSpecialtyById
+  );
   return app.use("/", router);
 };
 module.exports = initWebRoutes;

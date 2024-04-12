@@ -5,26 +5,136 @@ import HomeHeader from "../../HomePage/Home/HomeHeader";
 import DoctorSchedule from "../Doctor/DoctorSchedule";
 import DoctorExtrainfor from "../Doctor/DoctorExtrainfor";
 import ProfileDoctor from "../Doctor/ProfileDoctor";
+import {
+  getDetailSpecialtyByIdService,
+  getAllCodeService,
+} from "../../../services/userService";
+import _ from "lodash";
+import { LANGUAGES } from "../../../utils";
 class DetailSpecialty extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      arrDoctorId: [11, 12, 13],
+      arrDoctorId: [],
+      dataDetailSpecialty: {},
+      listProvince: [],
     };
   }
 
-  async componentDidMount() {}
-  componentDidUpdate(prevProps, prevState, snapshot) {}
+  async componentDidMount() {
+    if (
+      this.props.match &&
+      this.props.match.params &&
+      this.props.match.params.id
+    ) {
+      let id = this.props.match.params.id;
+      let res = await getDetailSpecialtyByIdService({
+        id: id,
+        location: "ALL",
+      });
 
+      let resProvince = await getAllCodeService("PROVINCE");
+
+      if (
+        res &&
+        res.errCode === 0 &&
+        resProvince &&
+        resProvince.errCode === 0
+      ) {
+        let data = res.data;
+        let arrDoctorId = [];
+        if (data && !_.isEmpty(res.data)) {
+          let arr = data.doctorSpecialty;
+          if (arr && arr.length > 0) {
+            arr.map((item) => {
+              arrDoctorId.push(item.doctorId);
+              return null;
+            });
+          }
+        }
+        let dataProvince = resProvince.data;
+        if (dataProvince && dataProvince.length > 0) {
+          dataProvince.unshift({
+            createdAt: null,
+            kyMap: "ALL",
+            type: "PROVINCE",
+            valueVi: "Toàn Quốc",
+            valueEn: "ALL",
+          });
+        }
+        this.setState({
+          dataDetailSpecialty: res.data,
+          arrDoctorId: arrDoctorId,
+          listProvince: dataProvince ? dataProvince : [],
+        });
+      }
+    }
+  }
+  componentDidUpdate(prevProps, prevState, snapshot) {}
+  handleOnChangeSelect = async (event) => {
+    if (
+      this.props.match &&
+      this.props.match.params &&
+      this.props.match.params.id
+    ) {
+      let id = this.props.match.params.id;
+      let location = event.target.value;
+      let res = await getDetailSpecialtyByIdService({
+        id: id,
+        location: location,
+      });
+      if (res && res.errCode === 0) {
+        let data = res.data;
+        let arrDoctorId = [];
+        if (data && !_.isEmpty(res.data)) {
+          let arr = data.doctorSpecialty;
+          if (arr && arr.length > 0) {
+            arr.map((item) => {
+              arrDoctorId.push(item.doctorId);
+              return null;
+            });
+          }
+        }
+        this.setState({
+          dataDetailSpecialty: res.data,
+          arrDoctorId: arrDoctorId,
+        });
+      }
+    }
+  };
   render() {
-    console.log("state", this.state);
-    let { arrDoctorId } = this.state;
+    let { arrDoctorId, dataDetailSpecialty, listProvince } = this.state;
+    let { language, dataTime } = this.props;
+    console.log(this.state);
     return (
       <div className="detail-specialty-container">
         <HomeHeader />
         <div className="description-specialty-body">
-          <div className="description-specialty"></div>
-
+          <div className="description-specialty">
+            {dataDetailSpecialty && !_.isEmpty(dataDetailSpecialty) && (
+              <div
+                dangerouslySetInnerHTML={{
+                  __html: dataDetailSpecialty.descriptionHTML,
+                }}
+              ></div>
+            )}
+          </div>
+          <div className="search-sp-doctor">
+            <select
+              className="btn form-select"
+              onChange={(event) => this.handleOnChangeSelect(event)}
+            >
+              {listProvince &&
+                listProvince.length > 0 &&
+                listProvince.map((item, index) => {
+                  return (
+                    <option key={index} value={item.keyMap}>
+                      {language === LANGUAGES.VI ? item.valueVi : item.valueEn}
+                    </option>
+                  );
+                })}
+            </select>
+          </div>
           {arrDoctorId &&
             arrDoctorId.length > 0 &&
             arrDoctorId.map((item, index) => {
@@ -36,7 +146,8 @@ class DetailSpecialty extends Component {
                         doctorId={item}
                         isShowDescriptionDoctor={true}
                         isShowPrice={false}
-                        //dataTime={dataTime}
+                        isShowLinkDetail={true}
+                        dataTime={dataTime}
                       />
                     </div>
                   </div>
