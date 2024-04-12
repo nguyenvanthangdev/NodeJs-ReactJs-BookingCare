@@ -61,7 +61,8 @@ class ProfileDoctor extends Component {
   };
   render() {
     let { dataProfile } = this.state;
-    let { language, dataTime, isShowDescriptionDoctor } = this.props;
+    let { language, dataTime, isShowDescriptionDoctor, isShowPrice } =
+      this.props;
     let nameVi = "";
     let nameEn = "";
     if (dataProfile && dataProfile.positionData) {
@@ -100,31 +101,35 @@ class ProfileDoctor extends Component {
               </div>
             </div>
           </div>
-          <div className="price">
-            <span>Giá Khám : </span>
-            {dataProfile &&
-              dataProfile.Doctor_Detail &&
-              language === LANGUAGES.VI && (
-                <NumericFormat
-                  className="currency"
-                  value={dataProfile.Doctor_Detail.priceTypeData.valueVi}
-                  displayType={"text"}
-                  thousandSeparator={true}
-                  suffix={"VND"}
-                />
-              )}
-            {dataProfile &&
-              dataProfile.Doctor_Detail &&
-              language === LANGUAGES.EN && (
-                <NumericFormat
-                  className="currency"
-                  value={dataProfile.Doctor_Detail.priceTypeData.valueEn}
-                  displayType={"text"}
-                  thousandSeparator={true}
-                  suffix={"USD"}
-                />
-              )}
-          </div>
+          {isShowPrice === true ? (
+            <div className="price">
+              <span>Giá Khám : </span>
+              {dataProfile &&
+                dataProfile.Doctor_Detail &&
+                language === LANGUAGES.VI && (
+                  <NumericFormat
+                    className="currency"
+                    value={dataProfile.Doctor_Detail.priceTypeData.valueVi}
+                    displayType={"text"}
+                    thousandSeparator={true}
+                    suffix={"VND"}
+                  />
+                )}
+              {dataProfile &&
+                dataProfile.Doctor_Detail &&
+                language === LANGUAGES.EN && (
+                  <NumericFormat
+                    className="currency"
+                    value={dataProfile.Doctor_Detail.priceTypeData.valueEn}
+                    displayType={"text"}
+                    thousandSeparator={true}
+                    suffix={"USD"}
+                  />
+                )}
+            </div>
+          ) : (
+            <></>
+          )}
         </div>
       </>
     );

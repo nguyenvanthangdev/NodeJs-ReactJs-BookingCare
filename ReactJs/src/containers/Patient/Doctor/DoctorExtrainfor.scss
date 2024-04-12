@@ -40,8 +40,9 @@
     }
     .detail-infor {
       border: 1px solid rgba(0, 0, 0, 0.301);
+      //border-radius: 0.3rem;
       padding: 5px;
-      //background-color: #f8f8f8;
+      background-color: #f8f8f8;
       .price {
         padding-bottom: 5px;
         .left {
@@ -63,11 +64,10 @@
     }
 
     .payment {
-      border-bottom: 1px solid rgba(0, 0, 0, 0.301);
-      border-left: 1px solid rgba(0, 0, 0, 0.301);
-      border-right: 1px solid rgba(0, 0, 0, 0.301);
+      border: 1px solid rgba(0, 0, 0, 0.301);
       padding: 5px;
-      //background-color: #eee;
+      //border-radius: 0.3rem;
+      background-color: #eee;
     }
     .hide-price {
       margin-top: 10px;

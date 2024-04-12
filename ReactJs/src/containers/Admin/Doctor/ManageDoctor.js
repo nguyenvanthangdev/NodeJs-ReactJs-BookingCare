@@ -177,7 +177,8 @@ class ManageDoctor extends Component {
   };
   handleChangeSelect = async (selectedDoctor) => {
     this.setState({ selectedDoctor });
-    let { listPayment, listPrice, listProvince } = this.state;
+    let { listPayment, listPrice, listProvince, listClinic, listSpecialty } =
+      this.state;
     let res = await getDetailDoctorByIdService(selectedDoctor.value);
     if (res && res.errCode === 0 && res.data && res.data.Doctor_Expertise) {
       let markdown = res.data.Doctor_Expertise;
@@ -189,8 +190,11 @@ class ManageDoctor extends Component {
         paymentId = "",
         selectedPrice = "",
         selectedPayment = "",
-        selectedProvince = "";
-
+        selectedProvince = "",
+        selectedClinic = "",
+        selectedSpecialty = "",
+        clinicId = "",
+        specialtyId = "";
       if (res.data.Doctor_Detail) {
         addressClinic = res.data.Doctor_Detail.addressClinic;
         nameClinic = res.data.Doctor_Detail.nameClinic;
@@ -198,6 +202,9 @@ class ManageDoctor extends Component {
         priceId = res.data.Doctor_Detail.priceId;
         provinceId = res.data.Doctor_Detail.provinceId;
         paymentId = res.data.Doctor_Detail.paymentId;
+
+        clinicId = res.data.Doctor_Detail.clinicId;
+        specialtyId = res.data.Doctor_Detail.specialtyId;
 
         selectedPayment = listPayment.find((item) => {
           return item && item.value === paymentId;
@@ -207,6 +214,12 @@ class ManageDoctor extends Component {
         });
         selectedProvince = listProvince.find((item) => {
           return item && item.value === provinceId;
+        });
+        selectedClinic = listClinic.find((item) => {
+          return item && item.value === clinicId;
+        });
+        selectedSpecialty = listSpecialty.find((item) => {
+          return item && item.value === specialtyId;
         });
       }
       this.setState({
@@ -220,6 +233,8 @@ class ManageDoctor extends Component {
         selectedProvince: selectedProvince,
         selectedPayment: selectedPayment,
         selectedPrice: selectedPrice,
+        selectedClinic: selectedClinic,
+        selectedSpecialty: selectedSpecialty,
       });
     } else {
       this.setState({
