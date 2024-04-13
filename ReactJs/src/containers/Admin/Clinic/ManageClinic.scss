@@ -1,4 +1,4 @@
-.manage-specialty-container {
+.manage-clinic-container {
   .m-s-title {
     font-size: 24px;
     text-align: center;
@@ -6,10 +6,10 @@
     color: #0d6efd;
     text-transform: uppercase;
   }
-  .container-title-specialty {
+  .container-title-clinic {
     display: flex;
     gap: 60px;
-    .container-body-specialty {
+    .container-body-clinic {
       width: 25%;
       box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.3);
       border-radius: 0.5rem;
@@ -18,13 +18,17 @@
       padding: 35px;
       margin-top: 50px;
       .form-row {
-        .title-custom1-specialty {
+        .title-custom1-clinic {
           font-size: 18px;
-          margin: 20px 0;
+          margin: 10px 0;
         }
-        .title-custom2-specialty {
+        .title-custom2-clinic {
           font-size: 18px;
-          margin: 20px 0;
+          margin: 10px 0;
+        }
+        .title-custom3-clinic {
+          font-size: 18px;
+          margin: 18px 0;
         }
         .preview-img-container {
           display: flex;
@@ -62,8 +66,8 @@
         }
       }
 
-      .btn-custom-specialty {
-        margin-top: 35px;
+      .btn-custom-clinic {
+        margin-top: 15px;
         margin-left: 10px;
       }
     }
@@ -76,25 +80,25 @@
       height: 570px;
       padding: 30px 60px;
 
-      .title-custom3-specialty {
+      .title-custom3-clinic {
         font-size: 18px;
         margin-left: 5px;
       }
       .form-group-custom {
         padding: 10px 0;
         margin-top: 7px;
-        .custom-mdeditor-specialty {
+        .custom-mdeditor-clinic {
           height: 450px !important;
         }
       }
     }
-    .table-specialty {
+    .table-clinic {
       width: 30%;
       margin: 50px 50px 0 0;
       box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.3);
       border-radius: 0.5rem;
       .custom-scrollbar {
-        .specialty-table {
+        .clinic-table {
           padding: 30px;
         }
       }

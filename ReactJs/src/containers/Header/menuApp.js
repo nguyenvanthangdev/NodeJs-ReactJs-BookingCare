@@ -45,7 +45,7 @@ export const adminMenu = [
       },
     ],
   },
-  //Quan ly phong kham
+  //Quan ly co so
   {
     name: "menu.admin.clinic",
     menus: [

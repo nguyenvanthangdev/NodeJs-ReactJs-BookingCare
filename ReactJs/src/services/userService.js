@@ -55,7 +55,7 @@ const postBookAppointmentService = (data) => {
   return axios.post("/api/patient-book-appointment", data);
 };
 const createNewSpecialtyService = (data) => {
-  return axios.post("/api/creace-new-specialty", data);
+  return axios.post("/api/create-new-specialty", data);
 };
 
 const getAllSpecialtyService = (inputId) => {
@@ -75,6 +75,23 @@ const getDetailSpecialtyByIdService = (data) => {
   return axios.get(
     `/api/get-detail-specialty-by-id?id=${data.id}&location=${data.location}`
   );
+};
+
+const allClinicService = (inputId) => {
+  return axios.get(`/api/all-clinic?id=${inputId}`);
+};
+const createClinicService = (data) => {
+  return axios.post("/api/create-new-clinic", data);
+};
+const getEditClinicService = (inputData) => {
+  return axios.put("/api/edit-clinic", inputData);
+};
+const deleteClinicService = (clinicId) => {
+  return axios.delete("/api/delete-clinic", {
+    data: {
+      id: clinicId,
+    },
+  });
 };
 export {
   handleLoginApi,
@@ -97,4 +114,8 @@ export {
   getEditSpecialtyService,
   deleteSpecialtyService,
   getDetailSpecialtyByIdService,
+  createClinicService,
+  allClinicService,
+  getEditClinicService,
+  deleteClinicService,
 };
