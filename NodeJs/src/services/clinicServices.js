@@ -135,10 +135,43 @@ let deleteClinicService = (clinicId) => {
     }
   });
 };
-
+let getDetailClinicByIdService = (inputId) => {
+  return new Promise(async (resolve, reject) => {
+    if (!inputId) {
+      resolve({
+        errCode: 1,
+        errMessage: "Missing required parameters",
+      });
+    } else {
+      let data = await db.Clinic.findOne({
+        where: { id: inputId },
+        attributes: [
+          "name",
+          "address",
+          "descriptionHTML",
+          "descriptionMarkdown",
+        ],
+      });
+      if (data) {
+        let doctorClinic = [];
+        doctorClinic = await db.Doctor_Detail.findAll({
+          where: { clinicId: inputId },
+          attributes: ["doctorId", "provinceId"],
+        });
+        data.doctorClinic = doctorClinic;
+      } else data = {};
+      resolve({
+        errCode: 0,
+        errMessage: "Ok",
+        data,
+      });
+    }
+  });
+};
 module.exports = {
   createClinicService: createClinicService,
   allClinicService: allClinicService,
   editClinicService: editClinicService,
   deleteClinicService: deleteClinicService,
+  getDetailClinicByIdService: getDetailClinicByIdService,
 };

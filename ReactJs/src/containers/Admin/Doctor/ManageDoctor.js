@@ -78,7 +78,7 @@ class ManageDoctor extends Component {
     if (
       prevProps.allRequiredDoctorInfor !== this.props.allRequiredDoctorInfor
     ) {
-      let { resPayment, resPrice, resProvince, resSpecialty } =
+      let { resPayment, resPrice, resProvince, resSpecialty, resClinic } =
         this.props.allRequiredDoctorInfor;
       let dataSelectPrice = this.builDataInputSelect(resPrice, "PRICE");
       let dataSelectPayment = this.builDataInputSelect(resPayment, "PAYMENT");
@@ -90,11 +90,13 @@ class ManageDoctor extends Component {
         resSpecialty,
         "SPECIALTY"
       );
+      let dataSelectClinic = this.builDataInputSelect(resClinic, "CLINIC");
       this.setState({
         listPrice: dataSelectPrice,
         listPayment: dataSelectPayment,
         listProvince: dataSelectProvince,
         listSpecialty: dataSelectSpecialty,
+        listClinic: dataSelectClinic,
       });
     }
   }
@@ -144,6 +146,15 @@ class ManageDoctor extends Component {
           return null;
         });
       }
+      if (type === "CLINIC") {
+        inputData.map((item, index) => {
+          let object = {};
+          object.label = item.name;
+          object.value = item.id;
+          result.push(object);
+          return null;
+        });
+      }
     }
     return result;
   };
@@ -168,10 +179,7 @@ class ManageDoctor extends Component {
       nameClinic: this.state.nameClinic,
       addressClinic: this.state.addressClinic,
       note: this.state.note,
-      clinicId:
-        this.state.selectedClinic && this.state.selectedClinic.value
-          ? this.state.selectedClinic.value
-          : "",
+      clinicId: this.state.selectedClinic.value,
       specialtyId: this.state.selectedSpecialty.value,
     });
   };
@@ -300,7 +308,7 @@ class ManageDoctor extends Component {
                 />
               </div>
               <div className="col-md-6">
-                <label className="form-label">Chọn Phòng Khám</label>
+                <label className="form-label">Chọn Chọn Cơ Sở</label>
                 <Select
                   className="select-doctor"
                   value={this.state.selectedClinic}

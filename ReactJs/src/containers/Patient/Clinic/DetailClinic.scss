@@ -1,25 +1,14 @@
-.detail-specialty-container {
+.detail-clinic-container {
   background-color: #eeee;
   padding-bottom: 20px;
-  .description-specialty {
+  .description-clinic {
     margin-top: 40px;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.35);
     padding: 25px;
     border-radius: 0.5rem;
     background-color: #ffff;
   }
-  .search-sp-doctor {
-    margin-top: 30px;
-    margin-right: 95rem;
-    font-size: 18px;
-    background-color: #ffff;
-    cursor: pointer;
-    select {
-      font-size: 16px;
-      margin: 0 auto;
-    }
-  }
-  .description-specialty-body {
+  .description-clinic-body {
     margin: 0 200px;
   }
   .each-doctor {
@@ -28,7 +17,6 @@
     display: flex;
     width: 100%;
     min-height: 300px;
-
     margin: 30px 0;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
     padding: 10px;
@@ -38,7 +26,6 @@
     }
     .content-right {
       width: 50%;
-
       padding: 5px;
       .doctor-extra-infor {
         border-top: 1px solid #ddd;

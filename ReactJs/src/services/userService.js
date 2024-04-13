@@ -93,6 +93,9 @@ const deleteClinicService = (clinicId) => {
     },
   });
 };
+const getDetailClinicByIdService = (data) => {
+  return axios.get(`/api/get-detail-clinic-by-id?id=${data.id}`);
+};
 export {
   handleLoginApi,
   getAllUsers,
@@ -118,4 +121,5 @@ export {
   allClinicService,
   getEditClinicService,
   deleteClinicService,
+  getDetailClinicByIdService,
 };

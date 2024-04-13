@@ -272,9 +272,7 @@ class ManageClinic extends Component {
             </button>
           </div>
           <div className="col-12 introductory-information">
-            <div className="title-custom3-clinic">
-              Thông tin chi tiết chuyên khoa
-            </div>
+            <div className="title-custom3-clinic">Thông tin chi tiết cơ sở</div>
             <div className="form-group-custom">
               <MdEditor
                 className="custom-mdeditor-clinic"

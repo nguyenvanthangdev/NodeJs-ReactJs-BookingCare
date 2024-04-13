@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { getAllSpecialtyService } from "../../../services/userService";
-//import { FormattedMessage } from "react-intl";
 import Slider from "react-slick";
 import { withRouter } from "react-router";
 class Specialty extends Component {
@@ -58,9 +57,7 @@ class Specialty extends Component {
                           backgroundImage: `url(${imageBase64})`,
                         }}
                       ></div>
-                      <div style={{ fontSize: "16px", fontWeight: 500 }}>
-                        {item.name}
-                      </div>
+                      <div style={{ marginTop: "15px" }}>{item.name}</div>
                     </div>
                   );
                 })}
