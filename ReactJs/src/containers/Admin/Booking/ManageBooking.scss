@@ -1,0 +1,41 @@
+.detail-booking-container {
+  .content-title {
+    font-size: 24px;
+    text-align: center;
+    font-weight: 500;
+    color: #0d6efd;
+    text-transform: uppercase;
+  }
+  .booking-content {
+    width: 80%;
+    padding: 28px;
+    height: 670px;
+    //text-align: center;
+    margin-left: 200px;
+
+    box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.3);
+    border-radius: 0.5rem;
+    .choose-day {
+      margin: 5px 0;
+      font-size: 16px;
+      font-weight: 500;
+    }
+    .custom-table-booking {
+      margin: 10px 50px 35px 50px;
+
+      table {
+        vertical-align: baseline !important;
+        th {
+          .customcolumn {
+            text-align: center !important;
+          }
+        }
+        tr {
+          .customcolumn {
+            text-align: center !important;
+          }
+        }
+      }
+    }
+  }
+}

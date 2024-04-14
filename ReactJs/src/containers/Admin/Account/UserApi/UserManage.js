@@ -7,7 +7,7 @@ import {
   createNewUserService,
   deleteUserService,
   editUserService,
-} from "../../../../services/userService";
+} from "../../../../services/ApiService";
 import ModalUser from "./ModalUser";
 import { emitter } from "../../../../utils/emitter";
 import ModalEditUser from "./ModalEditUser";

@@ -4,7 +4,7 @@ import { CommonUtils } from "../../../utils";
 import { Link } from "react-router-dom";
 import "./Signup.scss";
 import { emitter } from "../../../utils/emitter";
-import { createNewUserService } from "../../../services/userService";
+import { createNewUserService } from "../../../services/ApiService";
 import { toast } from "react-toastify";
 class Signup extends Component {
   constructor(props) {

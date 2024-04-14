@@ -5,7 +5,7 @@ import HomeHeader from "../../HomePage/Home/HomeHeader";
 import DoctorSchedule from "../Doctor/DoctorSchedule";
 import DoctorExtrainfor from "../Doctor/DoctorExtrainfor";
 import ProfileDoctor from "../Doctor/ProfileDoctor";
-import { getDetailClinicByIdService } from "../../../services/userService";
+import { getDetailClinicByIdService } from "../../../services/ApiService";
 import _ from "lodash";
 class DetailClinic extends Component {
   constructor(props) {

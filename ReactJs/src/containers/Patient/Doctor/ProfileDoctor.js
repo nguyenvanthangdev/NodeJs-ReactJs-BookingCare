@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import "./ProfileDoctor.scss";
-import { getProfileDoctorByIdService } from "../../../services/userService";
+import { getProfileDoctorByIdService } from "../../../services/ApiService";
 import { LANGUAGES } from "../../../utils";
 import NumericFormat from "react-number-format";
 import _ from "lodash";

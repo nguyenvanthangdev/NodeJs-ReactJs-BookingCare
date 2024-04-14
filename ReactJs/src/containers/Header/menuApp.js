@@ -65,6 +65,15 @@ export const adminMenu = [
       },
     ],
   },
+  {
+    name: "menu.admin.booking",
+    menus: [
+      {
+        name: "menu.admin.manage-booking",
+        link: "/system/manage-booking",
+      },
+    ],
+  },
 ];
 export const doctorMenu = [
   //Quan ly ke hoach kham benh cua bac si

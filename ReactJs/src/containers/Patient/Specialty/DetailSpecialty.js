@@ -8,7 +8,7 @@ import ProfileDoctor from "../Doctor/ProfileDoctor";
 import {
   getDetailSpecialtyByIdService,
   getAllCodeService,
-} from "../../../services/userService";
+} from "../../../services/ApiService";
 import _ from "lodash";
 import { LANGUAGES } from "../../../utils";
 class DetailSpecialty extends Component {

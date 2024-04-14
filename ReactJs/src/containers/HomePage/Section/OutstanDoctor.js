@@ -53,8 +53,10 @@ class OutstanDoctor extends Component {
                       "base64"
                     ).toString("binary");
                   }
-                  let nameVi = `${item.positionData.valueVi} ${item.lastName} ${item.firstName}`;
-                  let nameEn = `${item.positionData.valueEn} ${item.firstName} ${item.lastName}`;
+                  let nameVi = `${item.lastName} ${item.firstName}`;
+                  let positionVi = `${item.positionData.valueVi}`;
+                  let nameEn = `${item.firstName} ${item.lastName}`;
+                  let positionEn = `${item.positionData.valueEn} `;
                   return (
                     <div
                       className="section-customize"
@@ -72,9 +74,13 @@ class OutstanDoctor extends Component {
                         </div>
                         <div className="position text-center">
                           <div>
+                            {language === LANGUAGES.VI
+                              ? positionVi
+                              : positionEn}
+                          </div>
+                          <div>
                             {language === LANGUAGES.VI ? nameVi : nameEn}
                           </div>
-                          <div>Cơ xương khớp 1</div>
                         </div>
                       </div>
                     </div>

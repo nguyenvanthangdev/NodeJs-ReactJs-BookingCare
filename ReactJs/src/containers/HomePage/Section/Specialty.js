@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { getAllSpecialtyService } from "../../../services/userService";
+import { getAllSpecialtyService } from "../../../services/ApiService";
 import Slider from "react-slick";
 import { withRouter } from "react-router";
 class Specialty extends Component {

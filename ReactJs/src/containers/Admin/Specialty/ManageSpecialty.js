@@ -8,7 +8,7 @@ import {
   getAllSpecialtyService,
   getEditSpecialtyService,
   deleteSpecialtyService,
-} from "../../../services/userService";
+} from "../../../services/ApiService";
 import MarkdownIt from "markdown-it";
 import MdEditor from "react-markdown-editor-lite";
 import Select from "react-select";

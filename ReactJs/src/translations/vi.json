@@ -34,7 +34,9 @@
       "manage-specialty": "Quản lý Chuyên Khoa",
       "schedule": "Quản lý Lịch",
       "dashboard": "Dashboard",
-      "manage-infor-doctor": "Quản lý Thông Tin"
+      "manage-infor-doctor": "Quản lý Thông Tin",
+      "booking": "Quản lý Hóa Đơn",
+      "manage-booking": "Quản lý Hóa Đơn"
     },
     "doctor": {
       "manage-schedule": "Quản Lý Lịch"

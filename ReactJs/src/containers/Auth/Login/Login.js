@@ -4,7 +4,7 @@ import { push } from "connected-react-router";
 import * as actions from "../../../store/actions";
 import { Link } from "react-router-dom";
 import "./Login.scss";
-import { handleLoginApi } from "../../../services/userService";
+import { handleLoginApi } from "../../../services/ApiService";
 class Login extends Component {
   constructor(props) {
     super(props);

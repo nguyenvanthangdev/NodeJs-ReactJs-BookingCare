@@ -8,7 +8,7 @@ import _ from "lodash";
 import {
   postBookAppointmentService,
   getExtraInforDoctorByIdService,
-} from "../../../../services/userService";
+} from "../../../../services/ApiService";
 import NumericFormat from "react-number-format";
 import DatePicker from "../../../../components/Input/DatePicker";
 import * as actions from "../../../../store/actions";
@@ -144,9 +144,9 @@ class BookingModal extends Component {
       toast.success("Booking a new appointment succeed !");
       this.props.closeBookingClose();
     } else if (res && res.errCode === 1) {
-      toast.error("Missing input parameters !");
+      toast.error(res.errMessage);
     } else {
-      toast.error("Booking a new appointment error !");
+      toast.error(res.errMessage);
     }
   };
   render() {

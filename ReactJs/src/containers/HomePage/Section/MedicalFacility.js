@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { allClinicService } from "../../../services/userService";
+import { allClinicService } from "../../../services/ApiService";
 import Slider from "react-slick";
 import { withRouter } from "react-router";
 class MedicalFacility extends Component {

@@ -10,7 +10,7 @@ import {
   saveInforDoctorsService,
   getAllSpecialtyService,
   allClinicService,
-} from "../../services/userService";
+} from "../../services/ApiService";
 import { toast } from "react-toastify";
 export const fetchGenderStart = () => {
   return async (dispatch, getState) => {

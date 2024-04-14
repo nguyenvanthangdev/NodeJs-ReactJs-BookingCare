@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 // import { FormattedMessage } from "react-intl";
 import { connect } from "react-redux";
-// import { getAllCodeService } from "../../../services/userService";
+
 // import { LANGUAGES } from "../../../utils";
 class Dashboard extends Component {
   constructor(props) {

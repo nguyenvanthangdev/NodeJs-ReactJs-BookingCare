@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import "./DoctorExtrainfor.scss";
 // eslint-disable-next-line
-import { getExtraInforDoctorByIdService } from "../../../services/userService";
+import { getExtraInforDoctorByIdService } from "../../../services/ApiService";
 import NumericFormat from "react-number-format";
 import { LANGUAGES } from "../../../utils";
 class DoctorExtrainfor extends Component {

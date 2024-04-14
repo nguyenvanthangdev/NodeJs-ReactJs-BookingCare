@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import "./DetailDoctor.scss";
 import HomeHeader from "../../HomePage/Home/HomeHeader";
 import { LANGUAGES } from "../../../utils";
-import { getDetailDoctorByIdService } from "../../../services/userService";
+import { getDetailDoctorByIdService } from "../../../services/ApiService";
 import DoctorSchedule from "./DoctorSchedule";
 import DoctorExtrainfor from "./DoctorExtrainfor";
 class DetailDoctor extends Component {

@@ -10,6 +10,8 @@ import { USER_ROLE } from "../utils";
 import { withRouter } from "react-router";
 import ManageSpecialty from "../containers/Admin/Specialty/ManageSpecialty";
 import ManageClinic from "../containers/Admin/Clinic/ManageClinic";
+
+import ManageBooking from "../containers/Admin/Booking/ManageBooking";
 class System extends Component {
   constructor(props) {
     super(props);
@@ -39,6 +41,10 @@ class System extends Component {
                 />
                 <Route path="/system/manage-clinic" component={ManageClinic} />
 
+                <Route
+                  path="/system/manage-booking"
+                  component={ManageBooking}
+                />
                 <Route render={() => <Redirect to={systemMenuPath} />} />
               </Switch>
             </div>

@@ -5,7 +5,7 @@ import moment from "moment";
 // eslint-disable-next-line
 import localization from "moment/locale/vi";
 import { LANGUAGES } from "../../../utils";
-import { getScheduleDoctorByDate } from "../../../services/userService";
+import { getScheduleDoctorByDate } from "../../../services/ApiService";
 import BookingModal from "./Modal/BookingModal";
 class DoctorSchedule extends Component {
   constructor(props) {

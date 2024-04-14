@@ -8,7 +8,7 @@ import MdEditor from "react-markdown-editor-lite";
 import "react-markdown-editor-lite/lib/index.css";
 import Select from "react-select";
 import { CRUD_ACTIONS, LANGUAGES } from "../../../utils";
-import { getDetailDoctorByIdService } from "../../../services/userService";
+import { getDetailDoctorByIdService } from "../../../services/ApiService";
 
 const mdParser = new MarkdownIt();
 
