@@ -3,23 +3,48 @@ import { connect } from "react-redux";
 import "./ManageBooking.scss";
 import CustomScrollbars from "../../../components/CustomScrollbars";
 import DatePicker from "../../../components/Input/DatePicker";
+import { getListPatientForDoctorService } from "../../../services/ApiService";
+import moment from "moment";
 class ManageBooking extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentDate: new Date(),
+      currentDate: moment(new Date()).startOf("day").valueOf(),
+      dataPatient: [],
     };
   }
   handleChangeDatePicker = (date) => {
-    this.setState({
-      currentDate: date[0],
-    });
+    this.setState(
+      {
+        currentDate: date[0],
+      },
+      () => {
+        let { currentDate } = this.state;
+        let formatedDate = new Date(currentDate).getTime();
+        this.getDataPatient(formatedDate);
+      }
+    );
   };
-  async componentDidMount() {}
+  async componentDidMount() {
+    let { currentDate } = this.state;
+    let formatedDate = new Date(currentDate).getTime();
+    this.getDataPatient(formatedDate);
+  }
+  getDataPatient = async (formatedDate) => {
+    let res = await getListPatientForDoctorService({
+      date: formatedDate,
+    });
+    if (res && res.errCode === 0) {
+      this.setState({
+        dataPatient: res.data,
+      });
+    }
+  };
   componentDidUpdate(prevProps, prevState, snapshot) {}
 
   render() {
-    let arrUsers = this.state;
+    let { dataPatient } = this.state;
+    console.log("sfhsdhfjsd", this.state);
     return (
       <>
         <div className="detail-booking-container">
@@ -31,7 +56,7 @@ class ManageBooking extends Component {
                 <DatePicker
                   className="form-control"
                   value={this.state.currentDate}
-                  onChange={this.handleOnChangeDatePicker}
+                  onChange={this.handleChangeDatePicker}
                 />
               </div>
             </div>
@@ -40,15 +65,33 @@ class ManageBooking extends Component {
                 <table className="table px-3">
                   <thead className="thead-light">
                     <tr>
-                      <th scope="col text-center">Email</th>
+                      <th scope="col text-center">STT</th>
                       <th className="customcolumn" scope="col">
-                        First Name
+                        Thời Gian Khám
                       </th>
                       <th className="customcolumn" scope="col">
-                        Last Name
+                        Lý Do Khám
                       </th>
                       <th className="customcolumn" scope="col">
-                        Address
+                        Giá Khám
+                      </th>
+                      <th className="customcolumn" scope="col">
+                        Họ Tên
+                      </th>
+                      <th className="customcolumn" scope="col">
+                        Email
+                      </th>
+                      <th className="customcolumn" scope="col">
+                        Địa Chỉ
+                      </th>
+                      <th className="customcolumn" scope="col">
+                        Giới Tính
+                      </th>
+                      <th className="customcolumn" scope="col">
+                        Tên Bác Sĩ Khám
+                      </th>
+                      <th className="customcolumn" scope="col">
+                        Chức Danh
                       </th>
                       <th className="customcolumn" scope="col">
                         Actions
@@ -56,29 +99,48 @@ class ManageBooking extends Component {
                     </tr>
                   </thead>
                   <tbody>
-                    {arrUsers &&
-                      arrUsers.length > 0 &&
-                      arrUsers.map((item, index) => {
+                    {dataPatient &&
+                      dataPatient.length > 0 &&
+                      dataPatient.map((item, index) => {
                         return (
                           <tr key={index}>
-                            <td>{item.email}</td>
-                            <td className="customcolumn">{item.firstName}</td>
-                            <td className="customcolumn">{item.lastName}</td>
-                            <td className="customcolumn">{item.address}</td>
+                            <td>{index + 1}</td>
+                            <td className="customcolumn">
+                              {item.timeTypeDataPatient.valueVi}
+                            </td>
+                            <td className="customcolumn">{item.reason}</td>
+                            <td className="customcolumn">
+                              {item.price + " VND"}
+                            </td>
+                            <td className="customcolumn">
+                              {item.patientData.firstName +
+                                " " +
+                                item.patientData.lastName}
+                            </td>
+                            <td className="customcolumn">
+                              {item.patientData.email}
+                            </td>
+                            <td className="customcolumn">
+                              {item.patientData.address}
+                            </td>
+                            <td className="customcolumn">
+                              {item.patientData.genderData.valueVi}
+                            </td>
+                            <td className="customcolumn">
+                              {item.doctorDataBooking.firstName +
+                                " " +
+                                item.doctorDataBooking.lastName}
+                            </td>
+                            <td className="customcolumn">
+                              {item.doctorDataBooking.positionData.valueVi}
+                            </td>
                             <td className="customcolumn">
                               <button
                                 type="button"
                                 className="btn btn-warning px-3 mx-2"
                                 onClick={() => this.handEditUser(item)}
                               >
-                                Edit
-                              </button>
-                              <button
-                                type="button"
-                                className="btn btn-danger px-3"
-                                onClick={() => this.handleDeleteUser(item)}
-                              >
-                                Delete
+                                Xác Nhận
                               </button>
                             </td>
                           </tr>

@@ -50,7 +50,7 @@ let postBookAppointmentService = (data) => {
         //     },
         //   });
         await db.Booking.create({
-          statusId: "S1",
+          statusId: "S2",
           doctorId: data.doctorId,
           patientId: user.id,
           date: data.date,

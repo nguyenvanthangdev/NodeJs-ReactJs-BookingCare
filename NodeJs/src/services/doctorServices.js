@@ -281,6 +281,11 @@ let getScheduleByDateService = (doctorId, date) => {
               as: "timeTypeData",
               attributes: ["valueEn", "valueVi"],
             },
+            {
+              model: db.User,
+              as: "doctorData",
+              attributes: ["firstName", "lastName"],
+            },
           ],
           raw: false,
           nest: true,
@@ -416,12 +421,18 @@ let getListPatientForDoctorService = (date) => {
         });
       } else {
         let data = await db.Booking.findAll({
-          where: { statusId: "S1", date: date },
+          where: { statusId: "S2", date: date },
           include: [
             {
               model: db.User,
               as: "patientData",
-              attributes: ["email", "firstName", "address", "gender"],
+              attributes: [
+                "email",
+                "firstName",
+                "lastName",
+                "address",
+                "gender",
+              ],
               include: [
                 {
                   model: db.Allcode,
@@ -431,8 +442,13 @@ let getListPatientForDoctorService = (date) => {
               ],
             },
             {
+              model: db.Allcode,
+              as: "timeTypeDataPatient",
+              attributes: ["valueEn", "valueVi"],
+            },
+            {
               model: db.User,
-              as: "doctorData",
+              as: "doctorDataBooking",
               attributes: [
                 "email",
                 "firstName",
