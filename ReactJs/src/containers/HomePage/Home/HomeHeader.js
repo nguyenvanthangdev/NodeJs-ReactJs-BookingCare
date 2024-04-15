@@ -65,6 +65,12 @@ class HomeHeader extends Component {
       this.props.history.push(`/account/${userInfo.id}`);
     }
   };
+  handleViewHistory = () => {
+    const { userInfo } = this.props;
+    if (this.props.history) {
+      this.props.history.push(`/history-booking/${userInfo.id}`);
+    }
+  };
   render() {
     //let language = this.props.language;
     const { dropdownOpen } = this.state;
@@ -201,7 +207,11 @@ class HomeHeader extends Component {
                           </DropdownItem>
                         ) : (
                           <>
-                            <DropdownItem>Lịch sử dặt lịch</DropdownItem>
+                            <DropdownItem
+                              onClick={() => this.handleViewHistory()}
+                            >
+                              Lịch sử dặt lịch
+                            </DropdownItem>
                           </>
                         )}
                         <DropdownItem

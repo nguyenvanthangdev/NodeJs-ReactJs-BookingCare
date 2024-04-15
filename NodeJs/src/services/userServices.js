@@ -177,6 +177,9 @@ let updateUserData = (data) => {
         if (data.avatar) {
           user.image = data.avatar;
         }
+        if (data.image) {
+          user.image = data.image;
+        }
         await user.save();
         resolve({
           errCode: 0,

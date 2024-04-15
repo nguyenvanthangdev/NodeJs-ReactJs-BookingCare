@@ -11,6 +11,7 @@ import Home from "../routes/Home";
 import Login from "./Auth/Login/Login";
 import Signup from "./Auth/Signup/Signup";
 import ManageAccount from "./Auth/ManageAccount/ManageAccount";
+import History from "./Auth/History/History";
 import System from "../routes/System";
 import HomePage from "./HomePage/Home/HomePage";
 import CustomScrollbars from "../components/CustomScrollbars";
@@ -62,6 +63,10 @@ class App extends Component {
                   <Route
                     path={path.ACCOUNT}
                     component={userIsAuthenticated(ManageAccount)}
+                  />
+                  <Route
+                    path={path.HISTORY_BOOKING}
+                    component={userIsAuthenticated(History)}
                   />
                   <Route path={path.HOME} exact component={Home} />
                   <Route
