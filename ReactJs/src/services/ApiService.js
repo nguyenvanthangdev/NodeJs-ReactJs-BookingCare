@@ -100,6 +100,18 @@ const getListPatientForDoctorService = (data) => {
   return axios.get(`/api/get-list-patient-for-doctor?date=${data.date}`);
 };
 //doctor${data.doctorId}&
+const getAllScheduleService = (data) => {
+  return axios.get(
+    `/api/get-all-schedule?doctorId=${data.doctorId}&date=${data.date}`
+  );
+};
+const getDeleteScheduleService = (scheduleId) => {
+  return axios.delete("/api/get-delete-schedule", {
+    data: {
+      id: scheduleId,
+    },
+  });
+};
 export {
   handleLoginApi,
   getAllUsers,
@@ -127,4 +139,6 @@ export {
   deleteClinicService,
   getDetailClinicByIdService,
   getListPatientForDoctorService,
+  getAllScheduleService,
+  getDeleteScheduleService,
 };

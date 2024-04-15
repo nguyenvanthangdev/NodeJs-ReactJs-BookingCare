@@ -1,20 +1,13 @@
 import express from "express";
-import getHomePage from "../controllers/homeController";
+
 import userController from "../controllers/userController";
 import doctorController from "../controllers/doctorController";
 import patientController from "../controllers/patientController";
 import specialtyController from "../controllers/specialtyController";
 import clinicController from "../controllers/clinicController";
+import scheduleController from "../controllers/scheduleController";
 let router = express.Router();
 let initWebRoutes = (app) => {
-  router.get("/", getHomePage.getHomePage);
-  router.get("/about", getHomePage.getAboutPage);
-  router.get("/crud", getHomePage.getCRUD);
-  router.post("/post-crud", getHomePage.postCRUD);
-  router.get("/get-crud", getHomePage.displaygetCRUD);
-  router.get("/edit-crud", getHomePage.getEditCRUD);
-  router.post("/put-crud", getHomePage.putCRUD);
-  router.get("/delete-crud", getHomePage.deleteCRUD);
   //Login
   router.post("/api/login", userController.handleLogin);
   //User
@@ -45,6 +38,11 @@ let initWebRoutes = (app) => {
   );
 
   //Schedule
+  router.get("/api/get-all-schedule", scheduleController.getAllSchedule);
+  router.delete(
+    "/api/get-delete-schedule",
+    scheduleController.getDeleteSchedule
+  );
   router.post("/api/bulk-create-schedule", doctorController.bulkCreateSchedule);
   router.get(
     "/api/get-schedule-doctor-by-date",

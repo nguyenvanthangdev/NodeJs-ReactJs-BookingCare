@@ -90,9 +90,9 @@ class ManageBooking extends Component {
                       <th className="customcolumn" scope="col">
                         Tên Bác Sĩ Khám
                       </th>
-                      <th className="customcolumn" scope="col">
+                      {/* <th className="customcolumn" scope="col">
                         Chức Danh
-                      </th>
+                      </th> */}
                       <th className="customcolumn" scope="col">
                         Actions
                       </th>
@@ -131,13 +131,13 @@ class ManageBooking extends Component {
                                 " " +
                                 item.doctorDataBooking.lastName}
                             </td>
-                            <td className="customcolumn">
+                            {/* <td className="customcolumn">
                               {item.doctorDataBooking.positionData.valueVi}
-                            </td>
+                            </td> */}
                             <td className="customcolumn">
                               <button
                                 type="button"
-                                className="btn btn-warning px-3 mx-2"
+                                className="btn btn-warning px-3 mx-2 customcolumn"
                                 onClick={() => this.handEditUser(item)}
                               >
                                 Xác Nhận

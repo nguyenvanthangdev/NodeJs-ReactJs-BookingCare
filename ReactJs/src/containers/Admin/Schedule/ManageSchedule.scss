@@ -33,6 +33,7 @@
       }
     }
     .pick-hour-container {
+      display: flex;
       width: 60%;
       margin-top: 50px;
       flex-wrap: wrap;
@@ -54,12 +55,21 @@
       }
       .title-custom3 {
         font-size: 18px;
-        margin-left: 5px;
+        margin-left: 18px;
+        margin-bottom: 20px;
       }
       .form-group-custom {
         display: inline-grid;
         padding: 10px 0;
-        margin-top: 20px;
+        // margin-top: 20px;
+      }
+      .table-custom {
+        width: 600px;
+        padding: 15px;
+        margin-left: 125px;
+        .customcolumn-ngay {
+          text-transform: uppercase;
+        }
       }
     }
   }
