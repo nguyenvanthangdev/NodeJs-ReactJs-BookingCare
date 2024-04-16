@@ -21,6 +21,7 @@ import DetailSpecialty from "./Patient/Specialty/DetailSpecialty";
 import DetailClinic from "./Patient/Clinic/DetailClinic";
 import MoreDoctor from "../containers/HomePage/Section/MoreDoctor/MoreDoctor";
 import MoreSpecialty from "../containers/HomePage/Section/MoreSpecialty/MoreSpecialty";
+import MoreClinic from "../containers/HomePage/Section/MoreClinic/MoreClinic";
 class App extends Component {
   constructor(props) {
     super(props);
@@ -87,6 +88,7 @@ class App extends Component {
                   <Route path={path.DETAIL_CLINIC} component={DetailClinic} />
                   <Route path={path.MORE_DOCTOR} component={MoreDoctor} />
                   <Route path={path.MORE_SPECIALTY} component={MoreSpecialty} />
+                  <Route path={path.MORE_CLINIC} component={MoreClinic} />
                 </Switch>
               </CustomScrollbars>
             </div>

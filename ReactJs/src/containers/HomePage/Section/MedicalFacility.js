@@ -23,6 +23,11 @@ class MedicalFacility extends Component {
       this.props.history.push(`/detail-clinic/${item.id}`);
     }
   };
+  handleViewMoreClinic = () => {
+    if (this.props.history) {
+      this.props.history.push(`/more-clinic`);
+    }
+  };
   render() {
     let { dataCinic } = this.state;
     console.log("fhusdf", this.state);
@@ -31,7 +36,12 @@ class MedicalFacility extends Component {
         <div className="section-container">
           <div className="section-header">
             <span className="title-section">Cơ sở y tế nổi bật</span>
-            <button className="btn btn-section">Xem thêm</button>
+            <button
+              className="btn btn-section"
+              onClick={() => this.handleViewMoreClinic()}
+            >
+              Xem thêm
+            </button>
           </div>
           <div className="section-body">
             <Slider {...this.props.settings}>

@@ -71,6 +71,21 @@ class HomeHeader extends Component {
       this.props.history.push(`/history-booking/${userInfo.id}`);
     }
   };
+  handleViewMoreDoctor = () => {
+    if (this.props.history) {
+      this.props.history.push(`/more-doctor`);
+    }
+  };
+  handleViewMoreSpecialty = () => {
+    if (this.props.history) {
+      this.props.history.push(`/more-specialty`);
+    }
+  };
+  handleViewMoreClinic = () => {
+    if (this.props.history) {
+      this.props.history.push(`/more-clinic`);
+    }
+  };
   render() {
     //let language = this.props.language;
     const { dropdownOpen } = this.state;
@@ -110,7 +125,10 @@ class HomeHeader extends Component {
               ></div>
             </div>
             <div className="center-content">
-              <div className="child-content">
+              <div
+                className="child-content"
+                onClick={() => this.handleViewMoreSpecialty()}
+              >
                 <div>
                   <b>
                     <FormattedMessage id="home-header.speciality" />
@@ -120,7 +138,10 @@ class HomeHeader extends Component {
                   <FormattedMessage id="home-header.search-doctor" />
                 </div>
               </div>
-              <div className="child-content">
+              <div
+                className="child-content"
+                onClick={() => this.handleViewMoreClinic()}
+              >
                 <div>
                   <b>
                     <FormattedMessage id="home-header.health-facility" />
@@ -130,7 +151,10 @@ class HomeHeader extends Component {
                   <FormattedMessage id="home-header.select-room" />
                 </div>
               </div>
-              <div className="child-content">
+              <div
+                className="child-content"
+                onClick={() => this.handleViewMoreDoctor()}
+              >
                 <div>
                   <b>
                     <FormattedMessage id="home-header.doctor" />
