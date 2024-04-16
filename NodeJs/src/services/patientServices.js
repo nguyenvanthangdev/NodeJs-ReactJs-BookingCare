@@ -69,6 +69,61 @@ let postBookAppointmentService = (data) => {
     }
   });
 };
+let getHistoryBookingService = (inputPatientId) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      if (!inputPatientId) {
+        resolve({
+          errCode: 1,
+          errMessage: "Missing required parameter !",
+        });
+      } else {
+        let data = await db.Booking.findAll({
+          where: { statusId: "S2", patientId: inputPatientId },
+          include: [
+            {
+              model: db.User,
+              as: "patientData",
+              attributes: [
+                "email",
+                "firstName",
+                "lastName",
+                "address",
+                "gender",
+              ],
+              include: [
+                {
+                  model: db.Allcode,
+                  as: "genderData",
+                  attributes: ["valueEn", "valueVi"],
+                },
+              ],
+            },
+            {
+              model: db.Allcode,
+              as: "timeTypeDataPatient",
+              attributes: ["valueEn", "valueVi"],
+            },
+            {
+              model: db.User,
+              as: "doctorDataBooking",
+              attributes: ["firstName", "lastName"],
+            },
+          ],
+          raw: false,
+          nest: true,
+        });
+        resolve({
+          errCode: 0,
+          data: data,
+        });
+      }
+    } catch (e) {
+      reject(e);
+    }
+  });
+};
 module.exports = {
   postBookAppointmentService: postBookAppointmentService,
+  getHistoryBookingService: getHistoryBookingService,
 };

@@ -1,0 +1,18 @@
+.history-container {
+  background-color: #ddd;
+  height: 91.3vh;
+  .history-content {
+    width: 80%;
+    border-radius: 20px;
+    background-color: #ffff;
+    position: absolute;
+    margin: auto;
+    top: 75px;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    height: 600px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    padding: 40px;
+  }
+}

@@ -112,6 +112,11 @@ const getDeleteScheduleService = (scheduleId) => {
     },
   });
 };
+
+const getHistoryBookingService = (inputPatientId) => {
+  return axios.get(`/api/get-history-booking?patientId=${inputPatientId}`);
+};
+
 export {
   handleLoginApi,
   getAllUsers,
@@ -141,4 +146,5 @@ export {
   getListPatientForDoctorService,
   getAllScheduleService,
   getDeleteScheduleService,
+  getHistoryBookingService,
 };
