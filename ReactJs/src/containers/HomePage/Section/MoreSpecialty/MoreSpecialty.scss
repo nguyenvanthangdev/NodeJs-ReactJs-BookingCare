@@ -1,7 +1,7 @@
-.more-doctor-container {
+.more-specialty-container {
   background-color: #ddd;
   height: 125%;
-  .more-doctor-content {
+  .more-specialty-content {
     width: 67%;
     border-radius: 20px;
     background-color: #ffff;
@@ -19,7 +19,7 @@
       margin-right: 66%;
       margin-left: 48px;
     }
-    .more-doctor-card {
+    .more-specialty-card {
       .card-custom {
         padding: 20px;
         border: 1px solid rgba(0, 0, 0, 0.3);
@@ -37,10 +37,10 @@
             background-size: cover;
             background-color: #eee;
           }
-          .section-more-doctor {
-            width: 120px;
-            height: 120px;
-            border-radius: 50%;
+          .section-more-specialty {
+            width: 215px;
+            height: 145px;
+            // border-radius: 50%;
           }
         }
       }
