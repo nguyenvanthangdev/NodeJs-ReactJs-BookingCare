@@ -204,7 +204,7 @@ class ManageSchedule extends Component {
     let yesterday = new Date(new Date().setDate(new Date().getDate() - 1));
     console.log(this.props);
     console.log(this.state);
-    console.log(userInfo.id);
+    console.log(this.props.allDoctors);
     return (
       <div className="manage-schedule-container">
         {isLoggedIn === true &&

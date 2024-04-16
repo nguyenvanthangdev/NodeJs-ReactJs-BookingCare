@@ -1,0 +1,44 @@
+.more-doctor-container {
+  background-color: #ddd;
+  height: 91.3vh;
+  .more-doctor-content {
+    width: 70%;
+    border-radius: 20px;
+    background-color: #ffff;
+    position: absolute;
+    margin: auto;
+    top: 75px;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    height: 80%;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    padding: 40px;
+    .more-doctor-card {
+      .card-custom {
+        padding: 20px;
+        border: 1px solid #29af33;
+        height: 205px !important;
+        width: 260px !important;
+        .img-container {
+          display: flex;
+          justify-content: center;
+          margin-bottom: 10px;
+          .bg-image-card {
+            width: 95%;
+            height: 200px;
+            background-position: center center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-color: #eee;
+          }
+          .section-more-doctor {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+          }
+        }
+      }
+    }
+  }
+}

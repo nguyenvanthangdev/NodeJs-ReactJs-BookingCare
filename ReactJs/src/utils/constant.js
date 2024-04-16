@@ -11,6 +11,7 @@ export const path = {
   DOCTOR: "/doctor/",
   ACCOUNT: "/account/:id",
   HISTORY_BOOKING: "/history-booking/:id",
+  MORE_DOCTOR: "/more-doctor",
 };
 
 export const LANGUAGES = {
