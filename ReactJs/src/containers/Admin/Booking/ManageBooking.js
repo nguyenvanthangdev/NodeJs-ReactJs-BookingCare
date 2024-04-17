@@ -106,30 +106,30 @@ class ManageBooking extends Component {
                           <tr key={index}>
                             <td>{index + 1}</td>
                             <td className="customcolumn">
-                              {item.timeTypeDataPatient.valueVi}
+                              {item.timeTypeDataPatient?.valueVi}
                             </td>
                             <td className="customcolumn">{item.reason}</td>
                             <td className="customcolumn">
                               {item.price + " VND"}
                             </td>
                             <td className="customcolumn">
-                              {item.patientData.firstName +
+                              {item.patientData?.firstName +
                                 " " +
-                                item.patientData.lastName}
+                                item.patientData?.lastName}
                             </td>
                             <td className="customcolumn">
-                              {item.patientData.email}
+                              {item.patientData?.email}
                             </td>
                             <td className="customcolumn">
-                              {item.patientData.address}
+                              {item.patientData?.address}
                             </td>
                             <td className="customcolumn">
-                              {item.patientData.genderData.valueVi}
+                              {item.patientData?.genderData?.valueVi}
                             </td>
                             <td className="customcolumn">
-                              {item.doctorDataBooking.firstName +
+                              {item.doctorDataBooking?.firstName +
                                 " " +
-                                item.doctorDataBooking.lastName}
+                                item.doctorDataBooking?.lastName}
                             </td>
                             {/* <td className="customcolumn">
                               {item.doctorDataBooking.positionData.valueVi}

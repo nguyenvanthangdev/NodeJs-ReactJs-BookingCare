@@ -4,7 +4,6 @@ import { withRouter } from "react-router";
 import "./MoreClinic.scss";
 import HomeHeader from "../../Home/HomeHeader";
 import { allClinicService } from "../../../../services/ApiService";
-
 class MoreClinic extends Component {
   constructor(props) {
     super(props);
@@ -15,7 +14,7 @@ class MoreClinic extends Component {
   }
 
   async componentDidMount() {
-    this.getAllClinicFromReact();
+    await this.getAllClinicFromReact();
   }
 
   getAllClinicFromReact = async () => {
@@ -43,7 +42,7 @@ class MoreClinic extends Component {
     let filteredSpecialties = listClinic.filter((clinic) =>
       clinic.name.toLowerCase().includes(searchQuery)
     );
-
+    console.log(this.props);
     return (
       <>
         <HomeHeader />

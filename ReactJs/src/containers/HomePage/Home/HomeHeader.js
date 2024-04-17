@@ -21,6 +21,13 @@ class HomeHeader extends Component {
       dropdownOpen: false,
     };
   }
+  async componentDidMount() {
+    let { setLoading } = this.props;
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false);
+    }, 700);
+  }
   toggleDropdown = () => {
     this.setState((prevState) => ({
       dropdownOpen: !prevState.dropdownOpen,
@@ -338,6 +345,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     changeLanguageAppRedux: (language) => dispatch(changeLanguageApp(language)),
     processLogout: () => dispatch(actions.processLogout()),
+    setLoading: (isLoading) => dispatch(actions.setLoading(isLoading)),
   };
 };
 

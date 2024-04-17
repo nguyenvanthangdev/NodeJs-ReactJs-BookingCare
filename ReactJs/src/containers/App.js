@@ -6,6 +6,7 @@ import {
   userIsAuthenticated,
   userIsNotAuthenticated,
 } from "../hoc/authentication";
+import "./App.scss";
 import { path } from "../utils";
 import Home from "../routes/Home";
 import Login from "./Auth/Login/Login";
@@ -22,13 +23,11 @@ import DetailClinic from "./Patient/Clinic/DetailClinic";
 import MoreDoctor from "../containers/HomePage/Section/MoreDoctor/MoreDoctor";
 import MoreSpecialty from "../containers/HomePage/Section/MoreSpecialty/MoreSpecialty";
 import MoreClinic from "../containers/HomePage/Section/MoreClinic/MoreClinic";
+import ScaleLoader from "react-spinners/ScaleLoader";
 class App extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      userInfo: null,
-      isLoggedIn: false,
-    };
+    this.state = {};
   }
 
   handlePersistorState = () => {
@@ -50,11 +49,22 @@ class App extends Component {
   }
 
   render() {
+    const { isLoading } = this.props;
     return (
       <Fragment>
         <BrowserRouter>
           <div className="main-container">
             <div className="content-container">
+              <div className={`loader-container ${isLoading ? "show" : ""}`}>
+                <ScaleLoader
+                  color="#4fe12b"
+                  height={50}
+                  margin={2}
+                  radius={2}
+                  speedMultiplier={1}
+                  width={4}
+                />
+              </div>
               <CustomScrollbars style={{ height: "100vh", width: "100%" }}>
                 <Switch>
                   <Route path={path.SIGNUP} exact component={Signup} />
@@ -116,6 +126,7 @@ const mapStateToProps = (state) => {
     started: state.app.started,
     isLoggedIn: state.user.isLoggedIn,
     userInfo: state.user.userInfo,
+    isLoading: state.user.isLoading,
   };
 };
 
