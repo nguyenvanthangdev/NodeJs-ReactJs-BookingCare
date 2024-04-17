@@ -23,6 +23,9 @@
       }
       .down {
         padding-top: 10px;
+        .title-time-date {
+          text-transform: uppercase;
+        }
       }
     }
   }

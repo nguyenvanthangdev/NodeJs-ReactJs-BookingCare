@@ -187,9 +187,9 @@ class BookingModal extends Component {
     }
   };
   render() {
-    let { extraInfor } = this.state;
+    let { extraInfor, genderArr } = this.state;
     let { isOpenModel, closeBookingClose, dataTime, language } = this.props;
-    let genders = this.state.genderArr;
+
     let doctorId = "";
     if (dataTime && !_.isEmpty(dataTime)) {
       doctorId = dataTime.doctorId;
@@ -299,11 +299,11 @@ class BookingModal extends Component {
                       onChange={(event) =>
                         this.handleOnChangeInput(event, "genders")
                       }
-                      value={genders}
+                      value={this.state.genders}
                     >
-                      {genders &&
-                        genders.length > 0 &&
-                        genders.map((item, index) => {
+                      {genderArr &&
+                        genderArr.length > 0 &&
+                        genderArr.map((item, index) => {
                           return (
                             <option key={index} value={item.keyMap}>
                               {language === LANGUAGES.VI

@@ -34,9 +34,13 @@ class ManageAccount extends Component {
     }
   }
   getAllUsersFromReact = async () => {
-    let { userInfo } = this.props;
-    if (userInfo && userInfo.id) {
-      let res = await getAllUsers(userInfo.id);
+    if (
+      this.props.match &&
+      this.props.match.params &&
+      this.props.match.params.id
+    ) {
+      let id = this.props.match.params.id;
+      let res = await getAllUsers(id);
       if (res && res.errCode === 0) {
         let data = res.users;
         let img64 = new Buffer.from(data.image, "base64").toString("binary");
@@ -52,6 +56,24 @@ class ManageAccount extends Component {
         });
       }
     }
+    // let { userInfo } = this.props;
+    // if (userInfo && userInfo.id) {
+    //   let res = await getAllUsers(userInfo.id);
+    //   if (res && res.errCode === 0) {
+    //     let data = res.users;
+    //     let img64 = new Buffer.from(data.image, "base64").toString("binary");
+    //     this.setState({
+    //       id: data.id,
+    //       firstName: data.firstName,
+    //       lastName: data.lastName,
+    //       address: data.address,
+    //       phonenumber: data.phonenumber,
+    //       gender: data.gender,
+    //       previewImgUrl: img64,
+    //       image: img64,
+    //     });
+    //   }
+    // }
   };
   handleOnChangeInput = (event, id) => {
     let copyState = { ...this.state };

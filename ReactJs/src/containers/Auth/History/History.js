@@ -17,15 +17,29 @@ class History extends Component {
     this.getAllHistoryBooking();
   }
   getAllHistoryBooking = async () => {
-    let { userInfo } = this.props;
-    if (userInfo && userInfo.id) {
-      let res = await getHistoryBookingService(userInfo.id);
+    if (
+      this.props.match &&
+      this.props.match.params &&
+      this.props.match.params.id
+    ) {
+      let id = this.props.match.params.id;
+      let res = await getHistoryBookingService(id);
       if (res && res.errCode === 0) {
         this.setState({
           arrHistoryBooking: res.data,
         });
       }
     }
+
+    // let { userInfo } = this.props;
+    // if (userInfo && userInfo.id) {
+    //   let res = await getHistoryBookingService(userInfo.id);
+    //   if (res && res.errCode === 0) {
+    //     this.setState({
+    //       arrHistoryBooking: res.data,
+    //     });
+    //   }
+    // }
   };
   componentDidUpdate(prevProps, prevState, snapshot) {}
 
@@ -65,6 +79,9 @@ class History extends Component {
                         Địa Chỉ
                       </th>
                       <th className="customcolumn" scope="col">
+                        SĐT
+                      </th>
+                      <th className="customcolumn" scope="col">
                         Giới Tính
                       </th>
                       <th className="customcolumn" scope="col">
@@ -101,6 +118,9 @@ class History extends Component {
                             </td>
                             <td className="customcolumn">
                               {item.patientData.address}
+                            </td>
+                            <td className="customcolumn">
+                              {item.patientData.phonenumber}
                             </td>
                             <td className="customcolumn">
                               {item.patientData.genderData.valueVi}

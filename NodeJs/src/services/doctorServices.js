@@ -441,6 +441,7 @@ let getListPatientForDoctorService = (date) => {
                 "lastName",
                 "address",
                 "gender",
+                "phonenumber",
               ],
               include: [
                 {

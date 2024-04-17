@@ -44,7 +44,7 @@ class ManageBooking extends Component {
 
   render() {
     let { dataPatient } = this.state;
-    console.log("sfhsdhfjsd", this.state);
+
     return (
       <>
         <div className="detail-booking-container">
@@ -85,14 +85,14 @@ class ManageBooking extends Component {
                         Địa Chỉ
                       </th>
                       <th className="customcolumn" scope="col">
+                        SĐT
+                      </th>
+                      <th className="customcolumn" scope="col">
                         Giới Tính
                       </th>
                       <th className="customcolumn" scope="col">
                         Tên Bác Sĩ Khám
                       </th>
-                      {/* <th className="customcolumn" scope="col">
-                        Chức Danh
-                      </th> */}
                       <th className="customcolumn" scope="col">
                         Actions
                       </th>
@@ -106,34 +106,34 @@ class ManageBooking extends Component {
                           <tr key={index}>
                             <td>{index + 1}</td>
                             <td className="customcolumn">
-                              {item.timeTypeDataPatient?.valueVi}
+                              {item.timeTypeDataPatient.valueVi}
                             </td>
                             <td className="customcolumn">{item.reason}</td>
                             <td className="customcolumn">
                               {item.price + " VND"}
                             </td>
                             <td className="customcolumn">
-                              {item.patientData?.firstName +
+                              {item.patientData.firstName +
                                 " " +
-                                item.patientData?.lastName}
+                                item.patientData.lastName}
                             </td>
                             <td className="customcolumn">
-                              {item.patientData?.email}
+                              {item.patientData.email}
                             </td>
                             <td className="customcolumn">
-                              {item.patientData?.address}
+                              {item.patientData.address}
                             </td>
                             <td className="customcolumn">
-                              {item.patientData?.genderData?.valueVi}
+                              {item.patientData.phonenumber}
                             </td>
                             <td className="customcolumn">
-                              {item.doctorDataBooking?.firstName +
+                              {item.patientData.genderData.valueVi}
+                            </td>
+                            <td className="customcolumn">
+                              {item.doctorDataBooking.firstName +
                                 " " +
-                                item.doctorDataBooking?.lastName}
+                                item.doctorDataBooking.lastName}
                             </td>
-                            {/* <td className="customcolumn">
-                              {item.doctorDataBooking.positionData.valueVi}
-                            </td> */}
                             <td className="customcolumn">
                               <button
                                 type="button"

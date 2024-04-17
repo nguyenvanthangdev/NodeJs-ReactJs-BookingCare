@@ -90,6 +90,7 @@ let getHistoryBookingService = (inputPatientId) => {
                 "lastName",
                 "address",
                 "gender",
+                "phonenumber",
               ],
               include: [
                 {

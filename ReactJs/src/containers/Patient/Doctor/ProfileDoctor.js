@@ -56,7 +56,7 @@ class ProfileDoctor extends Component {
               .format("dddd - DD/MM/YYYY");
       return (
         <>
-          <div>
+          <div className="title-time-date">
             {time} {date}
           </div>
         </>
