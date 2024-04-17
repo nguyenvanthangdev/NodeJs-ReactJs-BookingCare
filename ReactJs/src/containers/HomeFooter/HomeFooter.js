@@ -1,6 +1,22 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { withRouter } from "react-router";
 class HomeFooter extends Component {
+  handleViewMoreDoctor = () => {
+    if (this.props.history) {
+      this.props.history.push(`/more-doctor`);
+    }
+  };
+  handleViewMoreSpecialty = () => {
+    if (this.props.history) {
+      this.props.history.push(`/more-specialty`);
+    }
+  };
+  handleViewMoreClinic = () => {
+    if (this.props.history) {
+      this.props.history.push(`/more-clinic`);
+    }
+  };
   render() {
     return (
       <div className="section-share section-home-footer">
@@ -27,95 +43,65 @@ class HomeFooter extends Component {
               </a>
             </div>
           </section>
-
           <section className="">
             <div className="container text-center text-md-start mt-5">
               <div className="row mt-3">
-                <div className="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
-                  <h6 className="text-uppercase fw-bold mb-4">
-                    <i className="fas fa-gem me-3 text-secondary"></i>Company
-                    name
-                  </h6>
-                  <p>
-                    Here you can use rows and columns to organize your footer
-                    content. Lorem ipsum dolor sit amet, consectetur adipisicing
-                    elit.
-                  </p>
-                </div>
-
-                <div className="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
-                  <h6 className="text-uppercase fw-bold mb-4">Products</h6>
-                  <p>
-                    <a href="#!" className="text-reset">
-                      Angular
-                    </a>
-                  </p>
-                  <p>
-                    <a href="#!" className="text-reset">
-                      React
-                    </a>
-                  </p>
-                  <p>
-                    <a href="#!" className="text-reset">
-                      Vue
-                    </a>
-                  </p>
-                  <p>
-                    <a href="#!" className="text-reset">
-                      Laravel
-                    </a>
-                  </p>
-                </div>
-
+                <div className="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4"></div>
                 <div className="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
                   <h6 className="text-uppercase fw-bold mb-4">Useful links</h6>
                   <p>
-                    <a href="#!" className="text-reset">
-                      Pricing
+                    <a
+                      href="#!"
+                      className="text-reset"
+                      onClick={() => this.handleViewMoreSpecialty()}
+                    >
+                      Medical Speciality
+                    </a>
+                  </p>
+                  <p>
+                    <a
+                      href="#!"
+                      className="text-reset"
+                      onClick={() => this.handleViewMoreClinic()}
+                    >
+                      Health facilities
+                    </a>
+                  </p>
+                  <p>
+                    <a
+                      href="#!"
+                      className="text-reset"
+                      onClick={() => this.handleViewMoreDoctor()}
+                    >
+                      Doctor
                     </a>
                   </p>
                   <p>
                     <a href="#!" className="text-reset">
-                      Settings
-                    </a>
-                  </p>
-                  <p>
-                    <a href="#!" className="text-reset">
-                      Orders
-                    </a>
-                  </p>
-                  <p>
-                    <a href="#!" className="text-reset">
-                      Help
+                      Examination package
                     </a>
                   </p>
                 </div>
-
                 <div className="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
                   <h6 className="text-uppercase fw-bold mb-4">Contact</h6>
                   <p>
-                    <i className="fas fa-home me-3 text-secondary"></i> New
-                    York, NY 10012, US
+                    <i className="fas fa-home me-3 text-secondary"></i> 123 Cù
+                    Chính Lan
                   </p>
                   <p>
                     <i className="fas fa-envelope me-3 text-secondary"></i>
-                    info@example.com
+                    thisthang24@gmail.com
                   </p>
                   <p>
-                    <i className="fas fa-phone me-3 text-secondary"></i> + 01
-                    234 567 88
-                  </p>
-                  <p>
-                    <i className="fas fa-print me-3 text-secondary"></i> + 01
-                    234 567 89
+                    <i className="fas fa-phone me-3 text-secondary"></i> +
+                    0969251032
                   </p>
                 </div>
               </div>
             </div>
           </section>
-
           <div className="text-center p-4 footer-color">
-            © 2021 Copyright:
+            © 2024 Copyright:
             <span className="text-reset fw-bold mx-3">Nguyễn Văn Thắng</span>
           </div>
         </footer>
@@ -125,13 +111,13 @@ class HomeFooter extends Component {
 }
 
 const mapStateToProps = (state) => {
-  return {
-    isLoggedIn: state.user.isLoggedIn,
-  };
+  return {};
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {};
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(HomeFooter);
+export default withRouter(
+  connect(mapStateToProps, mapDispatchToProps)(HomeFooter)
+);

@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { push } from "connected-react-router";
 import * as actions from "../../../store/actions";
 import HomeHeader from "../../HomePage/Home/HomeHeader";
 import "./ManageAccount.scss";
@@ -31,26 +30,27 @@ class ManageAccount extends Component {
       let arrGenders = this.props.genderRedux;
       this.setState({
         genderArr: arrGenders,
-        // gender: arrGenders && arrGenders.length > 0 ? arrGenders[1].keyMap : "",
       });
     }
   }
   getAllUsersFromReact = async () => {
     let { userInfo } = this.props;
-    let res = await getAllUsers(userInfo.id);
-    if (res && res.errCode === 0) {
-      let data = res.users;
-      let img64 = new Buffer.from(data.image, "base64").toString("binary");
-      this.setState({
-        id: data.id,
-        firstName: data.firstName,
-        lastName: data.lastName,
-        address: data.address,
-        phonenumber: data.phonenumber,
-        gender: data.gender,
-        previewImgUrl: img64,
-        image: img64,
-      });
+    if (userInfo && userInfo.id) {
+      let res = await getAllUsers(userInfo.id);
+      if (res && res.errCode === 0) {
+        let data = res.users;
+        let img64 = new Buffer.from(data.image, "base64").toString("binary");
+        this.setState({
+          id: data.id,
+          firstName: data.firstName,
+          lastName: data.lastName,
+          address: data.address,
+          phonenumber: data.phonenumber,
+          gender: data.gender,
+          previewImgUrl: img64,
+          image: img64,
+        });
+      }
     }
   };
   handleOnChangeInput = (event, id) => {
@@ -82,7 +82,6 @@ class ManageAccount extends Component {
         previewImgUrl: objectUrl,
         image: base64,
       });
-      // window.localStorage.setItem("image", base64);
     }
   };
   openPreviewImage = () => {
@@ -94,7 +93,6 @@ class ManageAccount extends Component {
   handleSaveUser = async () => {
     let isValid = this.checkValidateInput();
     if (isValid === true) {
-      // call api edit user modal
       let res = await editUserService(this.state);
       if (res && res.errCode === 0) {
         toast.success(res.message);
@@ -237,10 +235,6 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    navigate: (path) => dispatch(push(path)),
-    //userLoginFail: () => dispatch(actions.adminLoginFail()),
-    userLoginSuccess: (userInfo) =>
-      dispatch(actions.userLoginSuccess(userInfo)),
     getGenderStart: () => dispatch(actions.fetchGenderStart()),
   };
 };

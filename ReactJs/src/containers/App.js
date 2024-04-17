@@ -72,14 +72,7 @@ class App extends Component {
                     path={path.LOGIN}
                     component={userIsNotAuthenticated(Login)}
                   />
-                  <Route
-                    path={path.ACCOUNT}
-                    component={userIsAuthenticated(ManageAccount)}
-                  />
-                  <Route
-                    path={path.HISTORY_BOOKING}
-                    component={userIsAuthenticated(History)}
-                  />
+
                   <Route path={path.HOME} exact component={Home} />
                   <Route
                     path={path.SYSTEM}
@@ -99,6 +92,8 @@ class App extends Component {
                   <Route path={path.MORE_DOCTOR} component={MoreDoctor} />
                   <Route path={path.MORE_SPECIALTY} component={MoreSpecialty} />
                   <Route path={path.MORE_CLINIC} component={MoreClinic} />
+                  <Route path={path.ACCOUNT} component={ManageAccount} />
+                  <Route path={path.HISTORY_BOOKING} component={History} />
                 </Switch>
               </CustomScrollbars>
             </div>
