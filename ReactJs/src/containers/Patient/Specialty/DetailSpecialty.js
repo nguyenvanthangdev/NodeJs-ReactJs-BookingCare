@@ -121,7 +121,7 @@ class DetailSpecialty extends Component {
           </div>
           <div className="search-sp-doctor">
             <select
-              className="btn form-select"
+              className="btn form-select search-custom"
               onChange={(event) => this.handleOnChangeSelect(event)}
             >
               {listProvince &&
