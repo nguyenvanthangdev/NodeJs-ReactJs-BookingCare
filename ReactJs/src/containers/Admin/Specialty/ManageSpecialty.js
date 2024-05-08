@@ -122,7 +122,7 @@ class ManageSpecialty extends Component {
       let res = await getEditSpecialtyService(this.state);
       if (res && res.errCode === 0) {
         this.AllSpecialty();
-        toast.success("Edit new specialty succeeds !");
+        toast.success("Edit specialty succeeds !");
         this.setState({
           isOpenSeleced: false,
           nameselectedSpecialty: "",
@@ -213,7 +213,7 @@ class ManageSpecialty extends Component {
               <div className="form-row">
                 <div className="col-12 form-group">
                   <label className="title-custom1-specialty">
-                    Tạo chuyên Khoa
+                    Tên chuyên Khoa
                   </label>
                   <input
                     type="text"
@@ -258,7 +258,7 @@ class ManageSpecialty extends Component {
               onClick={() => this.hanldSaveNewSpecialty()}
             >
               {isOpenSeleced === false ? (
-                <span>Tạo thông tin</span>
+                <span>Thêm thông tin</span>
               ) : (
                 <span>Lưu thông tin</span>
               )}

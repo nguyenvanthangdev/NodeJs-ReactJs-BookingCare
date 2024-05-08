@@ -121,6 +121,7 @@ class DoctorSchedule extends Component {
       dataScheduleTimeModal,
     } = this.state;
     let { language } = this.props;
+    console.log("fkdsjfds121111111111111111111", this.state);
     return (
       <React.Fragment>
         <div className="doctor-schedule-container">

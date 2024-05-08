@@ -52,14 +52,15 @@ class DoctorExtrainfor extends Component {
       <React.Fragment>
         <div className="doctor-extra-infor-container">
           <div className="content-up">
-            <div className="text-address">ĐỊA CHỈ KHÁM</div>
+            <div className="text-address">ĐỊA CHỈ KHÁM :</div>
             <div className="name-clinic">
-              {extraInfor && extraInfor.nameClinic ? extraInfor.nameClinic : ""}
-            </div>
-            <div className="detail-address">
               {extraInfor && extraInfor.addressClinic
                 ? extraInfor.addressClinic
                 : ""}
+            </div>
+            <div className="text-address">PHÒNG KHÁM : </div>
+            <div className="detail-address">
+              {extraInfor && extraInfor.nameClinic ? extraInfor.nameClinic : ""}
             </div>
           </div>
           <div className="content-down">

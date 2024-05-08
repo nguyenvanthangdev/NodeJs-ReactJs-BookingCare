@@ -238,7 +238,7 @@ class ManageAccount extends Component {
               className="btn btn-primary custom-btn"
               onClick={() => this.handleSaveUser()}
             >
-              Lưu Thông Tin
+              Sửa Thông Tin
             </button>
           </div>
         </div>

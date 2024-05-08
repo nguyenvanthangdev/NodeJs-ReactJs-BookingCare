@@ -115,7 +115,7 @@ class ManageClinic extends Component {
       let res = await getEditClinicService(this.state);
       if (res && res.errCode === 0) {
         this.AllClinic();
-        toast.success("Edit new clinic succeeds !");
+        toast.success("Edit clinic succeeds !");
         this.setState({
           isOpenSeleced: false,
           nameSelectedClinic: "",
@@ -208,7 +208,7 @@ class ManageClinic extends Component {
               </div>
               <div className="form-row">
                 <div className="col-12 form-group">
-                  <label className="title-custom1-clinic">Tạo Cơ sở</label>
+                  <label className="title-custom1-clinic">Tên Cơ sở</label>
                   <input
                     type="text"
                     className="form-control"
@@ -265,7 +265,7 @@ class ManageClinic extends Component {
               onClick={() => this.hanldSaveNewClinic()}
             >
               {isOpenSeleced === false ? (
-                <span>Tạo thông tin</span>
+                <span>Thêm thông tin</span>
               ) : (
                 <span>Lưu thông tin</span>
               )}
@@ -289,7 +289,7 @@ class ManageClinic extends Component {
                 <table className="table">
                   <thead className="thead-light">
                     <tr>
-                      <th scope="col">Tên Khoa</th>
+                      <th scope="col">Tên Cơ Sở</th>
                       <th scope="col">Actions</th>
                     </tr>
                   </thead>

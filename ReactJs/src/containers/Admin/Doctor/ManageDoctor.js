@@ -282,7 +282,7 @@ class ManageDoctor extends Component {
     console.log("jaiksdjs", this.state);
     return (
       <React.Fragment>
-        <div className="manage-doctor-title">Tạo thông tin Bác Sĩ</div>
+        <div className="manage-doctor-title">Quản lý bác sĩ Bác Sĩ</div>
         <div className="manage-doctor-content">
           <div className="content-left">
             <div className="more-infor-top">
@@ -405,7 +405,7 @@ class ManageDoctor extends Component {
                 onClick={() => this.handleSaveContentMarkdown()}
               >
                 {hasOldData === true ? (
-                  <span>Lưu thông tin</span>
+                  <span>Sửu thông tin</span>
                 ) : (
                   <span>Tạo thông tin</span>
                 )}
@@ -413,6 +413,7 @@ class ManageDoctor extends Component {
             </div>
           </div>
           <div className="content-right">
+            <div className="py-3">Thông tin chuyên môn</div>
             <MdEditor
               className="custom-mdeditor"
               style={{ height: "540px" }}

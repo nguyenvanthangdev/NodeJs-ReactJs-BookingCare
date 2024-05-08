@@ -32,19 +32,19 @@
       "manage-clinic": "Quản lý Cơ Sở",
       "specialty": "Quản lý Chuyên Khoa",
       "manage-specialty": "Quản lý Chuyên Khoa",
-      "schedule": "Quản lý Lịch",
+      "schedule": "Quản lý Lịch Khám",
       "dashboard": "Dashboard",
       "manage-infor-doctor": "Quản lý Thông Tin",
       "booking": "Quản lý Hóa Đơn",
       "manage-booking": "Quản lý Hóa Đơn"
     },
     "doctor": {
-      "manage-schedule": "Quản Lý Lịch"
+      "manage-schedule": "Quản Lý Lịch Khám"
     }
   },
   "manage-user": {
     "manage-users": "Quản Lý Tài Khoản",
-    "add": "Thêm Mới Bác Sĩ",
+    "add": "Thêm Mới Tài Khoản",
     "email": "Email",
     "password": "Mật khẩu",
     "first-name": "Tên",

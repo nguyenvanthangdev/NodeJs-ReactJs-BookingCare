@@ -210,9 +210,7 @@ class ManageSchedule extends Component {
         {isLoggedIn === true &&
         userInfo &&
         userInfo.roleId === USER_ROLE.ADMIN ? (
-          <div className="m-s-title my-5">
-            QUẢN LÝ KẾ HOẠCH KHÁM BỆNH CỦA BÁC SĨ
-          </div>
+          <div className="m-s-title my-5">QUẢN LÝ LỊCH KHÁM</div>
         ) : (
           <div className="m-s-title my-5">LỊCH KHÁM CỦA BÁC SĨ</div>
         )}
