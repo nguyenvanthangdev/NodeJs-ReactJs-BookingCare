@@ -15,6 +15,61 @@ let checkRequiredFields = (inputData) => {
     element: element,
   };
 };
+// let postBookAppointmentService = (data) => {
+//   return new Promise(async (resolve, reject) => {
+//     try {
+//       let checkObj = checkRequiredFields(data);
+//       if (checkObj.isValid === false) {
+//         resolve({
+//           errCode: 1,
+//           errMessage: `Missing parameter ${checkObj.element} !`,
+//         });
+//       } else {
+//         let user = await db.User.findOne({
+//           where: { email: data.email },
+//           // defaults: {
+//           //   email: data.email,
+//           //   roleId: "R3",
+//           // },
+//         });
+//         if (!user) {
+//           resolve({
+//             errCode: 2,
+//             errMessage: "Email different from login email !",
+//           });
+//         }
+
+//         // if (user && user[0]) {
+//         //   await db.Booking.findOrCreate({
+//         //     where: { patientId: user[0].id },
+//         //     defaults: {
+//         //       statusId: "S1",
+//         //       doctorId: data.doctorId,
+//         //       patientId: user[0].id,
+//         //       date: data.date,
+//         //       timeType: data.timeType,
+//         //     },
+//         //   });
+//         await db.Booking.create({
+//           statusId: "S2",
+//           doctorId: data.doctorId,
+//           patientId: user.id,
+//           date: data.date,
+//           timeType: data.timeType,
+//           reason: data.reason,
+//           price: data.price,
+//         });
+//         // }
+//         resolve({
+//           errCode: 0,
+//           errMessage: "Save infor patient succeed !",
+//         });
+//       }
+//     } catch (e) {
+//       reject(e);
+//     }
+//   });
+// };
 let postBookAppointmentService = (data) => {
   return new Promise(async (resolve, reject) => {
     try {
@@ -27,42 +82,52 @@ let postBookAppointmentService = (data) => {
       } else {
         let user = await db.User.findOne({
           where: { email: data.email },
-          // defaults: {
-          //   email: data.email,
-          //   roleId: "R3",
-          // },
         });
         if (!user) {
           resolve({
             errCode: 2,
             errMessage: "Email different from login email !",
           });
+        } else {
+          let schedule = await db.Schedule.findOne({
+            where: {
+              date: data.date,
+              timeType: data.timeType,
+              doctorId: data.doctorId,
+            },
+          });
+          if (!schedule) {
+            resolve({
+              errCode: 3,
+              errMessage: "Schedule not found!",
+            });
+          } else if (schedule.currentNumber >= schedule.maxNumber) {
+            resolve({
+              errCode: 4,
+              errMessage: "Schedule is already full!",
+            });
+          } else {
+            await db.Booking.create({
+              statusId: "S2",
+              doctorId: data.doctorId,
+              patientId: user.id,
+              date: data.date,
+              timeType: data.timeType,
+              reason: data.reason,
+              price: data.price,
+            });
+
+            // Increment currentNumber by 1
+            await db.Schedule.update(
+              { currentNumber: schedule.currentNumber + 1 },
+              { where: { id: schedule.id } }
+            );
+            resolve({
+              errCode: 0,
+              errMessage: "Appointment booked successfully!",
+            });
+          }
         }
-        // if (user && user[0]) {
-        //   await db.Booking.findOrCreate({
-        //     where: { patientId: user[0].id },
-        //     defaults: {
-        //       statusId: "S1",
-        //       doctorId: data.doctorId,
-        //       patientId: user[0].id,
-        //       date: data.date,
-        //       timeType: data.timeType,
-        //     },
-        //   });
-        await db.Booking.create({
-          statusId: "S2",
-          doctorId: data.doctorId,
-          patientId: user.id,
-          date: data.date,
-          timeType: data.timeType,
-          reason: data.reason,
-          price: data.price,
-        });
-        // }
-        resolve({
-          errCode: 0,
-          errMessage: "Save infor patient succeed !",
-        });
       }
     } catch (e) {
       reject(e);
@@ -124,7 +189,31 @@ let getHistoryBookingService = (inputPatientId) => {
     }
   });
 };
+
+let handleSumPriceService = () => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      let sum = await db.Booking.sum("price");
+      resolve(sum);
+    } catch (e) {
+      reject(e);
+    }
+  });
+};
+let handleCountBookingService = () => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      let count = await db.Booking.count({});
+      resolve(count);
+    } catch (e) {
+      reject(e);
+    }
+  });
+};
+
 module.exports = {
   postBookAppointmentService: postBookAppointmentService,
   getHistoryBookingService: getHistoryBookingService,
+  handleSumPriceService: handleSumPriceService,
+  handleCountBookingService: handleCountBookingService,
 };

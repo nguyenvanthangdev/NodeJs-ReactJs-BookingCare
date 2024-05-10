@@ -65,10 +65,22 @@ let getDetailSpecialtyById = async (req, res) => {
     });
   }
 };
+let handleCountSpecialty = async (req, res) => {
+  try {
+    let count = await specialtyServices.handleCountSpecialtyService();
+    return res.status(200).json({ count: count });
+  } catch (e) {
+    return res.status(500).json({
+      errCode: -1,
+      errMessage: "Error from server",
+    });
+  }
+};
 module.exports = {
   createSpecialty: createSpecialty,
   allSpecialty: allSpecialty,
   editSpecialty: editSpecialty,
   deleteSpecialty: deleteSpecialty,
   getDetailSpecialtyById: getDetailSpecialtyById,
+  handleCountSpecialty: handleCountSpecialty,
 };

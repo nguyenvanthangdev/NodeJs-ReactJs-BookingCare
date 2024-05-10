@@ -60,7 +60,7 @@ class ManageBooking extends Component {
                 />
               </div>
             </div>
-            <CustomScrollbars>
+            <CustomScrollbars className="scrollbars-custom">
               <div className="custom-table-booking">
                 <table className="table px-3">
                   <thead className="thead-light">
@@ -138,7 +138,7 @@ class ManageBooking extends Component {
                               <button
                                 type="button"
                                 className="btn btn-warning px-3 mx-2 customcolumn"
-                                onClick={() => this.handEditUser(item)}
+                                // onClick={() => this.handEditUser(item)}
                               >
                                 Xác Nhận
                               </button>

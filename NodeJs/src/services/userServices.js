@@ -218,7 +218,34 @@ let getAllCodeService = (typeInput) => {
     }
   });
 };
-
+let handleCountDoctorService = () => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      let count = await db.User.count({
+        where: {
+          roleId: "R2",
+        },
+      });
+      resolve(count);
+    } catch (e) {
+      reject(e);
+    }
+  });
+};
+let handleCountUsersService = () => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      let count = await db.User.count({
+        where: {
+          roleId: "R3",
+        },
+      });
+      resolve(count);
+    } catch (e) {
+      reject(e);
+    }
+  });
+};
 module.exports = {
   handleUserLogin: handleUserLogin,
   getAllUsers: getAllUsers,
@@ -226,4 +253,6 @@ module.exports = {
   deleteUser: deleteUser,
   updateUserData: updateUserData,
   getAllCodeService: getAllCodeService,
+  handleCountDoctorService: handleCountDoctorService,
+  handleCountUsersService: handleCountUsersService,
 };

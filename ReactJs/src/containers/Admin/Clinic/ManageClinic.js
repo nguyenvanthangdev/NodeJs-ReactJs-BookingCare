@@ -284,7 +284,10 @@ class ManageClinic extends Component {
             </div>
           </div>
           <div className="table-clinic">
-            <CustomScrollbars style={{ height: "570px" }}>
+            <CustomScrollbars
+              style={{ height: "570px" }}
+              className="scrollbars-custom"
+            >
               <div className="clinic-table">
                 <table className="table">
                   <thead className="thead-light">

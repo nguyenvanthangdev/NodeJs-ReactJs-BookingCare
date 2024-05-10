@@ -116,7 +116,25 @@ const getDeleteScheduleService = (scheduleId) => {
 const getHistoryBookingService = (inputPatientId) => {
   return axios.get(`/api/get-history-booking?patientId=${inputPatientId}`);
 };
-
+//Dashboard
+const getCountUserService = () => {
+  return axios.get(`/api/get-users-count`);
+};
+const getCountDoctorService = () => {
+  return axios.get(`/api/get-doctor-count`);
+};
+const getCountClinicService = () => {
+  return axios.get(`/api/get-clinic-count`);
+};
+const getCountSpecialtyService = () => {
+  return axios.get(`/api/get-specialty-count`);
+};
+const getSumMoneyService = () => {
+  return axios.get(`/api/get-price-sum`);
+};
+const getCountBookingService = () => {
+  return axios.get(`/api/get-booking-count`);
+};
 export {
   handleLoginApi,
   getAllUsers,
@@ -147,4 +165,10 @@ export {
   getAllScheduleService,
   getDeleteScheduleService,
   getHistoryBookingService,
+  getCountClinicService,
+  getCountUserService,
+  getCountDoctorService,
+  getCountSpecialtyService,
+  getSumMoneyService,
+  getCountBookingService,
 };

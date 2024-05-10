@@ -12,10 +12,11 @@ let initWebRoutes = (app) => {
   router.post("/api/login", userController.handleLogin);
   //User
   router.get("/api/get-all-users", userController.handleGetAllUsers);
-
   router.post("/api/create-new-user", userController.handleCreateNewUser);
   router.put("/api/edit-user", userController.handleEditUser);
   router.delete("/api/delete-user", userController.handleDeleteUser);
+  router.get("/api/get-doctor-count", userController.handleCountDoctor);
+  router.get("/api/get-users-count", userController.handleCountUsers);
   // Allcode
   router.get("/api/allcode", userController.getAllCode);
   //Top Doctor
@@ -54,6 +55,9 @@ let initWebRoutes = (app) => {
     patientController.postBookAppointment
   );
   router.get("/api/get-history-booking", patientController.getHistoryBooking);
+  router.get("/api/get-price-sum", patientController.handleSumPrice);
+  router.get("/api/get-booking-count", patientController.handleCountBooking);
+
   //Specialty
   router.get("/api/all-specialty", specialtyController.allSpecialty);
   router.post("/api/create-new-specialty", specialtyController.createSpecialty);
@@ -62,6 +66,10 @@ let initWebRoutes = (app) => {
   router.get(
     "/api/get-detail-specialty-by-id",
     specialtyController.getDetailSpecialtyById
+  );
+  router.get(
+    "/api/get-specialty-count",
+    specialtyController.handleCountSpecialty
   );
   //Clinic
   router.get("/api/all-clinic", clinicController.allClinic);
@@ -72,6 +80,7 @@ let initWebRoutes = (app) => {
     "/api/get-detail-clinic-by-id",
     clinicController.getDetailClinicById
   );
+  router.get("/api/get-clinic-count", clinicController.handleCountClinic);
 
   return app.use("/", router);
 };

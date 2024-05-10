@@ -165,10 +165,21 @@ let getDetailSpecialtyByIdService = (inputId, location) => {
     }
   });
 };
+let handleCountSpecialtyService = async (req, res) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      let count = await db.Specialty.count();
+      resolve(count);
+    } catch (e) {
+      reject(e);
+    }
+  });
+};
 module.exports = {
   createSpecialtyService: createSpecialtyService,
   allSpecialtyService: allSpecialtyService,
   editSpecialtyService: editSpecialtyService,
   deleteSpecialtyService: deleteSpecialtyService,
   getDetailSpecialtyByIdService: getDetailSpecialtyByIdService,
+  handleCountSpecialtyService: handleCountSpecialtyService,
 };

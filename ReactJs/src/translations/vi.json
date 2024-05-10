@@ -32,7 +32,7 @@
       "manage-clinic": "Quản lý Cơ Sở",
       "specialty": "Quản lý Chuyên Khoa",
       "manage-specialty": "Quản lý Chuyên Khoa",
-      "schedule": "Quản lý Lịch Khám",
+      "schedule": "Lịch Khám",
       "dashboard": "Dashboard",
       "manage-infor-doctor": "Quản lý Thông Tin",
       "booking": "Quản lý Hóa Đơn",
@@ -59,7 +59,7 @@
     "edit": "Sửa"
   },
   "homepage": {
-    "outstanding-doctor": "Bác sĩ nổi bật tuần qua",
+    "outstanding-doctor": "Bác sĩ",
     "more-infor": "Xem Thêm"
   },
   "manage-schedule": {

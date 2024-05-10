@@ -282,7 +282,7 @@ class ManageDoctor extends Component {
     console.log("jaiksdjs", this.state);
     return (
       <React.Fragment>
-        <div className="manage-doctor-title">Quản lý bác sĩ Bác Sĩ</div>
+        <div className="manage-doctor-title">Quản lý Bác Sĩ</div>
         <div className="manage-doctor-content">
           <div className="content-left">
             <div className="more-infor-top">

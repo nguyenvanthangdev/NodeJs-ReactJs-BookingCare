@@ -35,7 +35,7 @@ class Specialty extends Component {
       <div className="section-share section-specialty">
         <div className="section-container">
           <div className="section-header">
-            <span className="title-section">Chuyên khoa phổ biến</span>
+            <span className="title-section">Chuyên khoa</span>
             <button
               className="btn btn-section"
               onClick={() => this.handleViewMoreSpecialty()}

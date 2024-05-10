@@ -64,7 +64,28 @@ let getAllCode = async (req, res) => {
     });
   }
 };
-
+let handleCountDoctor = async (req, res) => {
+  try {
+    let count = await userService.handleCountDoctorService();
+    return res.status(200).json({ count: count });
+  } catch (e) {
+    return res.status(500).json({
+      errCode: -1,
+      errMessage: "Error from server",
+    });
+  }
+};
+let handleCountUsers = async (req, res) => {
+  try {
+    let count = await userService.handleCountUsersService();
+    return res.status(200).json({ count: count });
+  } catch (e) {
+    return res.status(500).json({
+      errCode: -1,
+      errMessage: "Error from server",
+    });
+  }
+};
 module.exports = {
   handleLogin: handleLogin,
   handleGetAllUsers: handleGetAllUsers,
@@ -72,4 +93,6 @@ module.exports = {
   handleEditUser: handleEditUser,
   handleDeleteUser: handleDeleteUser,
   getAllCode: getAllCode,
+  handleCountDoctor: handleCountDoctor,
+  handleCountUsers: handleCountUsers,
 };

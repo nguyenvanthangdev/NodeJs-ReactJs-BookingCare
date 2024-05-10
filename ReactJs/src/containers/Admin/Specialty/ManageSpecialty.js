@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import "./ManageSpecialty.scss";
 import { CommonUtils } from "../../../utils";
 import { toast } from "react-toastify";
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 import {
   createNewSpecialtyService,
   getAllSpecialtyService,
@@ -30,6 +31,7 @@ class ManageSpecialty extends Component {
       nameselectedSpecialty: "",
       previewImgUrl: "",
       isOpen: false,
+      isOpenModal: false,
       //arrSpecialty: [],
     };
   }
@@ -170,12 +172,13 @@ class ManageSpecialty extends Component {
       name: "",
     });
   };
-  handleDeleteUser = async (specialty) => {
+  handleDeleteSpecialty = async (specialty) => {
     try {
       let res = await deleteSpecialtyService(specialty.id);
       if (res && res.errCode === 0) {
         await this.AllSpecialty();
         toast.success(res.errMessage);
+        this.toggle();
       } else {
         toast.error(res.errMessage);
       }
@@ -184,8 +187,18 @@ class ManageSpecialty extends Component {
       console.log(e);
     }
   };
+  handleModal = () => {
+    this.setState({
+      isOpenModal: true,
+    });
+  };
+  toggle = () => {
+    this.setState({
+      isOpenModal: !this.state.isOpenModal,
+    });
+  };
   render() {
-    console.log("hdaihdws", this.state);
+    console.log("hdaihdws", this.state.nameSpecialty);
     let { isOpenSeleced, nameSpecialty } = this.state;
     return (
       <div className="manage-specialty-container">
@@ -279,7 +292,10 @@ class ManageSpecialty extends Component {
             </div>
           </div>
           <div className="table-specialty">
-            <CustomScrollbars style={{ height: "570px" }}>
+            <CustomScrollbars
+              style={{ height: "570px" }}
+              className="scrollbars-custom"
+            >
               <div className="specialty-table">
                 <table className="table">
                   <thead className="thead-light">
@@ -298,10 +314,49 @@ class ManageSpecialty extends Component {
                               <button
                                 type="button"
                                 className="btn btn-danger px-3"
-                                onClick={() => this.handleDeleteUser(item)}
+                                onClick={() => this.handleModal(item)}
                               >
                                 Delete
                               </button>
+                              <Modal
+                                isOpen={this.state.isOpenModal}
+                                toggle={() => {
+                                  this.toggle();
+                                }}
+                                size="lg"
+                                centered
+                              >
+                                <ModalHeader
+                                  className="text-dark bg-white"
+                                  toggle={() => {
+                                    this.toggle();
+                                  }}
+                                >
+                                  Thông báo
+                                </ModalHeader>
+                                <ModalBody>
+                                  <div>Bạn có mốn xóa không ?</div>
+                                </ModalBody>
+                                <ModalFooter>
+                                  <Button
+                                    className="btn btn-danger px-3"
+                                    onClick={() =>
+                                      this.handleDeleteSpecialty(item)
+                                    }
+                                  >
+                                    Xác Nhận
+                                  </Button>
+                                  <Button
+                                    className="btn px-3"
+                                    color="secondary"
+                                    onClick={() => {
+                                      this.toggle();
+                                    }}
+                                  >
+                                    Hủy
+                                  </Button>
+                                </ModalFooter>
+                              </Modal>
                             </td>
                           </tr>
                         );

@@ -168,10 +168,21 @@ let getDetailClinicByIdService = (inputId) => {
     }
   });
 };
+let handleCountClinicService = async (req, res) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      let count = await db.Clinic.count();
+      resolve(count);
+    } catch (e) {
+      reject(e);
+    }
+  });
+};
 module.exports = {
   createClinicService: createClinicService,
   allClinicService: allClinicService,
   editClinicService: editClinicService,
   deleteClinicService: deleteClinicService,
   getDetailClinicByIdService: getDetailClinicByIdService,
+  handleCountClinicService: handleCountClinicService,
 };

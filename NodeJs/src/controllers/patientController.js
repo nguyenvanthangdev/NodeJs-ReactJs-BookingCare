@@ -25,7 +25,32 @@ let getHistoryBooking = async (req, res) => {
     });
   }
 };
+
+let handleSumPrice = async (req, res) => {
+  try {
+    let sum = await patientServices.handleSumPriceService();
+    return res.status(200).json({ sum: sum });
+  } catch (e) {
+    return res.status(500).json({
+      errCode: -1,
+      errMessage: "Error from server",
+    });
+  }
+};
+let handleCountBooking = async (req, res) => {
+  try {
+    let count = await patientServices.handleCountBookingService();
+    return res.status(200).json({ count: count });
+  } catch (e) {
+    return res.status(500).json({
+      errCode: -1,
+      errMessage: "Error from server",
+    });
+  }
+};
 module.exports = {
   postBookAppointment: postBookAppointment,
   getHistoryBooking: getHistoryBooking,
+  handleSumPrice: handleSumPrice,
+  handleCountBooking: handleCountBooking,
 };
