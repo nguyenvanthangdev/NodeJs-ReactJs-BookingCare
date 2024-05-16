@@ -12,7 +12,6 @@ import {
 } from "../../../services/ApiService";
 import MarkdownIt from "markdown-it";
 import MdEditor from "react-markdown-editor-lite";
-import Select from "react-select";
 import Lightbox from "react-image-lightbox";
 import CustomScrollbars from "../../../components/CustomScrollbars";
 const mdParser = new MarkdownIt();
@@ -21,67 +20,50 @@ class ManageSpecialty extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      id: "",
       name: "",
       imageBase64: "",
       descriptionHTML: "",
       descriptionMarkdown: "",
-      selectedSpecialty: "",
-      nameSpecialty: [],
+      //selectedSpecialty: "",
+      AllSpecialty: [],
       isOpenSeleced: false,
-      nameselectedSpecialty: "",
+      //nameselectedSpecialty: "",
       previewImgUrl: "",
       isOpen: false,
       isOpenModal: false,
-      //arrSpecialty: [],
+      specialtyToDelete: null, // Track specialty to delete
     };
   }
 
   async componentDidMount() {
-    //this.AllNameSpecialty();
     this.AllSpecialty();
   }
-  // AllNameSpecialty = async () => {
-  //   let res = await getAllNameSpecialtyService();
-  //   if (res && res.errCode === 0 && res.data) {
-  //     this.setState({
-  //       nameSpecialty: res.data,
-  //     });
-  //   }
-  // };
+
   AllSpecialty = async () => {
     let res = await getAllSpecialtyService("ALL");
     if (res && res.errCode === 0 && res.data) {
       this.setState({
-        nameSpecialty: res.data,
+        AllSpecialty: res.data,
       });
     }
   };
-  componentDidUpdate(prevProps, prevState, snapshot) {
-    if (prevProps.language !== this.props.language) {
-    }
-  }
+
   handleOnChangeInput = (event, id) => {
     let stateCopy = { ...this.state };
     stateCopy[id] = event.target.value;
-    if (id === "name") {
-      stateCopy.isOpenSeleced = false;
-      stateCopy.imageBase64 = "";
-      stateCopy.descriptionHTML = "";
-      stateCopy.descriptionMarkdown = "";
-      stateCopy.selectedSpecialty = "";
-      stateCopy.nameselectedSpecialty = "";
-      stateCopy.previewImgUrl = "";
-    }
     this.setState({
       ...stateCopy,
     });
   };
+
   handleEditorChange = ({ html, text }) => {
     this.setState({
       descriptionHTML: html,
       descriptionMarkdown: text,
     });
   };
+
   handleOnChangeImage = async (event) => {
     let data = event.target.files;
     let file = data[0];
@@ -94,12 +76,14 @@ class ManageSpecialty extends Component {
       });
     }
   };
+
   openPreviewImage = () => {
     if (!this.state.previewImgUrl) return;
     this.setState({
       isOpen: true,
     });
   };
+
   hanldSaveNewSpecialty = async () => {
     let { isOpenSeleced } = this.state;
     if (isOpenSeleced === false) {
@@ -109,7 +93,8 @@ class ManageSpecialty extends Component {
         toast.success("Add new specialty succeeds !");
         this.setState({
           isOpenSeleced: false,
-          nameselectedSpecialty: "",
+          id: "",
+          //nameselectedSpecialty: "",
           name: "",
           imageBase64: "",
           descriptionHTML: "",
@@ -127,13 +112,14 @@ class ManageSpecialty extends Component {
         toast.success("Edit specialty succeeds !");
         this.setState({
           isOpenSeleced: false,
-          nameselectedSpecialty: "",
+          id: "",
+          //nameselectedSpecialty: "",
           name: "",
           imageBase64: "",
           descriptionHTML: "",
           descriptionMarkdown: "",
           previewImgUrl: "",
-          selectedSpecialty: "",
+          //selectedSpecialty: "",
         });
       } else {
         toast.error("Missing required parameter!");
@@ -141,9 +127,9 @@ class ManageSpecialty extends Component {
       }
     }
   };
-  handleChangeSelect = async (selectedSpecialty) => {
-    this.setState({ selectedSpecialty });
-    let res = await getAllSpecialtyService(selectedSpecialty.value);
+
+  handleChangeSelect = async (item) => {
+    let res = await getAllSpecialtyService(item.id);
     if (res && res.errCode === 0 && res.data) {
       let specialty = res.data;
       let image64 = "";
@@ -152,7 +138,8 @@ class ManageSpecialty extends Component {
       }
       this.setState({
         isOpenSeleced: true,
-        nameselectedSpecialty: specialty.name,
+        id: specialty.id,
+        name: specialty.name,
         descriptionHTML: specialty.descriptionHTML,
         descriptionMarkdown: specialty.descriptionMarkdown,
         imageBase64: image64,
@@ -161,20 +148,20 @@ class ManageSpecialty extends Component {
     } else {
       this.setState({
         isOpenSeleced: false,
-        nameselectedSpecialty: "",
+        id: "",
+        name: "",
         imageBase64: "",
         descriptionHTML: "",
         descriptionMarkdown: "",
         previewImgUrl: "",
       });
     }
-    this.setState({
-      name: "",
-    });
   };
-  handleDeleteSpecialty = async (specialty) => {
+
+  handleDeleteSpecialty = async () => {
+    const { specialtyToDelete } = this.state;
     try {
-      let res = await deleteSpecialtyService(specialty.id);
+      let res = await deleteSpecialtyService(specialtyToDelete.id);
       if (res && res.errCode === 0) {
         await this.AllSpecialty();
         toast.success(res.errMessage);
@@ -187,26 +174,31 @@ class ManageSpecialty extends Component {
       console.log(e);
     }
   };
-  handleModal = () => {
+
+  handleModal = (specialty) => {
     this.setState({
       isOpenModal: true,
+      specialtyToDelete: specialty, // Set the specialty to delete
     });
   };
+
   toggle = () => {
     this.setState({
       isOpenModal: !this.state.isOpenModal,
+      specialtyToDelete: null, // Reset the specialty to delete
     });
   };
+
   render() {
-    console.log("hdaihdws", this.state.nameSpecialty);
-    let { isOpenSeleced, nameSpecialty } = this.state;
+    let { isOpenSeleced, AllSpecialty } = this.state;
+    console.log("check", this.state);
     return (
       <div className="manage-specialty-container">
         <div className="m-s-title my-5">QUẢN LÝ CHUYÊN KHOA</div>
         <div className="container-title-specialty">
           <div className="container container-body-specialty">
             <div className="row">
-              <div className="form-row">
+              {/* <div className="form-row">
                 <div className="col-12 form-group">
                   <label className="title-custom1-specialty">
                     Chọn chuyên khoa cần chỉnh sữa
@@ -215,15 +207,15 @@ class ManageSpecialty extends Component {
                     className="select-doctor"
                     value={this.state.selectedSpecialty}
                     onChange={this.handleChangeSelect}
-                    options={this.state.nameSpecialty.map((item) => ({
+                    options={this.state.AllSpecialty.map((item) => ({
                       value: item.id,
                       label: item.name,
                     }))}
                     placeholder={""}
                   />
                 </div>
-              </div>
-              <div className="form-row">
+              </div> */}
+              <div className="form-row my-5">
                 <div className="col-12 form-group">
                   <label className="title-custom1-specialty">
                     Tên chuyên Khoa
@@ -239,7 +231,7 @@ class ManageSpecialty extends Component {
                 </div>
               </div>
               <div className="form-row">
-                <div className="col-12 form-group">
+                <div className="col-12 form-group my-3">
                   <label className="title-custom2-specialty">Hình Ảnh</label>
                   <div className="preview-img-container">
                     <input
@@ -301,16 +293,25 @@ class ManageSpecialty extends Component {
                   <thead className="thead-light">
                     <tr>
                       <th scope="col">Tên Khoa</th>
-                      <th scope="col">Actions</th>
+                      <th className="customcolumn" scope="col">
+                        Actions
+                      </th>
                     </tr>
                   </thead>
                   <tbody>
-                    {nameSpecialty &&
-                      nameSpecialty.map((item, index) => {
+                    {AllSpecialty &&
+                      AllSpecialty.map((item, index) => {
                         return (
                           <tr key={index}>
                             <td>{item.name}</td>
-                            <td>
+                            <td className="customcolumn ">
+                              <button
+                                type="button"
+                                className="btn btn-warning px-3 mx-2"
+                                onClick={() => this.handleChangeSelect(item)}
+                              >
+                                Edit
+                              </button>
                               <button
                                 type="button"
                                 className="btn btn-danger px-3"
@@ -318,45 +319,6 @@ class ManageSpecialty extends Component {
                               >
                                 Delete
                               </button>
-                              <Modal
-                                isOpen={this.state.isOpenModal}
-                                toggle={() => {
-                                  this.toggle();
-                                }}
-                                size="lg"
-                                centered
-                              >
-                                <ModalHeader
-                                  className="text-dark bg-white"
-                                  toggle={() => {
-                                    this.toggle();
-                                  }}
-                                >
-                                  Thông báo
-                                </ModalHeader>
-                                <ModalBody>
-                                  <div>Bạn có mốn xóa không ?</div>
-                                </ModalBody>
-                                <ModalFooter>
-                                  <Button
-                                    className="btn btn-danger px-3"
-                                    onClick={() =>
-                                      this.handleDeleteSpecialty(item)
-                                    }
-                                  >
-                                    Xác Nhận
-                                  </Button>
-                                  <Button
-                                    className="btn px-3"
-                                    color="secondary"
-                                    onClick={() => {
-                                      this.toggle();
-                                    }}
-                                  >
-                                    Hủy
-                                  </Button>
-                                </ModalFooter>
-                              </Modal>
                             </td>
                           </tr>
                         );
@@ -367,13 +329,49 @@ class ManageSpecialty extends Component {
             </CustomScrollbars>
           </div>
         </div>
-
         {this.state.isOpen === true && (
           <Lightbox
             mainSrc={this.state.previewImgUrl}
             onCloseRequest={() => this.setState({ isOpen: false })}
           />
         )}
+        <Modal
+          isOpen={this.state.isOpenModal}
+          toggle={() => {
+            this.toggle();
+          }}
+          size="lg"
+          centered
+        >
+          <ModalHeader
+            className="text-dark bg-white"
+            toggle={() => {
+              this.toggle();
+            }}
+          >
+            Thông báo
+          </ModalHeader>
+          <ModalBody>
+            <div>Bạn có muốn xóa không?</div>
+          </ModalBody>
+          <ModalFooter>
+            <Button
+              className="btn btn-danger px-3"
+              onClick={this.handleDeleteSpecialty}
+            >
+              Xác Nhận
+            </Button>
+            <Button
+              className="btn px-3"
+              color="secondary"
+              onClick={() => {
+                this.toggle();
+              }}
+            >
+              Hủy
+            </Button>
+          </ModalFooter>
+        </Modal>
       </div>
     );
   }
@@ -382,7 +380,6 @@ class ManageSpecialty extends Component {
 const mapStateToProps = (state) => {
   return {
     isLoggedIn: state.user.isLoggedIn,
-
     language: state.app.language,
   };
 };

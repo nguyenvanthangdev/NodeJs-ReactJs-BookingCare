@@ -24,6 +24,14 @@ class HomePage extends Component {
         <OutStandingDoctor settings={settings} />
         <MedicalFacility settings={settings} />
         <HomeFooter />
+        <div>
+          <df-messenger
+            intent="WELCOME"
+            chat-title="BookingCare"
+            agent-id="299e7f83-22ff-4966-86f2-93417558f570"
+            language-code="en"
+          ></df-messenger>
+        </div>
       </div>
     );
   }

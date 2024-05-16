@@ -62,8 +62,8 @@ let editSpecialtyService = (data) => {
   return new Promise(async (resolve, reject) => {
     try {
       if (
-        !data.selectedSpecialty.value ||
-        !data.nameselectedSpecialty ||
+        !data.id ||
+        !data.name ||
         !data.imageBase64 ||
         !data.descriptionHTML ||
         !data.descriptionMarkdown
@@ -74,13 +74,11 @@ let editSpecialtyService = (data) => {
         });
       }
       let specialty = await db.Specialty.findOne({
-        where: { id: data.selectedSpecialty.value },
+        where: { id: data.id },
         raw: false,
       });
       if (specialty) {
-        if (data.nameselectedSpecialty) {
-          specialty.name = data.nameselectedSpecialty;
-        }
+        specialty.name = data.name;
         if (data.imageBase64) {
           specialty.image = data.imageBase64;
         }

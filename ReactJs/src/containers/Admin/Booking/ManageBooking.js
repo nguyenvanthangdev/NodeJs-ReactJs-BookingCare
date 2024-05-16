@@ -130,9 +130,9 @@ class ManageBooking extends Component {
                               {item.patientData.genderData.valueVi}
                             </td>
                             <td className="customcolumn">
-                              {item.doctorDataBooking.firstName +
+                              {item.doctorDataBooking.lastName +
                                 " " +
-                                item.doctorDataBooking.lastName}
+                                item.doctorDataBooking.firstName}
                             </td>
                             <td className="customcolumn">
                               <button

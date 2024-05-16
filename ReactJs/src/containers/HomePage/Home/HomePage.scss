@@ -16,6 +16,7 @@
   width: 50px !important;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
   top: 45% !important;
+  z-index: 99;
 }
 .slick-next {
   right: -8px !important;
@@ -25,6 +26,7 @@
   width: 50px !important;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
   top: 45% !important;
+  z-index: 99;
 }
 .slick-disabled {
   display: none !important;
@@ -63,20 +65,10 @@
         background-repeat: no-repeat;
         background-size: cover;
         background-color: #eee;
-
-        // &.section-specialty {
-        //   background-image: url("../../../assets/specialty/1.png");
-        // }
-        // &.section-medical-facility {
-        //   background-image: url("../../../assets/medical-facility/gallery1.png");
-        // }
         &.section-outdtanding-doctor {
           width: 120px;
           height: 120px;
           border-radius: 50%;
-        }
-        &.section-handbook {
-          background-image: url("../../../assets/handbook/news-image1.jpg");
         }
       }
     }
