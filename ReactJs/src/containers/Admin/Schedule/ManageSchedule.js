@@ -10,6 +10,7 @@ import { toast } from "react-toastify";
 import _ from "lodash";
 import moment from "moment";
 import CustomScrollbars from "../../../components/CustomScrollbars";
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 import {
   SaveBulkScheduleDoctor,
   getAllScheduleService,
@@ -24,6 +25,8 @@ class ManageSchedule extends Component {
       currentDate: "",
       rangeTime: [],
       listSchedule: [],
+      isOpenModal: false,
+      scheduleToDelete: null,
     };
   }
 
@@ -183,13 +186,15 @@ class ManageSchedule extends Component {
     }
   };
 
-  handleDelete = async (schedule) => {
+  handleDelete = async () => {
+    const { scheduleToDelete } = this.state;
     try {
-      let res = await getDeleteScheduleService(schedule.id);
+      let res = await getDeleteScheduleService(scheduleToDelete.id);
       let selectedDoctor = this.state.selectedDoctor;
       let currentDate = this.state.currentDate;
       if (res && res.errCode === 0) {
         await this.fetchSchedule(selectedDoctor, currentDate);
+        this.toggle();
         toast.success(res.errMessage);
       } else {
         toast.error(res.errMessage);
@@ -197,6 +202,19 @@ class ManageSchedule extends Component {
     } catch (e) {
       console.log(e);
     }
+  };
+  handleModal = (schedule) => {
+    this.setState({
+      isOpenModal: true,
+      scheduleToDelete: schedule, // Set the schedule to delete
+    });
+  };
+
+  toggle = () => {
+    this.setState({
+      isOpenModal: !this.state.isOpenModal,
+      scheduleToDelete: null, // Reset the schedule to delete
+    });
   };
   render() {
     let { rangeTime, listSchedule } = this.state;
@@ -299,71 +317,110 @@ class ManageSchedule extends Component {
               )}
             </div>
             <div className="table-custom">
-              <CustomScrollbars>
-                <table className="table px-3">
-                  <thead className="thead-light">
-                    <tr>
-                      <th scope="col text-center">STT</th>
-                      <th className="customcolumn" scope="col">
-                        Thời Gian
-                      </th>
-                      <th className="customcolumn" scope="col">
-                        Ngày
-                      </th>
-                      {isLoggedIn === true &&
-                      userInfo &&
-                      userInfo.roleId === USER_ROLE.ADMIN ? (
-                        <>
-                          <th className="customcolumn" scope="col">
-                            Actions
-                          </th>
-                        </>
-                      ) : (
-                        <></>
-                      )}
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {listSchedule &&
-                      listSchedule.length > 0 &&
-                      listSchedule.map((item, index) => {
-                        return (
-                          <tr key={index}>
-                            <td>{index + 1}</td>
-                            <td className="customcolumn">
-                              {item.timeTypeData.valueVi}
-                            </td>
-                            <td className="customcolumn-ngay">
-                              {moment
-                                .unix(+item.date / 1000)
-                                .format("dddd - DD/MM/YYYY")}
-                            </td>
-                            <td className="customcolumn">
-                              {isLoggedIn === true &&
-                              userInfo &&
-                              userInfo.roleId === USER_ROLE.ADMIN ? (
-                                <>
-                                  <button
-                                    type="button"
-                                    className="btn btn-danger px-3 customcolumn"
-                                    onClick={() => this.handleDelete(item)}
-                                  >
-                                    Delete
-                                  </button>
-                                </>
-                              ) : (
-                                <></>
-                              )}
-                            </td>
-                          </tr>
-                        );
-                      })}
-                  </tbody>
-                </table>
+              <CustomScrollbars
+                style={{ height: "495px" }}
+                className="scrollbars-custom"
+              >
+                <div className="schedule-custom">
+                  <table className="table px-3">
+                    <thead className="thead-light">
+                      <tr>
+                        <th scope="col text-center">STT</th>
+                        <th className="customcolumn" scope="col">
+                          Thời Gian
+                        </th>
+                        <th className="customcolumn" scope="col">
+                          Ngày
+                        </th>
+                        {isLoggedIn === true &&
+                        userInfo &&
+                        userInfo.roleId === USER_ROLE.ADMIN ? (
+                          <>
+                            <th className="customcolumn" scope="col">
+                              Actions
+                            </th>
+                          </>
+                        ) : (
+                          <></>
+                        )}
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {listSchedule &&
+                        listSchedule.length > 0 &&
+                        listSchedule.map((item, index) => {
+                          return (
+                            <tr key={index}>
+                              <td>{index + 1}</td>
+                              <td className="customcolumn">
+                                {item.timeTypeData.valueVi}
+                              </td>
+                              <td className="customcolumn-ngay">
+                                {moment
+                                  .unix(+item.date / 1000)
+                                  .format("dddd - DD/MM/YYYY")}
+                              </td>
+                              <td className="customcolumn">
+                                {isLoggedIn === true &&
+                                userInfo &&
+                                userInfo.roleId === USER_ROLE.ADMIN ? (
+                                  <>
+                                    <button
+                                      type="button"
+                                      className="btn btn-danger px-3 customcolumn"
+                                      onClick={() => this.handleModal(item)}
+                                    >
+                                      Delete
+                                    </button>
+                                  </>
+                                ) : (
+                                  <></>
+                                )}
+                              </td>
+                            </tr>
+                          );
+                        })}
+                    </tbody>
+                  </table>
+                </div>
               </CustomScrollbars>
             </div>
           </div>
         </div>
+        <Modal
+          isOpen={this.state.isOpenModal}
+          toggle={() => {
+            this.toggle();
+          }}
+          size="lg"
+          centered
+        >
+          <ModalHeader
+            className="text-dark bg-white"
+            toggle={() => {
+              this.toggle();
+            }}
+          >
+            Thông báo
+          </ModalHeader>
+          <ModalBody>
+            <div>Bạn có muốn xóa không?</div>
+          </ModalBody>
+          <ModalFooter>
+            <Button className="btn btn-danger px-3" onClick={this.handleDelete}>
+              Xác Nhận
+            </Button>
+            <Button
+              className="btn px-3"
+              color="secondary"
+              onClick={() => {
+                this.toggle();
+              }}
+            >
+              Hủy
+            </Button>
+          </ModalFooter>
+        </Modal>
       </div>
     );
   }

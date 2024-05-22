@@ -65,10 +65,30 @@
       }
       .table-custom {
         width: 600px;
-        padding: 15px;
+        padding: 10px;
         margin-left: 125px;
-        .customcolumn-ngay {
-          text-transform: uppercase;
+        .schedule-custom {
+          padding: 30px;
+          table {
+            vertical-align: baseline !important;
+            .customcolumn-ngay {
+              text-transform: uppercase;
+            }
+            th {
+              .customcolumn {
+                text-align: center !important;
+              }
+            }
+            tr {
+              .customcolumn {
+                text-align: center !important;
+              }
+            }
+          }
+        }
+
+        .scrollbars-custom {
+          height: 94% !important;
         }
       }
     }

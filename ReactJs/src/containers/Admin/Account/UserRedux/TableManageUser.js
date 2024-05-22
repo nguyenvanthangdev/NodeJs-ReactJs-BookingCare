@@ -3,12 +3,15 @@ import { connect } from "react-redux";
 import "./TableManageUser.scss";
 import * as actions from "../../../../store/actions";
 import CustomScrollbars from "../../../../components/CustomScrollbars";
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 class TableManageUser extends Component {
   constructor(props) {
     super(props);
     this.state = {
       usersRedux: [],
       currentPage: 0,
+      isOpenModal: false,
+      userToDelete: null,
     };
   }
 
@@ -22,13 +25,27 @@ class TableManageUser extends Component {
       });
     }
   }
-  handleDeleteUser = (user) => {
-    this.props.deleteAUserRedux(user.id);
+  handleDeleteUser = async () => {
+    const { userToDelete } = this.state;
+    await this.props.deleteAUserRedux(userToDelete.id);
+    this.toggle();
   };
   handEditUser = (user) => {
     this.props.handEditUserFromParentKey(user);
   };
+  handleModal = (user) => {
+    this.setState({
+      isOpenModal: true,
+      userToDelete: user, // Set the user to delete
+    });
+  };
 
+  toggle = () => {
+    this.setState({
+      isOpenModal: !this.state.isOpenModal,
+      userToDelete: null, // Reset the user to delete
+    });
+  };
   render() {
     let arrUsers = this.state.usersRedux;
     return (
@@ -74,7 +91,7 @@ class TableManageUser extends Component {
                           <button
                             type="button"
                             className="btn btn-danger px-3"
-                            onClick={() => this.handleDeleteUser(item)}
+                            onClick={() => this.handleModal(item)}
                           >
                             Delete
                           </button>
@@ -86,6 +103,43 @@ class TableManageUser extends Component {
             </table>
           </div>
         </CustomScrollbars>
+        <Modal
+          isOpen={this.state.isOpenModal}
+          toggle={() => {
+            this.toggle();
+          }}
+          size="lg"
+          centered
+        >
+          <ModalHeader
+            className="text-dark bg-white"
+            toggle={() => {
+              this.toggle();
+            }}
+          >
+            Thông báo
+          </ModalHeader>
+          <ModalBody>
+            <div>Bạn có muốn xóa không?</div>
+          </ModalBody>
+          <ModalFooter>
+            <Button
+              className="btn btn-danger px-3"
+              onClick={this.handleDeleteUser}
+            >
+              Xác Nhận
+            </Button>
+            <Button
+              className="btn px-3"
+              color="secondary"
+              onClick={() => {
+                this.toggle();
+              }}
+            >
+              Hủy
+            </Button>
+          </ModalFooter>
+        </Modal>
       </React.Fragment>
     );
   }

@@ -65,8 +65,8 @@ let editClinicService = (data) => {
   return new Promise(async (resolve, reject) => {
     try {
       if (
-        !data.selectedClinic.value ||
-        !data.nameSelectedClinic ||
+        !data.id ||
+        !data.name ||
         !data.address ||
         !data.imageBase64 ||
         !data.descriptionHTML ||
@@ -78,13 +78,11 @@ let editClinicService = (data) => {
         });
       }
       let clinic = await db.Clinic.findOne({
-        where: { id: data.selectedClinic.value },
+        where: { id: data.id },
         raw: false,
       });
       if (clinic) {
-        if (data.nameSelectedClinic) {
-          clinic.name = data.nameSelectedClinic;
-        }
+        clinic.name = data.name;
         if (data.imageBase64) {
           clinic.image = data.imageBase64;
         }

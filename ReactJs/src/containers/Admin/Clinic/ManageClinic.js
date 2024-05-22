@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import "./ManageClinic.scss";
 import { CommonUtils } from "../../../utils";
 import { toast } from "react-toastify";
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 import {
   allClinicService,
   createClinicService,
@@ -11,7 +12,7 @@ import {
 } from "../../../services/ApiService";
 import MarkdownIt from "markdown-it";
 import MdEditor from "react-markdown-editor-lite";
-import Select from "react-select";
+// import Select from "react-select";
 import Lightbox from "react-image-lightbox";
 import CustomScrollbars from "../../../components/CustomScrollbars";
 const mdParser = new MarkdownIt();
@@ -20,17 +21,20 @@ class ManageClinic extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      id: "",
       name: "",
       address: "",
       imageBase64: "",
       descriptionHTML: "",
       descriptionMarkdown: "",
-      selectedClinic: "",
-      nameClinic: [],
+      // selectedClinic: "",
+      AllClinic: [],
       isOpenSeleced: false,
-      nameSelectedClinic: "",
+      // nameSelectedClinic: "",
       previewImgUrl: "",
       isOpen: false,
+      isOpenModal: false,
+      clinicToDelete: null,
     };
   }
 
@@ -41,7 +45,7 @@ class ManageClinic extends Component {
     let res = await allClinicService("ALL");
     if (res && res.errCode === 0 && res.data) {
       this.setState({
-        nameClinic: res.data,
+        AllClinic: res.data,
       });
     }
   };
@@ -52,16 +56,6 @@ class ManageClinic extends Component {
   handleOnChangeInput = (event, id) => {
     let stateCopy = { ...this.state };
     stateCopy[id] = event.target.value;
-    if (id === "name") {
-      stateCopy.isOpenSeleced = false;
-      stateCopy.address = "";
-      stateCopy.imageBase64 = "";
-      stateCopy.descriptionHTML = "";
-      stateCopy.descriptionMarkdown = "";
-      stateCopy.selectedClinic = "";
-      stateCopy.nameSelectedClinic = "";
-      stateCopy.previewImgUrl = "";
-    }
     this.setState({
       ...stateCopy,
     });
@@ -99,7 +93,7 @@ class ManageClinic extends Component {
         toast.success("Add new Clinic succeeds !");
         this.setState({
           isOpenSeleced: false,
-          nameSelectedClinic: "",
+          id: "",
           name: "",
           address: "",
           imageBase64: "",
@@ -118,14 +112,14 @@ class ManageClinic extends Component {
         toast.success("Edit clinic succeeds !");
         this.setState({
           isOpenSeleced: false,
-          nameSelectedClinic: "",
+          id: "",
           name: "",
           address: "",
           imageBase64: "",
           descriptionHTML: "",
           descriptionMarkdown: "",
           previewImgUrl: "",
-          selectedClinic: "",
+          // selectedClinic: "",
         });
       } else {
         toast.error("Missing required parameter!");
@@ -133,9 +127,8 @@ class ManageClinic extends Component {
       }
     }
   };
-  handleChangeSelect = async (selectedClinic) => {
-    this.setState({ selectedClinic });
-    let res = await allClinicService(selectedClinic.value);
+  handleChangeSelect = async (item) => {
+    let res = await allClinicService(item.id);
     if (res && res.errCode === 0 && res.data) {
       let clinic = res.data;
       let image64 = "";
@@ -144,7 +137,8 @@ class ManageClinic extends Component {
       }
       this.setState({
         isOpenSeleced: true,
-        nameSelectedClinic: clinic.name,
+        id: clinic.id,
+        name: clinic.name,
         address: clinic.address,
         descriptionHTML: clinic.descriptionHTML,
         descriptionMarkdown: clinic.descriptionMarkdown,
@@ -154,7 +148,8 @@ class ManageClinic extends Component {
     } else {
       this.setState({
         isOpenSeleced: false,
-        nameSelectedClinic: "",
+        id: "",
+        name: "",
         address: "",
         imageBase64: "",
         descriptionHTML: "",
@@ -162,16 +157,15 @@ class ManageClinic extends Component {
         previewImgUrl: "",
       });
     }
-    this.setState({
-      name: "",
-    });
   };
-  handleDeleteUser = async (clinic) => {
+  handleDeleteClinic = async () => {
+    const { clinicToDelete } = this.state;
     try {
-      let res = await deleteClinicService(clinic.id);
+      let res = await deleteClinicService(clinicToDelete.id);
       if (res && res.errCode === 0) {
         await this.AllClinic();
         toast.success(res.errMessage);
+        this.toggle();
       } else {
         toast.error(res.errMessage);
       }
@@ -180,16 +174,29 @@ class ManageClinic extends Component {
       console.log(e);
     }
   };
+  handleModal = (clinic) => {
+    this.setState({
+      isOpenModal: true,
+      clinicToDelete: clinic, // Set the clinic to delete
+    });
+  };
+
+  toggle = () => {
+    this.setState({
+      isOpenModal: !this.state.isOpenModal,
+      clinicToDelete: null, // Reset the clinic to delete
+    });
+  };
   render() {
     console.log("Clinic", this.state);
-    let { isOpenSeleced, nameClinic } = this.state;
+    let { isOpenSeleced, AllClinic } = this.state;
     return (
       <div className="manage-clinic-container">
         <div className="m-s-title my-5">Quản lý cơ sở</div>
         <div className="container-title-clinic">
           <div className="container container-body-clinic">
             <div className="row">
-              <div className="form-row">
+              {/* <div className="form-row">
                 <div className="col-12 form-group">
                   <label className="title-custom1-clinic">
                     Chọn Cơ sở cần chỉnh sữa
@@ -198,15 +205,15 @@ class ManageClinic extends Component {
                     className="select-doctor"
                     value={this.state.selectedClinic}
                     onChange={this.handleChangeSelect}
-                    options={this.state.nameClinic.map((item) => ({
+                    options={this.state.AllClinic.map((item) => ({
                       value: item.id,
                       label: item.name,
                     }))}
                     placeholder={""}
                   />
                 </div>
-              </div>
-              <div className="form-row">
+              </div> */}
+              <div className="form-row my-3">
                 <div className="col-12 form-group">
                   <label className="title-custom1-clinic">Tên Cơ sở</label>
                   <input
@@ -219,7 +226,7 @@ class ManageClinic extends Component {
                   />
                 </div>
               </div>
-              <div className="form-row">
+              <div className="form-row my-3">
                 <div className="col-12 form-group">
                   <label className="title-custom1-clinic">Địa chỉ</label>
                   <input
@@ -232,7 +239,7 @@ class ManageClinic extends Component {
                   />
                 </div>
               </div>
-              <div className="form-row">
+              <div className="form-row my-3">
                 <div className="col-12 form-group">
                   <label className="title-custom3-clinic">Hình Ảnh</label>
                   <div className="preview-img-container">
@@ -293,20 +300,29 @@ class ManageClinic extends Component {
                   <thead className="thead-light">
                     <tr>
                       <th scope="col">Tên Cơ Sở</th>
-                      <th scope="col">Actions</th>
+                      <th className="customcolumn" scope="col">
+                        Actions
+                      </th>
                     </tr>
                   </thead>
                   <tbody>
-                    {nameClinic &&
-                      nameClinic.map((item, index) => {
+                    {AllClinic &&
+                      AllClinic.map((item, index) => {
                         return (
                           <tr key={index}>
                             <td>{item.name}</td>
-                            <td>
+                            <td className="customcolumn">
+                              <button
+                                type="button"
+                                className="btn btn-warning px-3 mx-2"
+                                onClick={() => this.handleChangeSelect(item)}
+                              >
+                                Edit
+                              </button>
                               <button
                                 type="button"
                                 className="btn btn-danger px-3"
-                                onClick={() => this.handleDeleteUser(item)}
+                                onClick={() => this.handleModal(item)}
                               >
                                 Delete
                               </button>
@@ -320,13 +336,49 @@ class ManageClinic extends Component {
             </CustomScrollbars>
           </div>
         </div>
-
         {this.state.isOpen === true && (
           <Lightbox
             mainSrc={this.state.previewImgUrl}
             onCloseRequest={() => this.setState({ isOpen: false })}
           />
         )}
+        <Modal
+          isOpen={this.state.isOpenModal}
+          toggle={() => {
+            this.toggle();
+          }}
+          size="lg"
+          centered
+        >
+          <ModalHeader
+            className="text-dark bg-white"
+            toggle={() => {
+              this.toggle();
+            }}
+          >
+            Thông báo
+          </ModalHeader>
+          <ModalBody>
+            <div>Bạn có muốn xóa không?</div>
+          </ModalBody>
+          <ModalFooter>
+            <Button
+              className="btn btn-danger px-3"
+              onClick={this.handleDeleteClinic}
+            >
+              Xác Nhận
+            </Button>
+            <Button
+              className="btn px-3"
+              color="secondary"
+              onClick={() => {
+                this.toggle();
+              }}
+            >
+              Hủy
+            </Button>
+          </ModalFooter>
+        </Modal>
       </div>
     );
   }

@@ -72,7 +72,7 @@
       }
     }
     .introductory-information {
-      width: 45%;
+      width: 40%;
       margin-top: 50px;
       flex-wrap: wrap;
       box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.3);
@@ -93,17 +93,31 @@
       }
     }
     .table-clinic {
-      width: 30%;
+      width: 35%;
       margin: 50px 50px 0 0;
       box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.3);
       border-radius: 0.5rem;
+      padding: 25px;
       .custom-scrollbar {
         .clinic-table {
-          padding: 30px;
+          padding: 20px;
+          table {
+            vertical-align: baseline !important;
+            th {
+              .customcolumn {
+                text-align: center !important;
+              }
+            }
+            tr {
+              .customcolumn {
+                text-align: center !important;
+              }
+            }
+          }
         }
       }
       .scrollbars-custom {
-        height: 93% !important;
+        height: 101% !important;
       }
     }
   }
