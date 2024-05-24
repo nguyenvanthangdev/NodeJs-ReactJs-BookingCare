@@ -4,8 +4,12 @@ import * as actions from "../../../store/actions";
 import HomeHeader from "../../HomePage/Home/HomeHeader";
 import "./History.scss";
 import CustomScrollbars from "../../../components/CustomScrollbars";
-import { getHistoryBookingService } from "../../../services/ApiService";
+import {
+  getHistoryBookingService,
+  handleDeleteBookingService,
+} from "../../../services/ApiService";
 import moment from "moment";
+import { toast } from "react-toastify";
 class History extends Component {
   constructor(props) {
     super(props);
@@ -43,6 +47,20 @@ class History extends Component {
   };
   componentDidUpdate(prevProps, prevState, snapshot) {}
 
+  handleCan = async (bookingId) => {
+    try {
+      let res = await handleDeleteBookingService(bookingId.id);
+      if (res && res.errCode === 0) {
+        await this.getAllHistoryBooking();
+        toast.success(res.errMessage);
+      } else {
+        toast.error(res.errMessage);
+      }
+      console.log(res);
+    } catch (e) {
+      console.log(e);
+    }
+  };
   render() {
     //JSX
     let { arrHistoryBooking } = this.state;
@@ -85,7 +103,13 @@ class History extends Component {
                         Giới Tính
                       </th>
                       <th className="customcolumn" scope="col">
+                        Thời gian đặt
+                      </th>
+                      <th className="customcolumn" scope="col">
                         Tên Bác Sĩ Khám
+                      </th>
+                      <th className="customcolumn" scope="col">
+                        Trạng thái
                       </th>
                     </tr>
                   </thead>
@@ -126,9 +150,27 @@ class History extends Component {
                               {item.patientData.genderData.valueVi}
                             </td>
                             <td className="customcolumn">
+                              {moment(item.createdAt).format(
+                                "YYYY-MM-DD HH:mm:ss"
+                              )}
+                            </td>
+                            <td className="customcolumn">
                               {item.doctorDataBooking.firstName +
                                 " " +
                                 item.doctorDataBooking.lastName}
+                            </td>
+                            <td className="customcolumn">
+                              {item.statusId === "S2" ? (
+                                <button
+                                  type="button"
+                                  className="btn btn-danger px-3"
+                                  onClick={() => this.handleCan(item)}
+                                >
+                                  Hủy Lịch
+                                </button>
+                              ) : (
+                                "Đã Khám Xong"
+                              )}
                             </td>
                           </tr>
                         );

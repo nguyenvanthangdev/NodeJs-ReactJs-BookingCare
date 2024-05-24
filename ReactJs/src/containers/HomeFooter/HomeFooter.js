@@ -90,7 +90,7 @@ class HomeFooter extends Component {
                   </p>
                   <p>
                     <i className="fas fa-envelope me-3 text-secondary"></i>
-                    thisthang24@gmail.com
+                    thisthang42@gmail.com
                   </p>
                   <p>
                     <i className="fas fa-phone me-3 text-secondary"></i> +

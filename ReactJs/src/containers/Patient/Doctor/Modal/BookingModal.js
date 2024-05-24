@@ -259,7 +259,7 @@ class BookingModal extends Component {
                     />
                   </div>
                   <div className="form-group col-md-6">
-                    <label>Địa chỉ liên hệ</label>
+                    <label>Địa chỉ</label>
                     <input
                       type="text"
                       className="form-control"
@@ -372,6 +372,11 @@ class BookingModal extends Component {
                     onApprove={async (data, actions) => {
                       await actions.order.capture();
                       this.handleConfirmBooking();
+                      let { setLoading } = this.props;
+                      setLoading(true);
+                      setTimeout(() => {
+                        setLoading(false);
+                      }, 2000);
                     }}
                   />
                 </PayPalScriptProvider>
@@ -396,6 +401,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     getGenders: () => dispatch(actions.fetchGenderStart()),
+    setLoading: (isLoading) => dispatch(actions.setLoading(isLoading)),
   };
 };
 

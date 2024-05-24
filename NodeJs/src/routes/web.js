@@ -37,7 +37,7 @@ let initWebRoutes = (app) => {
     "/api/get-list-patient-for-doctor",
     doctorController.getListPatientForDoctor
   );
-
+  router.post("/api/send-remedy", doctorController.sendRemedy);
   //Schedule
   router.get("/api/get-all-schedule", scheduleController.getAllSchedule);
   router.delete(
@@ -56,7 +56,14 @@ let initWebRoutes = (app) => {
   );
   router.get("/api/get-history-booking", patientController.getHistoryBooking);
   router.get("/api/get-price-sum", patientController.handleSumPrice);
+  router.get("/api/get-price-sum1", patientController.handleSumPrice1);
+  router.get("/api/get-price-sum2", patientController.handleSumPrice2);
   router.get("/api/get-booking-count", patientController.handleCountBooking);
+  router.get("/api/get-booking-count1", patientController.handleCountBooking1);
+  router.delete(
+    "/api/get-delete-booking",
+    patientController.handleDeleteBooking
+  );
 
   //Specialty
   router.get("/api/all-specialty", specialtyController.allSpecialty);

@@ -1,4 +1,5 @@
 import db from "../models/index";
+import emailServices from "./emailServices";
 let checkRequiredFields = (inputData) => {
   let arrFields = ["email", "doctorId", "timeType", "date", "reason", "price"];
   let isValid = true;
@@ -116,12 +117,23 @@ let postBookAppointmentService = (data) => {
               reason: data.reason,
               price: data.price,
             });
-
             // Increment currentNumber by 1
             await db.Schedule.update(
               { currentNumber: schedule.currentNumber + 1 },
               { where: { id: schedule.id } }
             );
+            await emailServices.sendSimpleEmail({
+              reciverEmail: data.email,
+              patientName: data.fullName,
+              time: data.timeString,
+              reason: data.reason,
+              address: data.address,
+              genders: data.genders,
+              doctorName: data.doctorName,
+              phoneNumber: data.phoneNumber,
+              birthday: data.birthday,
+              price: data.price,
+            });
             resolve({
               errCode: 0,
               errMessage: "Appointment booked successfully!",
@@ -144,7 +156,7 @@ let getHistoryBookingService = (inputPatientId) => {
         });
       } else {
         let data = await db.Booking.findAll({
-          where: { statusId: "S2", patientId: inputPatientId },
+          where: { patientId: inputPatientId },
           include: [
             {
               model: db.User,
@@ -193,6 +205,34 @@ let getHistoryBookingService = (inputPatientId) => {
 let handleSumPriceService = () => {
   return new Promise(async (resolve, reject) => {
     try {
+      let sum = await db.Booking.sum("price", {
+        where: {
+          statusId: "S2",
+        },
+      });
+      resolve(sum);
+    } catch (e) {
+      reject(e);
+    }
+  });
+};
+let handleSumPriceService1 = () => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      let sum = await db.Booking.sum("price", {
+        where: {
+          statusId: "S3",
+        },
+      });
+      resolve(sum);
+    } catch (e) {
+      reject(e);
+    }
+  });
+};
+let handleSumPriceService2 = () => {
+  return new Promise(async (resolve, reject) => {
+    try {
       let sum = await db.Booking.sum("price");
       resolve(sum);
     } catch (e) {
@@ -203,7 +243,21 @@ let handleSumPriceService = () => {
 let handleCountBookingService = () => {
   return new Promise(async (resolve, reject) => {
     try {
-      let count = await db.Booking.count({});
+      let count = await db.Booking.count({
+        where: { statusId: "S2" },
+      });
+      resolve(count);
+    } catch (e) {
+      reject(e);
+    }
+  });
+};
+let handleCountBookingService1 = () => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      let count = await db.Booking.count({
+        where: { statusId: "S3" },
+      });
       resolve(count);
     } catch (e) {
       reject(e);
@@ -211,9 +265,40 @@ let handleCountBookingService = () => {
   });
 };
 
+let handleDeleteBookingService = (bookingId) => {
+  return new Promise(async (resolve, reject) => {
+    if (!bookingId) {
+      resolve({
+        errCode: 1,
+        errMessage: "Missing required parameters",
+      });
+    } else {
+      let booking = await db.Booking.findOne({
+        where: { id: bookingId },
+      });
+      if (!booking) {
+        resolve({
+          errCode: 2,
+          errMessage: "Booking is not exist",
+        });
+      }
+      await db.Booking.destroy({
+        where: { id: bookingId },
+      });
+      resolve({
+        errCode: 0,
+        errMessage: "The Booking is deleted",
+      });
+    }
+  });
+};
 module.exports = {
   postBookAppointmentService: postBookAppointmentService,
   getHistoryBookingService: getHistoryBookingService,
   handleSumPriceService: handleSumPriceService,
+  handleSumPriceService1: handleSumPriceService1,
+  handleSumPriceService2: handleSumPriceService2,
   handleCountBookingService: handleCountBookingService,
+  handleCountBookingService1: handleCountBookingService1,
+  handleDeleteBookingService: handleDeleteBookingService,
 };

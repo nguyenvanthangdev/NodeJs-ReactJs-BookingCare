@@ -3,8 +3,13 @@ import { connect } from "react-redux";
 import "./ManageBooking.scss";
 import CustomScrollbars from "../../../components/CustomScrollbars";
 import DatePicker from "../../../components/Input/DatePicker";
-import { getListPatientForDoctorService } from "../../../services/ApiService";
+import * as actions from "../../../store/actions";
+import {
+  getListPatientForDoctorService,
+  sendRemedyService,
+} from "../../../services/ApiService";
 import moment from "moment";
+import { toast } from "react-toastify";
 class ManageBooking extends Component {
   constructor(props) {
     super(props);
@@ -13,24 +18,24 @@ class ManageBooking extends Component {
       dataPatient: [],
     };
   }
+
   handleChangeDatePicker = (date) => {
     this.setState(
       {
         currentDate: date[0],
       },
-      () => {
-        let { currentDate } = this.state;
-        let formatedDate = new Date(currentDate).getTime();
-        this.getDataPatient(formatedDate);
+      async () => {
+        await this.getDataPatient();
       }
     );
   };
   async componentDidMount() {
+    this.getDataPatient();
+  }
+  getDataPatient = async () => {
     let { currentDate } = this.state;
     let formatedDate = new Date(currentDate).getTime();
-    this.getDataPatient(formatedDate);
-  }
-  getDataPatient = async (formatedDate) => {
+
     let res = await getListPatientForDoctorService({
       date: formatedDate,
     });
@@ -40,11 +45,36 @@ class ManageBooking extends Component {
       });
     }
   };
+  handleBtnConfirm = (item) => {
+    let { setLoading } = this.props;
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false);
+    }, 2000);
+    let data = {
+      doctorId: item.doctorId,
+      patientId: item.patientId,
+      email: item.patientData.email,
+      timeType: item.timeType,
+      patientName: item.patientData.firstName + " " + item.patientData.lastName,
+    };
+    this.sendRemedy(data);
+  };
+  sendRemedy = async (dataChild) => {
+    let res = await sendRemedyService(dataChild);
+    if (res && res.errCode === 0) {
+      toast.success("The patient is examination was successful !");
+      await this.getDataPatient();
+    } else {
+      toast.error("Error !");
+      console.log(res);
+    }
+  };
   componentDidUpdate(prevProps, prevState, snapshot) {}
 
   render() {
     let { dataPatient } = this.state;
-
+    console.log(dataPatient);
     return (
       <>
         <div className="detail-booking-container">
@@ -91,6 +121,9 @@ class ManageBooking extends Component {
                         Giới Tính
                       </th>
                       <th className="customcolumn" scope="col">
+                        Thời gian đặt
+                      </th>
+                      <th className="customcolumn" scope="col">
                         Tên Bác Sĩ Khám
                       </th>
                       <th className="customcolumn" scope="col">
@@ -130,6 +163,11 @@ class ManageBooking extends Component {
                               {item.patientData.genderData.valueVi}
                             </td>
                             <td className="customcolumn">
+                              {moment(item.createdAt).format(
+                                "YYYY-MM-DD HH:mm:ss"
+                              )}
+                            </td>
+                            <td className="customcolumn">
                               {item.doctorDataBooking.lastName +
                                 " " +
                                 item.doctorDataBooking.firstName}
@@ -138,7 +176,7 @@ class ManageBooking extends Component {
                               <button
                                 type="button"
                                 className="btn btn-warning px-3 mx-2 customcolumn"
-                                // onClick={() => this.handEditUser(item)}
+                                onClick={() => this.handleBtnConfirm(item)}
                               >
                                 Xác Nhận
                               </button>
@@ -164,7 +202,9 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch) => {
-  return {};
+  return {
+    setLoading: (isLoading) => dispatch(actions.setLoading(isLoading)),
+  };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ManageBooking);

@@ -132,9 +132,30 @@ const getCountSpecialtyService = () => {
 const getSumMoneyService = () => {
   return axios.get(`/api/get-price-sum`);
 };
+const getSumMoneyService1 = () => {
+  return axios.get(`/api/get-price-sum1`);
+};
+const getSumMoneyService2 = () => {
+  return axios.get(`/api/get-price-sum2`);
+};
 const getCountBookingService = () => {
   return axios.get(`/api/get-booking-count`);
 };
+const getCountBookingService1 = () => {
+  return axios.get(`/api/get-booking-count1`);
+};
+
+const sendRemedyService = (data) => {
+  return axios.post("/api/send-remedy", data);
+};
+const handleDeleteBookingService = (bookingId) => {
+  return axios.delete("/api/get-delete-booking", {
+    data: {
+      id: bookingId,
+    },
+  });
+};
+
 export {
   handleLoginApi,
   getAllUsers,
@@ -170,5 +191,10 @@ export {
   getCountDoctorService,
   getCountSpecialtyService,
   getSumMoneyService,
+  getSumMoneyService1,
+  getSumMoneyService2,
   getCountBookingService,
+  getCountBookingService1,
+  sendRemedyService,
+  handleDeleteBookingService,
 };

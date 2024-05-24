@@ -11,6 +11,9 @@ import {
   getCountSpecialtyService,
   getSumMoneyService,
   getCountBookingService,
+  getCountBookingService1,
+  getSumMoneyService1,
+  getSumMoneyService2,
 } from "../../../services/ApiService";
 
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip } from "recharts";
@@ -26,7 +29,10 @@ class Dashboard extends Component {
       countSpecialty: 0,
       arrSpecialty: [],
       sumMoney: 0,
+      sumMoney1: 0,
+      sumMoney2: 0,
       countBooking: 0,
+      countBooking1: 0,
     };
   }
 
@@ -57,8 +63,10 @@ class Dashboard extends Component {
       let res3 = await getCountDoctorService();
       let res4 = await getCountSpecialtyService();
       let res5 = await getSumMoneyService();
+      let res8 = await getSumMoneyService1();
+      let res9 = await getSumMoneyService2();
       let res6 = await getCountBookingService();
-
+      let res7 = await getCountBookingService1();
       this.setState({
         countClinic: res1.count,
         countPatient: res2.count,
@@ -66,6 +74,9 @@ class Dashboard extends Component {
         countSpecialty: res4.count,
         sumMoney: res5.sum,
         countBooking: res6.count,
+        countBooking1: res7.count,
+        sumMoney1: res8.sum,
+        sumMoney2: res9.sum,
       });
     } catch (error) {
       console.error("Error ! ", error);
@@ -78,8 +89,13 @@ class Dashboard extends Component {
       { name: "Cơ sở", value: this.state.countClinic },
       { name: "Chuyên Khoa", value: this.state.countSpecialty },
       { name: "Đặt Lịch", value: this.state.countBooking },
+      { name: "Khám Xong", value: this.state.countBooking1 },
     ];
-    const data2 = [{ name: "Tổng Tiền", value: this.state.sumMoney }];
+    const data2 = [
+      { name: "Tổng Tiền Đặt", value: this.state.sumMoney },
+      { name: "Tổng Tiền Khám Xong", value: this.state.sumMoney1 },
+      { name: "Tổng Tiền ", value: this.state.sumMoney2 },
+    ];
     return (
       <>
         <div className="container-fluid">
@@ -183,15 +199,53 @@ class Dashboard extends Component {
               </div>
             </div>
             <div className="col-xl-3 col-md-6 mb-4">
+              <div className="card border-left-warning shadow h-100 py-2">
+                <div className="card-body">
+                  <div className="row no-gutters align-items-center">
+                    <div className="col mr-2">
+                      <div className="text-xs font-weight-bold mb-1 h4 text-purple">
+                        Khám Xong
+                      </div>
+                      <div className="h5 mb-0 font-weight-bold text-gray-800">
+                        {this.state.countBooking1}
+                      </div>
+                    </div>
+                    <div className="col-auto">
+                      {/* <i className="fas fa-venus fa-2x text-gray-300"></i> */}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="col-xl-3 col-md-6 mb-4">
               <div className="card border-left-success shadow h-100 py-2">
                 <div className="card-body">
                   <div className="row no-gutters align-items-center">
                     <div className="col mr-2">
                       <div className="text-xs font-weight-bold text-muted mb-1 h4">
-                        Tổng Tiền
+                        Tổng Tiền Đặt
                       </div>
                       <div className="h5 mb-0 font-weight-bold text-gray-800">
                         {this.state.sumMoney} VNĐ
+                      </div>
+                    </div>
+                    <div className="col-auto">
+                      {/* <i className="fa-2x text-gray-300 font-weight-bold"></i> */}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="col-xl-3 col-md-6 mb-4">
+              <div className="card border-left-success shadow h-100 py-2">
+                <div className="card-body">
+                  <div className="row no-gutters align-items-center">
+                    <div className="col mr-2">
+                      <div className="text-xs font-weight-bold text-muted mb-1 h4">
+                        Tổng Tiền Khám Xong
+                      </div>
+                      <div className="h5 mb-0 font-weight-bold text-gray-800">
+                        {this.state.sumMoney1} VNĐ
                       </div>
                     </div>
                     <div className="col-auto">
@@ -216,7 +270,7 @@ class Dashboard extends Component {
               <Bar dataKey="value" fill="#29af33" />
             </BarChart>
             <BarChart
-              width={250}
+              width={550}
               height={550}
               data={data2}
               className="card my-5 col-xl-12 col-md-6 mb-4 barchart-custom2"
